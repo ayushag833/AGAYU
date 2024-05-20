@@ -12,8 +12,8 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      "/api/": "http://localhost:8000",
-      "/uploads/": "http://localhost:8000",
+      "/api/": "https://agayu-backend.vercel.app/",
+      "/uploads/": "https://agayu-backend.vercel.app/",
     },
   },
 });
