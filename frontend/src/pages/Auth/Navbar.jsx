@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import logo from "../../assets/logo.png";
 import { useNavigate, useLocation } from "react-router-dom";
 import { getSearchQuery } from "../../redux/slices/searchSlice";
@@ -21,9 +21,13 @@ const Navbar = () => {
   const { userInfo } = useSelector((state) => state.user);
   const [LogoutMutation] = useLogoutMutation();
 
-  const { search } = useLocation();
-  const searchParams = new URLSearchParams(search);
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
   const role = searchParams.get("role") || "student";
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
 
   const submitHandler = (e) => {
     e.preventDefault();

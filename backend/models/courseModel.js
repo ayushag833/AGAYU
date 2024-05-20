@@ -6,6 +6,10 @@ const subHeadingSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    altHeading: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );

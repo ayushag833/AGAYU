@@ -14,7 +14,7 @@ const CustomModal = ({ setDropdown }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-10">
-      <div className="fixed inset-0 bg-opacity-80 backdrop-blur-sm z-10"></div>
+      <div className="fixed inset-0 bg-opacity-80 z-10"></div>
       <div className="bg-slate-50 text-black text-xl fixed z-20 duration-150 ease-in-out rounded-lg p-2">
         <div className="flex justify-center pt-5 font-bold">
           <div>Select your Language</div>

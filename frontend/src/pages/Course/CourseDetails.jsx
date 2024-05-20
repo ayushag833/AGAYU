@@ -13,13 +13,17 @@ import { FaCircle, FaFirefox } from "react-icons/fa";
 import { useGetLatestCoursesQuery } from "../../redux/api/coursesApiSlice";
 import CourseCard from "./CourseCard";
 import { IoIosArrowDown } from "react-icons/io";
+import VideoPopup from "../../components/VideoPopup";
 
 const CourseDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [bought, setBought] = useState(false);
   const [showButton, setShowButton] = useState(true);
+  const [showVideo, setShowVideo] = useState(false);
   const [activeIndex, setActiveIndex] = useState(null);
+  const [videoUrl, setVideoUrl] = useState("");
+  const [videoText, setVideoText] = useState("");
   const { data: course, isLoading, isError } = useGetCourseByIdQuery(id);
   const {
     data: latestCourses,
@@ -34,6 +38,12 @@ const CourseDetails = () => {
       setShowButton(false);
     }
   }, []);
+
+  const handleVideoClick = (videoUrl, videoText) => {
+    setVideoUrl(videoUrl);
+    setVideoText(videoText);
+    setShowVideo(true);
+  };
 
   const boughtHandler = () => {
     setBought(true);
@@ -82,6 +92,7 @@ const CourseDetails = () => {
                 </div>
               </div>
             </div>
+            {/* <div className="border-2 p-5 mt-[5rem] ml-[8rem] w-6/12 bg-gradient-to-b from-indigo-800 via-pink-800 to-purple-800"> */}
             <div className="border-2 p-5 mt-[5rem] ml-[8rem] w-6/12">
               <h2 className="text-3xl font-bold mb-5">What you'll learn ?</h2>
               <h2 className="grid grid-cols-2 gap-5">
@@ -132,7 +143,23 @@ const CourseDetails = () => {
                                     key={ind}
                                     className="cursor-pointer mt-1"
                                   >
-                                    {it.subHeading}
+                                    <button
+                                      onClick={() =>
+                                        handleVideoClick(
+                                          it.subHeading,
+                                          it.altHeading
+                                        )
+                                      }
+                                    >
+                                      {it.altHeading}
+                                    </button>
+                                    {showVideo && (
+                                      <VideoPopup
+                                        setShowVideo={setShowVideo}
+                                        linkText={videoUrl}
+                                        altHeading={videoText}
+                                      />
+                                    )}
                                   </div>
                                 ))}
                               </div>

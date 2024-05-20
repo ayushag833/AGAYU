@@ -27,7 +27,7 @@ router.post("/", (req, res) => {
     if (err) {
       return res.status(400).json({ message: err.message });
     } else if (req.file) {
-      const upload = await uploadFile(req.file.path);
+      const upload = await uploadFile(req.file);
       return res.status(200).json({
         file: upload.secure_url,
         message: "File uploaded successfully",
