@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import connect from "./config/db.js";
 import cookieParser from "cookie-parser";
 import path from "path";
-// import cors from "cors";
+import cors from "cors";
 
 // Routes
 import userRoutes from "./routes/userRoutes.js";
@@ -23,13 +23,13 @@ connect();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-// app.use(
-//   cors({
-//     origin: ["https://agayu-frontend.vercel.app"],
-//     methods: ["GET", "POST", "PUT", "DELETE"],
-//     credentials: true,
-//   })
-// );
+app.use(
+  cors({
+    origin: ["https://agayu.netlify.app"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 
 app.use("/api/users", userRoutes);
 app.use("/api/courses", courseRoutes);
