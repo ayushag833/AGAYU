@@ -12,8 +12,8 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      "/api/": "https://agayu-backend.vercel.app/",
-      "/uploads/": "https://agayu-backend.vercel.app/",
+      "/api/": "https://agayu.onrender.com/",
+      "/uploads/": "https://agayu.onrender.com/",
     },
   },
 });
