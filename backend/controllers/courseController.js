@@ -102,7 +102,7 @@ const fetchAllCourses = async (req, res) => {
 
 const getLatestCourses = async (req, res) => {
   try {
-    const topCourses = await Course.find({}).sort({ id: -1 }).limit(4);
+    const topCourses = await Course.find({}).sort({ id: -1 }).limit(8);
     return res.status(200).json(topCourses);
   } catch (error) {
     console.log(error.message);
@@ -112,7 +112,7 @@ const getLatestCourses = async (req, res) => {
 
 const getPopularCourses = async (req, res) => {
   try {
-    const topCourses = await Course.find({}).sort().limit(4);
+    const topCourses = await Course.find({}).sort().limit(8);
     return res.status(200).json(topCourses);
   } catch (error) {
     console.log(error.message);

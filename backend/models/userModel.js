@@ -20,6 +20,15 @@ const userModel = mongoose.Schema(
       enum: ["student", "teacher", "admin"],
       required: true,
     },
+    gender: {
+      type: String,
+    },
+    address: {
+      type: String,
+    },
+    country: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

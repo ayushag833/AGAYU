@@ -128,12 +128,15 @@ const Navbar = () => {
                     >
                       <div className="p-3">
                         <ul className="bg-slate-50 text-black border-2 border-gray-500 font-semibold text-sm p-3 text-md rounded-lg">
-                          <li className="hover:underline duration-150 ease-in-out hover:opacity-80 whitespace-nowrap">
+                          <li
+                            className="hover:underline duration-150 ease-in-out hover:opacity-80 whitespace-nowrap"
+                            onClick={() => navigate(`/profile/${role}/update`)}
+                          >
                             {userInfo.fullName}
                           </li>
                           <li
                             onClick={logoutHandler}
-                            className="hover:underline duration-150 ease-in-out hover:opacity-80"
+                            className="hover:underline duration-150 ease-in-out hover:opacity-80 whitespace-nowrap"
                           >
                             Log out
                           </li>

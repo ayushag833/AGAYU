@@ -22,8 +22,8 @@ export default defineConfig({
   ],
   server: {
     proxy: {
-      "/api/": "https://agayu.onrender.com",
-      "/uploads/": "https://agayu.onrender.com",
+      "/api/": "http://localhost:8000",
+      "/uploads/": "http://localhost:8000",
     },
   },
 });

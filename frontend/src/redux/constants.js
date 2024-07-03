@@ -1,4 +1,4 @@
-const BASE_URL = "https://agayu.onrender.com";
+const BASE_URL = "";
 const USERS_URL = "/api/users";
 const CATEGORY_URL = "/api/category";
 const COURSES_URL = "/api/courses";

@@ -10,20 +10,22 @@ cloudinary.config({
   api_secret: process.env.API_SECRET,
 });
 
-const uploadFile = async (file) => {
+const uploadFile = async (file, folder) => {
   try {
     const extName = path.extname(file.originalname).toLowerCase();
+    const options = { folder };
     if (
       extName === ".jpg" ||
       extName === ".jpeg" ||
       extName === ".png" ||
       extName === ".webp"
     ) {
-      const result = await cloudinary.uploader.upload(file.path);
+      const result = await cloudinary.uploader.upload(file.path, options);
       return result;
     } else if (extName === ".mp4") {
       const result = await cloudinary.uploader.upload(file.path, {
         resource_type: "video",
+        folder,
       });
       return result;
     } else if (
@@ -34,6 +36,7 @@ const uploadFile = async (file) => {
       const result = await cloudinary.uploader.upload(file.path, {
         resource_type: "raw",
         format: extName.substring(1),
+        folder,
       });
       return result;
     }
