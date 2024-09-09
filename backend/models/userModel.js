@@ -20,14 +20,35 @@ const userModel = mongoose.Schema(
       enum: ["student", "teacher", "admin"],
       required: true,
     },
+    coursesPurchased: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Course",
+      },
+    ],
+    phone: {
+      type: String,
+      unique: true,
+      minlength: [10, "minimum 10 digit phone number is required"],
+      maxlength: [11, "maximum 11 digit phone number is required"],
+    },
+    image: {
+      type: String,
+      default:
+        "https://upload.wikimedia.org/wikipedia/commons/e/e0/Userimage.png",
+    },
     gender: {
       type: String,
     },
     address: {
       type: String,
     },
-    country: {
+    dateOfBirth: {
       type: String,
+    },
+    bio: {
+      type: String,
+      trim: true,
     },
   },
   { timestamps: true }

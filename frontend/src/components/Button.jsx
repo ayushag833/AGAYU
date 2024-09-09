@@ -12,7 +12,7 @@ const Button = ({ color, children, onClick, width }) => {
     }
   };
   return (
-    <div>
+    <div className="flex w-full justify-center items-center">
       <button
         className={`${getColor()} ${
           width ? "w-full" : ""

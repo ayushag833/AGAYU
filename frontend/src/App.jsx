@@ -13,8 +13,8 @@ import CourseDetails from "./pages/Course/CourseDetails";
 import Cart from "./pages/Auth/Cart";
 import StudentProfile from "./pages/Student/StudentProfile";
 import StudentCourses from "./pages/Student/StudentCourses";
-import StudentInfo from "./pages/Student/StudentInfo";
 import StudentDelete from "./pages/Student/StudentDelete";
+import StudentChangePassword from "./pages/Student/StudentChangePassword";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProtectedRoutesStudent from "./components/ProtectedRoutesStudent";
@@ -43,17 +43,20 @@ const App = () => {
 
           <Route path="" element={<ProtectedRoutesStudent />}>
             <Route
-              path="/profile/student/update"
+              path="/profile/student/update/:id"
               element={<StudentProfile />}
             />
-            <Route path="/profile/student/delete" element={<StudentDelete />} />
             <Route
-              path="/profile/student/courses"
+              path="/profile/student/delete/:id"
+              element={<StudentDelete />}
+            />
+            <Route
+              path="/profile/student/courses/:id"
               element={<StudentCourses />}
             />
             <Route
-              path="/profile/student/information"
-              element={<StudentInfo />}
+              path="/profile/student/password/:id"
+              element={<StudentChangePassword />}
             />
           </Route>
 
@@ -61,7 +64,7 @@ const App = () => {
 
           <Route path="" element={<ProtectedRoutesTeacher />}>
             <Route
-              path="/profile/teacher/update"
+              path="/profile/teacher/update/:id"
               element={<TeacherProfile />}
             />
           </Route>

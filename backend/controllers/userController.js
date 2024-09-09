@@ -72,7 +72,7 @@ const loginUser = async (req, res) => {
 const logoutUser = async (req, res) => {
   try {
     res.clearCookie("jwt");
-    return res.status(200).send("Logout successfully!");
+    return res.status(200).json({ message: "Logout successfully!" });
   } catch (error) {
     console.log(error.message);
     return res.status(500).json({ Error: error.message });
@@ -89,4 +89,101 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-export { createUser, loginUser, logoutUser, getAllUsers };
+const updateUser = async (req, res) => {
+  try {
+    const { fullName, email, phone, image, gender, address, dateOfBirth, bio } =
+      req.body;
+    switch (true) {
+      case !fullName:
+        return res.json({ error: "FullName is required" });
+      case !email:
+        return res.json({ error: "Email is required" });
+      case !phone:
+        return res.json({ error: "Phone is required" });
+      case !gender:
+        return res.json({ error: "Gender is required" });
+      case !address:
+        return res.json({ error: "Address is required" });
+      case !dateOfBirth:
+        return res.json({ error: "DateOfBirth is required" });
+      case !bio:
+        return res.json({ error: "Bio is required" });
+      case !image:
+        return res.json({ error: "Image is required" });
+    }
+    const user = await User.findByIdAndUpdate(
+      req.params.id,
+      { ...req.body },
+      { new: true }
+    );
+    res.status(200).json(user);
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json({ Error: error.message });
+  }
+};
+
+const updatePassword = async (req, res) => {
+  try {
+    const { oldPassword, newPassword } = req.body;
+    switch (true) {
+      case !oldPassword:
+        return res.json({ error: "OldPassword is required" });
+      case !newPassword:
+        return res.json({ error: "NewPassword is required" });
+    }
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    const matchPassword = await bcrypt.compare(oldPassword, user.password);
+    if (!matchPassword) {
+      return res.json({ error: "Invalid Password" });
+    }
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+    user.password = hashedPassword;
+    await user.save();
+    res.status(200).json({ message: "Password is changed" });
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json({ Error: error.message });
+  }
+};
+
+const deleteUser = async (req, res) => {
+  try {
+    const user = await User.findByIdAndDelete(req.params.id);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.status(200).json({ message: "User account is deleted Successfully" });
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json({ Error: error.message });
+  }
+};
+
+const showPurchasedCourses = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.status(200).json(user.coursesPurchased);
+  } catch (error) {
+    console.log("error in showing courses", error.message);
+    return res.status(500).json({ Error: error.message });
+  }
+};
+
+export {
+  createUser,
+  loginUser,
+  logoutUser,
+  getAllUsers,
+  updateUser,
+  updatePassword,
+  deleteUser,
+  showPurchasedCourses,
+};

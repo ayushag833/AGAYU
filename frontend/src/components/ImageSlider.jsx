@@ -19,8 +19,8 @@ const ImageSlider = ({ courses }) => {
     <div className="slider-container">
       <Slider {...settings} className="mt-5 m-auto flex justify-between">
         {courses.map((course) => (
-          <div className="p-5">
-            <CourseCard key={course._id} course={course} />
+          <div className="p-5" key={course._id}>
+            <CourseCard course={course} />
           </div>
         ))}
       </Slider>

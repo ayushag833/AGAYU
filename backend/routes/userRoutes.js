@@ -6,6 +6,10 @@ import {
   loginUser,
   logoutUser,
   getAllUsers,
+  updateUser,
+  updatePassword,
+  deleteUser,
+  showPurchasedCourses,
 } from "../controllers/userController.js";
 
 import {
@@ -19,5 +23,9 @@ router
   .get(authenticate, authorizeAsAdmin, getAllUsers);
 router.route("/login").post(loginUser);
 router.route("/logout").post(logoutUser);
+router.route("/update/:id").put(authenticate, updateUser);
+router.route("/delete/:id").delete(authenticate, deleteUser);
+router.route("/password/:id").put(authenticate, updatePassword);
+router.route("/courses/:id").get(authenticate, showPurchasedCourses);
 
 export default router;

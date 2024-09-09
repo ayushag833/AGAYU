@@ -1,30 +1,5 @@
 import mongoose from "mongoose";
 
-const subHeadingSchema = mongoose.Schema(
-  {
-    subHeading: {
-      type: String,
-      required: true,
-    },
-    altHeading: {
-      type: String,
-      required: true,
-    },
-  },
-  { timestamps: true }
-);
-
-const headingSchema = mongoose.Schema(
-  {
-    heading: {
-      type: String,
-      required: true,
-    },
-    subHeading: [subHeadingSchema],
-  },
-  { timestamps: true }
-);
-
 const courseSchema = mongoose.Schema(
   {
     name: {
@@ -59,15 +34,15 @@ const courseSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    // content: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   ref: "Content",
-    //   required: true,
-    // },
-    content: {
-      heading: [headingSchema],
-      // type: String,
-      // required: true,
+    content: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Content",
+      },
+    ],
+    category: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "category",
     },
     requirements: {
       type: String,
@@ -82,10 +57,12 @@ const courseSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    tags: {
-      type: String,
-      required: true,
-    },
+    tags: [
+      {
+        type: String,
+        required: true,
+      },
+    ],
   },
   {
     timestamps: true,

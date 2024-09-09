@@ -32,18 +32,20 @@ const Navbar = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     navigate(`/courses?search=${data}`);
-    console.log(data);
     dispatch(getSearchQuery(data));
   };
 
-  const logoutHandler = () => {
+  const logoutHandler = async () => {
     try {
-      LogoutMutation().unwrap();
+      await LogoutMutation().unwrap();
       dispatch(userLogout());
-      toast.success("User logged out successfully!");
       setIsDropdownVisible(false);
       navigate("/");
-    } catch (error) {}
+      toast.success("User logged out successfully!");
+    } catch (error) {
+      console.error(error.error);
+      toast.error(error.error);
+    }
   };
 
   const handleLogin = () => {
@@ -130,7 +132,11 @@ const Navbar = () => {
                         <ul className="bg-slate-50 text-black border-2 border-gray-500 font-semibold text-sm p-3 text-md rounded-lg">
                           <li
                             className="hover:underline duration-150 ease-in-out hover:opacity-80 whitespace-nowrap"
-                            onClick={() => navigate(`/profile/${role}/update`)}
+                            onClick={() =>
+                              navigate(
+                                `/profile/${role}/update/${userInfo._id}`
+                              )
+                            }
                           >
                             {userInfo.fullName}
                           </li>

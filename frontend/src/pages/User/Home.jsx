@@ -49,7 +49,7 @@ const Home = () => {
           {popularCoursesLoading ? (
             <Loader />
           ) : popularCoursesError ? (
-            <Message variant="error">Error Occurred</Message>
+            <Message variant="error">{error?.data}</Message>
           ) : (
             <>{<ImageSlider courses={popularCourses} />}</>
           )}
@@ -61,7 +61,7 @@ const Home = () => {
           {budgetCoursesLoading ? (
             <Loader />
           ) : budgetCoursesError ? (
-            <Message variant="error">Error Occurred</Message>
+            <Message variant="error">{error?.data}</Message>
           ) : (
             <>{<ImageSlider courses={budgetCourses} />}</>
           )}

@@ -1,46 +1,15 @@
 import mongoose from "mongoose";
 
-const subSectionSchema = mongoose.Schema(
-  {
-    title: {
-      type: String,
-      required: true,
-    },
-    lectures: {
-      type: String,
-      required: true,
-    },
-    length: {
-      type: String,
-      required: true,
-    },
-    videos: {
-      type: String,
-      required: true,
-    },
-    images: {
-      type: String,
-      required: true,
-    },
-  },
-  { timestamps: true }
-);
-
 const contentSchema = mongoose.Schema(
   {
-    sections: {
-      type: String,
-      required: true,
-    },
-    lectures: {
-      type: String,
-      required: true,
-    },
-    length: {
-      type: String,
-      required: true,
-    },
-    subSection: [subSectionSchema],
+    title: String,
+    totalTime: String,
+    subSection: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "subContent",
+      },
+    ],
   },
   { timestamps: true }
 );

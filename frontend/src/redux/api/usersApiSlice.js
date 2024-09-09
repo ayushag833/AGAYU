@@ -29,6 +29,33 @@ const userApiSlice = apiSlice.injectEndpoints({
     getAllUsers: builder.query({
       query: () => USERS_URL,
     }),
+
+    updateUser: builder.mutation({
+      query: (id, ...data) => ({
+        url: `${USERS_URL}/update/${id}`,
+        method: "PUT",
+        body: data,
+      }),
+    }),
+
+    deleteUser: builder.mutation({
+      query: (id) => ({
+        url: `${USERS_URL}/delete/${id}`,
+        method: "DELETE",
+      }),
+    }),
+
+    updatePassword: builder.mutation({
+      query: (id, ...data) => ({
+        url: `${USERS_URL}/password/${id}`,
+        method: "PUT",
+        body: data,
+      }),
+    }),
+
+    showPurchasedCourses: builder.query({
+      query: (id) => `${USERS_URL}/courses/${id}`,
+    }),
   }),
 });
 
@@ -37,4 +64,8 @@ export const {
   useLoginMutation,
   useLogoutMutation,
   useGetAllUsersQuery,
+  useUpdateUserMutation,
+  useDeleteUserMutation,
+  useShowPurchasedCoursesQuery,
+  useUpdatePasswordMutation,
 } = userApiSlice;

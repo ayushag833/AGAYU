@@ -12,6 +12,7 @@ const createNewCourse = async (req, res) => {
       rightAudience,
       requirements,
       tags,
+      image,
     } = req.fields;
 
     switch (true) {
@@ -33,6 +34,8 @@ const createNewCourse = async (req, res) => {
         return res.json({ error: "Requirements are required" });
       case !tags:
         return res.json({ error: "Tags are required" });
+      case !image:
+        return res.json({ error: "Image is required" });
     }
     const newCourse = new Course({
       ...req.fields,
