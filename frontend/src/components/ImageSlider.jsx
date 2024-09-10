@@ -18,6 +18,7 @@ const ImageSlider = ({ courses }) => {
   return (
     <div className="slider-container">
       <Slider {...settings} className="mt-5 m-auto justify-between">
+        {console.log(courses)}
         {courses.map((course) => (
           <div className="p-5" key={course._id}>
             <CourseCard course={course} />
