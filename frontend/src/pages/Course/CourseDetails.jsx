@@ -108,7 +108,7 @@ const CourseDetails = () => {
               <h2 className="text-3xl font-bold mb-5">Course content</h2>
               <div>
                 <div className="p-5">
-                  {course.content.heading.map((item, index) => {
+                  {course?.content?.heading.map((item, index) => {
                     const accordionOpened = activeIndex === index;
                     return (
                       <div

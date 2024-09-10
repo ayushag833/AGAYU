@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate, useLocation } from "react-router";
 import { useUpdateUserMutation } from "../../redux/api/usersApiSlice";
+import { useSignupMutation } from "../../redux/api/usersApiSlice";
 import { userInformation } from "../../redux/slices/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../../components/Button";
@@ -64,7 +65,7 @@ const StudentProfile = () => {
             name="fullName"
             disabled
             placeholder="Full Name"
-            value={fullName}
+            value={formData.fullName}
             onChange={(e) => setfullName(e.target.value)}
             className="mt-1 mb-5 block w-[30rem] px-3 py-2 border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400
       focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500
@@ -81,7 +82,7 @@ const StudentProfile = () => {
             type="email"
             name="email"
             placeholder="Enter Email"
-            value={email}
+            value={formData.email}
             onChange={(e) => setEmail(e.target.value)}
             className="mt-1 mb-5 block w-[30rem] px-3 py-2 border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400
       focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500
