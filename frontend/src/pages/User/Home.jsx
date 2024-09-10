@@ -31,7 +31,6 @@ const Home = () => {
   return (
     <div className="text-white">
       <Carousel />
-      {console.log(latestCourses)}
       <div className="m-10">
         <h1 className="mb-5 text-3xl font-bold">Latest Courses</h1>
         <div>
