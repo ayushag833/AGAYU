@@ -49,10 +49,8 @@ const StudentProfile = () => {
 
   return (
     <div className="flex">
-      <div className="w-[20rem]">
-        <StudentMenu />
-      </div>
-      <div className="w-[30rem]">
+      <StudentMenu />
+      <div className="flex justify-center w-full mt-[5rem]">
         <form className="ml-10 mt-10" onSubmit={submitHandler}>
           <label
             htmlFor="fullName"
@@ -68,9 +66,9 @@ const StudentProfile = () => {
             value={formData.fullName}
             onChange={(e) => setfullName(e.target.value)}
             className="mt-1 mb-5 block w-[30rem] px-3 py-2 border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400
-      focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500
-      invalid:border-red-500 invalid:text-red-600
-      focus:invalid:border-red-500 focus:invalid:ring-red-500"
+           focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500
+           invalid:border-red-500 invalid:text-red-600
+           focus:invalid:border-red-500 focus:invalid:ring-red-500"
           />
           <label
             htmlFor="email"
@@ -85,9 +83,9 @@ const StudentProfile = () => {
             value={formData.email}
             onChange={(e) => setEmail(e.target.value)}
             className="mt-1 mb-5 block w-[30rem] px-3 py-2 border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400
-      focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500
-      invalid:border-red-500 invalid:text-red-600
-      focus:invalid:border-red-500 focus:invalid:ring-red-500"
+         focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500
+         invalid:border-red-500 invalid:text-red-600
+         focus:invalid:border-red-500 focus:invalid:ring-red-500"
           />
           <Button color="green">Update</Button>
         </form>
