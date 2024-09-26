@@ -23,7 +23,8 @@ const Navbar = () => {
 
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const role = searchParams.get("role") || "student";
+  const role = searchParams.get("role") || userInfo.role || "student";
+  console.log(role);
 
   useEffect(() => {
     window.scrollTo(0, 0);

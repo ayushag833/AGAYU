@@ -21,6 +21,11 @@ import ProtectedRoutesStudent from "./components/ProtectedRoutesStudent";
 import ProtectedRoutesTeacher from "./components/ProtectedRoutesTeacher";
 import ProtectedRoutesAdmin from "./components/ProtectedRoutesAdmin";
 import TeacherProfile from "./pages/Teacher/TeacherProfile";
+import TeacherDelete from "./pages/Teacher/TeacherDelete";
+import TeacherChangePassword from "./pages/Teacher/TeacherChangePassword";
+import TeacherCourses from "./pages/Teacher/TeacherCourses";
+import TeacherCreateCourse from "./pages/Teacher/TeacherCreateCourse";
+import TeacherRevenue from "./pages/Teacher/TeacherRevenue";
 
 const App = () => {
   return (
@@ -66,6 +71,26 @@ const App = () => {
             <Route
               path="/profile/teacher/update/:id"
               element={<TeacherProfile />}
+            />
+            <Route
+              path="/profile/teacher/delete/:id"
+              element={<TeacherDelete />}
+            />
+            <Route
+              path="/profile/teacher/courses/:id"
+              element={<TeacherCourses />}
+            />
+            <Route
+              path="/profile/teacher/password/:id"
+              element={<TeacherChangePassword />}
+            />
+            <Route
+              path="/profile/teacher/createcourse/:id"
+              element={<TeacherCreateCourse />}
+            />
+            <Route
+              path="/profile/teacher/revenue/:id"
+              element={<TeacherRevenue />}
             />
           </Route>
 

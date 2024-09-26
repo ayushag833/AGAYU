@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import StudentMenu from "./StudentMenu";
+import TeacherMenu from "./TeacherMenu";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Button from "../../components/Button";
 import { useUpdatePasswordMutation } from "../../redux/api/usersApiSlice";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-const StudentChangePassword = () => {
+const TeacherChangePassword = () => {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -36,7 +36,7 @@ const StudentChangePassword = () => {
 
   return (
     <div className="flex">
-      <StudentMenu />
+      <TeacherMenu />
       <div className="flex flex-col items-center justify-center h-[30rem] w-[70rem]  gap-[1rem] text-white">
         <div className="text-xl ">Change Password</div>
         <form onSubmit={submitHandler}>
@@ -132,4 +132,4 @@ const StudentChangePassword = () => {
   );
 };
 
-export default StudentChangePassword;
+export default TeacherChangePassword;

@@ -1,19 +1,19 @@
 import React from "react";
-import StudentMenu from "./StudentMenu";
+import TeacherMenu from "./TeacherMenu";
 import { useShowPurchasedCoursesQuery } from "../../redux/api/usersApiSlice";
 import Loader from "../../components/Loader";
 import Message from "../../components/Message";
 import CourseCard from "../Course/CourseCard";
 import { useSelector } from "react-redux";
 
-const StudentCourses = () => {
+const TeacherCourses = () => {
   const userDetails = useSelector((state) => state.user);
   const id = userDetails.userInfo._id;
   const { data, isLoading, isError, error } = useShowPurchasedCoursesQuery(id);
 
   return (
     <div className="flex">
-      <StudentMenu />
+      <TeacherMenu />
       {isLoading ? (
         <Loader />
       ) : isError ? (
@@ -34,4 +34,4 @@ const StudentCourses = () => {
   );
 };
 
-export default StudentCourses;
+export default TeacherCourses;

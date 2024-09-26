@@ -57,6 +57,14 @@ const courseSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    readyToPublished: {
+      type: Boolean,
+      default: false,
+    },
+    approvedByAdmin: {
+      type: Boolean,
+      default: false,
+    },
     tags: [
       {
         type: String,

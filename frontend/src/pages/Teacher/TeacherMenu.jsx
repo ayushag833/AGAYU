@@ -9,8 +9,10 @@ import { RiLockPasswordFill } from "react-icons/ri";
 import { toast } from "react-toastify";
 import { userLogout } from "../../redux/slices/userSlice";
 import { useLogoutMutation } from "../../redux/api/usersApiSlice";
+import { MdCurrencyRupee } from "react-icons/md";
+import { IoCreateSharp } from "react-icons/io5";
 
-const StudentMenu = () => {
+const TeacherMenu = () => {
   const userDetails = useSelector((state) => state.user);
   const role = userDetails?.userInfo?.role;
   const id = userDetails?.userInfo?._id;
@@ -78,6 +80,28 @@ const StudentMenu = () => {
           <BiBookBookmark className="text-xl mr-1 mb-1 inline-block" />
           My Courses
         </NavLink>
+        <NavLink
+          to={`/profile/${role}/createcourse/${id}`}
+          className={({ isActive }) =>
+            isActive
+              ? "p-2 m-5 text-center bg-green-500 hover:underline rounded-full"
+              : "p-2 m-5 text-center hover:underline"
+          }
+        >
+          <IoCreateSharp className="text-xl mr-1 mb-1 inline-block" />
+          Create Course
+        </NavLink>
+        <NavLink
+          to={`/profile/${role}/revenue/${id}`}
+          className={({ isActive }) =>
+            isActive
+              ? "p-2 m-5 text-center bg-green-500 hover:underline rounded-full"
+              : "p-2 m-5 text-center hover:underline"
+          }
+        >
+          <MdCurrencyRupee className="text-xl mr-1 mb-1 inline-block" />
+          My Revenue
+        </NavLink>
         <div
           className="p-2 m-5 text-center  hover:underline rounded-full cursor-pointer"
           onClick={logoutHandler}
@@ -90,4 +114,4 @@ const StudentMenu = () => {
   );
 };
 
-export default StudentMenu;
+export default TeacherMenu;

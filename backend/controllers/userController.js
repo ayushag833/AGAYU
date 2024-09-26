@@ -57,12 +57,7 @@ const loginUser = async (req, res) => {
 
     generateToken(res, userExists._id);
 
-    return res.status(200).json({
-      _id: userExists._id,
-      fullName: userExists.fullName,
-      email: userExists.email,
-      role: userExists.role,
-    });
+    return res.status(200).json(userExists).select("-password");
   } catch (error) {
     console.log(error.message);
     return res.status(500).json({ Error: error.message });
@@ -91,31 +86,11 @@ const getAllUsers = async (req, res) => {
 
 const updateUser = async (req, res) => {
   try {
-    const { fullName, email, phone, image, gender, address, dateOfBirth, bio } =
-      req.body;
-    switch (true) {
-      case !fullName:
-        return res.json({ error: "FullName is required" });
-      case !email:
-        return res.json({ error: "Email is required" });
-      case !phone:
-        return res.json({ error: "Phone is required" });
-      case !gender:
-        return res.json({ error: "Gender is required" });
-      case !address:
-        return res.json({ error: "Address is required" });
-      case !dateOfBirth:
-        return res.json({ error: "DateOfBirth is required" });
-      case !bio:
-        return res.json({ error: "Bio is required" });
-      case !image:
-        return res.json({ error: "Image is required" });
-    }
     const user = await User.findByIdAndUpdate(
       req.params.id,
       { ...req.body },
       { new: true }
-    );
+    ).select("-password");
     res.status(200).json(user);
   } catch (error) {
     console.log(error.message);

@@ -1,5 +1,5 @@
 import apiSlice from "./apiSlice";
-import { USERS_URL } from "../constants";
+import { UPLOADS_URL, USERS_URL } from "../constants";
 
 const userApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -26,12 +26,24 @@ const userApiSlice = apiSlice.injectEndpoints({
       }),
     }),
 
+    upload: builder.mutation({
+      query: (file) => {
+        const formData = new FormData();
+        formData.append("file", file);
+        return {
+          url: `${UPLOADS_URL}`,
+          method: "POST",
+          body: formData,
+        };
+      },
+    }),
+
     getAllUsers: builder.query({
       query: () => USERS_URL,
     }),
 
     updateUser: builder.mutation({
-      query: (id, ...data) => ({
+      query: ({ id, ...data }) => ({
         url: `${USERS_URL}/update/${id}`,
         method: "PUT",
         body: data,
@@ -46,7 +58,7 @@ const userApiSlice = apiSlice.injectEndpoints({
     }),
 
     updatePassword: builder.mutation({
-      query: (id, ...data) => ({
+      query: ({ id, ...data }) => ({
         url: `${USERS_URL}/password/${id}`,
         method: "PUT",
         body: data,
@@ -63,6 +75,7 @@ export const {
   useSignupMutation,
   useLoginMutation,
   useLogoutMutation,
+  useUploadMutation,
   useGetAllUsersQuery,
   useUpdateUserMutation,
   useDeleteUserMutation,
