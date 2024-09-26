@@ -18,7 +18,7 @@ const TeacherCourses = () => {
         <Loader />
       ) : isError ? (
         <div>
-          <Message variant="error">{error?.data}</Message>
+          <Message variant="error">{error?.error}</Message>
         </div>
       ) : (
         <div className="flex flex-col items-center mt-[2rem] h-[30rem] w-[70rem]  gap-[1rem] text-white">

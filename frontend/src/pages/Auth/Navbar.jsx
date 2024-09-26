@@ -23,8 +23,7 @@ const Navbar = () => {
 
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const role = searchParams.get("role") || userInfo.role || "student";
-  console.log(role);
+  const role = searchParams.get("role") || userInfo?.role || "student";
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -112,13 +111,19 @@ const Navbar = () => {
               className="bg-slate-100 rounded-tr-full h-[2.5rem] rounded-br-full focus:outline-none w-full sm:w-11/12 text-base md:text-base"
             />
           </form>
-
           <div className="flex gap-5 mx-5 my-auto p-1 text-4xl cursor-pointer">
             <div
               onMouseOver={() => setIsDropdownVisible(true)}
               onMouseOut={() => setIsDropdownVisible(false)}
             >
-              <FaRegUserCircle className="text-white rounded-full text-3xl" />
+              <img
+                src={
+                  userInfo?.image ||
+                  "https://upload.wikimedia.org/wikipedia/commons/e/e0/Userimage.png"
+                }
+                className="bg-white rounded-full w-[35px] h-[35px] mt-1 object-cover object-top border-white border-[2px]"
+                alt="User profile image"
+              />
             </div>
             <div className="relative top-[1.8rem] right-[4.5rem] z-10">
               {isDropdownVisible && (
