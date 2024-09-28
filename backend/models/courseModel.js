@@ -34,10 +34,11 @@ const courseSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    totalTime: String,
     content: [
       {
         title: String,
-        totalTime: String,
+        time: String,
         subContent: [
           {
             title: String,

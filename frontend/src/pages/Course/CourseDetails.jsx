@@ -14,16 +14,18 @@ import { useGetLatestCoursesQuery } from "../../redux/api/coursesApiSlice";
 import CourseCard from "./CourseCard";
 import { IoIosArrowDown } from "react-icons/io";
 import VideoPopup from "../../components/VideoPopup";
+import ShowTime from "../../components/ShowTime";
+import { FaArrowRight } from "react-icons/fa";
 
 const CourseDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [bought, setBought] = useState(false);
   const [showButton, setShowButton] = useState(true);
-  const [showVideo, setShowVideo] = useState(false);
+  // const [showVideo, setShowVideo] = useState(false);
   const [activeIndex, setActiveIndex] = useState(null);
-  const [videoUrl, setVideoUrl] = useState("");
-  const [videoText, setVideoText] = useState("");
+  // const [videoUrl, setVideoUrl] = useState("");
+  // const [videoText, setVideoText] = useState("");
   const { data: course, isLoading, isError } = useGetCourseByIdQuery(id);
   const {
     data: latestCourses,
@@ -39,11 +41,11 @@ const CourseDetails = () => {
     }
   }, []);
 
-  const handleVideoClick = (videoUrl, videoText) => {
-    setVideoUrl(videoUrl);
-    setVideoText(videoText);
-    setShowVideo(true);
-  };
+  // const handleVideoClick = (videoUrl, videoText) => {
+  //   setVideoUrl(videoUrl);
+  //   setVideoText(videoText);
+  //   setShowVideo(true);
+  // };
 
   const boughtHandler = () => {
     setBought(true);
@@ -107,61 +109,75 @@ const CourseDetails = () => {
               </h2>
             </div>
             <div className="p-5 mt-[5rem] ml-[8rem] w-6/12 border-2">
-              <h2 className="text-3xl font-bold mb-5">Course content</h2>
+              <div className="flex justify-between">
+                <h2 className="text-3xl font-bold mb-5">Course content</h2>
+                <div>
+                  <h3
+                    className="hover:underline flex cursor-pointer hover:text-slate-300 transition border-2 rounded-md p-2 mb-2 w-fit"
+                    onClick={() => navigate(`/course/view/${course._id}`)}
+                  >
+                    <div> View Course</div>
+                    <FaArrowRight className="mt-1 ml-1" />
+                  </h3>
+                  <h3 className="ml-[1.2rem]">
+                    <ShowTime time={course.totalTime} />
+                  </h3>
+                </div>
+              </div>
               <div>
                 <div className="p-5">
-                  {course?.content?.heading?.map((item, index) => {
+                  {course?.content?.map((item, index) => {
                     const accordionOpened = activeIndex === index;
                     return (
                       <div
                         key={index}
-                        className={`flex ${
+                        className={`flex relative ${
                           index == 0 ? "border-2" : "border-2 border-t-0"
                         } border-2 p-5`}
                       >
                         <div className="flex flex-col">
-                          <div className="flex">
+                          <div
+                            className="flex"
+                            onClick={() =>
+                              setActiveIndex(
+                                activeIndex === index ? null : index
+                              )
+                            }
+                          >
                             <IoIosArrowDown
                               className={`text-xl cursor-pointer mr-1 ml-1 duration-150 ease-in-out ${
                                 accordionOpened ? "rotate-180" : ""
                               }`}
                             />
-                            <div
-                              onClick={() =>
-                                setActiveIndex(
-                                  activeIndex === index ? null : index
-                                )
-                              }
-                              className="cursor-pointer"
-                            >
-                              <div>{item.heading}</div>
+                            <div className="cursor-pointer">
+                              <div>
+                                {index + 1}.) {item.title}
+                              </div>
+                              <div className="absolute right-3 top-5">
+                                <ShowTime time={item.time} />
+                              </div>
                             </div>
                           </div>
                           <div>
                             {accordionOpened && (
                               <div className="mt-5">
-                                {item?.subHeading?.map((it, ind) => (
-                                  <div
-                                    key={ind}
-                                    className="cursor-pointer mt-1"
-                                  >
-                                    <button
+                                {item?.subContent?.map((it, ind) => (
+                                  <div key={ind} className="mt-1">
+                                    <div
                                       onClick={() =>
-                                        handleVideoClick(
-                                          it.subHeading,
-                                          it.altHeading
-                                        )
+                                        handleVideoClick(it.video, it.title)
                                       }
                                     >
-                                      {it.altHeading}
-                                    </button>
-                                    {showVideo && (
-                                      <VideoPopup
-                                        setShowVideo={setShowVideo}
-                                        linkText={videoUrl}
-                                        altHeading={videoText}
-                                      />
-                                    )}
+                                      <div className="flex gap-3">
+                                        <div>
+                                          {ind + 1}) {it.title}:
+                                        </div>
+                                        <div>{it.description}</div>
+                                        <div className="absolute right-3">
+                                          <ShowTime time={it.time} />
+                                        </div>
+                                      </div>
+                                    </div>
                                   </div>
                                 ))}
                               </div>

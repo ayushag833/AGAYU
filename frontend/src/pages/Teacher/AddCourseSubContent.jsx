@@ -11,25 +11,15 @@ const AddCourseSubContent = ({
   contentIndex,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [btnClicked, setBtnClicked] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     video: "",
     time: "",
   });
-  const [uploadApi] = useUploadMutation();
 
-  //   const submitHandler = async (e) => {
-  //     e.preventDefault();
-  //     try {
-  //       setShowSubContent(false);
-  //       setSubContentDetails((prev) => [...prev, formData]);
-  //       toast.success("Video Details uploaded successfully");
-  //     } catch (error) {
-  //       console.log(error, error.message);
-  //       toast.error("Can't upload video at this time. Try again later!");
-  //     }
-  //   };
+  const [uploadApi] = useUploadMutation();
 
   const submitHandler = async (e) => {
     if (formData.title.trim() === "") return;
@@ -39,13 +29,21 @@ const AddCourseSubContent = ({
       setContent((prev) => {
         const updatedDetails = [...prev];
         if (updatedDetails[contentIndex]?.subContent?.length >= 0) {
-          updatedDetails[contentIndex]?.subContent?.push(formData);
+          updatedDetails[contentIndex].subContent.push(formData);
+          updatedDetails[contentIndex].time = updatedDetails[
+            contentIndex
+          ].subContent.reduce((acc, cur) => {
+            return acc + cur.time;
+          }, 0);
           return updatedDetails;
         }
         const updatedContent = { title: updatedDetails[contentIndex] };
         updatedContent.subContent = [];
         updatedContent.subContent.push(formData);
-        updatedDetails[contentIndex] = updatedContent;
+        const time = updatedContent.subContent.reduce((acc, cur) => {
+          return acc + cur.time;
+        }, 0);
+        updatedDetails[contentIndex] = { ...updatedContent, time };
         return updatedDetails;
       });
       toast.success("Video Details uploaded successfully");
@@ -66,6 +64,7 @@ const AddCourseSubContent = ({
     setIsLoading(true);
     try {
       const res = await uploadApi(e.target.files[0]).unwrap();
+      setBtnClicked(true);
       toast.success(res?.message);
       setFormData((prev) => {
         return { ...prev, video: res.file, time: res.duration };
@@ -133,6 +132,7 @@ const AddCourseSubContent = ({
               <input
                 type="file"
                 name="video"
+                controls
                 accept=".mp4"
                 onChange={videoHandler}
                 className="mt-1 mb-5 block border-2 rounded-md text-md
@@ -141,13 +141,20 @@ const AddCourseSubContent = ({
          focus:invalid:border-red-500 focus:invalid:ring-red-500"
               />
             </div>
-            {isLoading ? (
-              <div className="mt-1">
-                <Loader />
-              </div>
-            ) : (
-              <video src={formData?.video} className="w-[5rem]" />
-            )}
+            <div>
+              {isLoading ? (
+                <div className="mt-[2rem]">
+                  <Loader />
+                </div>
+              ) : (
+                btnClicked && (
+                  <video
+                    src={formData?.video}
+                    className="w-[6rem] border-2 rounded-md mt-[1.5rem]"
+                  />
+                )
+              )}
+            </div>
           </div>
           <div>
             <Button color="green">Upload</Button>

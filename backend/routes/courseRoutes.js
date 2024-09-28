@@ -1,6 +1,5 @@
 import express from "express";
 const router = express.Router();
-// import formidable from "express-formidable";
 
 import {
   authenticate,
@@ -14,33 +13,20 @@ import {
   getBudgetCourses,
   getPopularCourses,
   getCourseById,
-  addHeading,
-  addSubHeading,
+  updateCourse,
+  deleteCourse,
 } from "../controllers/courseController.js";
 
 router
   .route("/")
   .post(authenticate, authorizeAsTeacher, createNewCourse)
-  // .post(authenticate, authorizeAsTeacher, formidable(), createNewCourse)
   .get(fetchAllCourses);
 
-router.post(
-  "/heading",
-  authenticate,
-  authorizeAsTeacher,
-  // formidable(),
-  addHeading
-);
-router.post(
-  "/subheading",
-  authenticate,
-  authorizeAsTeacher,
-  // formidable(),
-  addSubHeading
-);
 router.route("/latest").get(getLatestCourses);
 router.route("/popular").get(getPopularCourses);
 router.route("/budget").get(getBudgetCourses);
 router.route("/:id").get(getCourseById);
+router.route("/update/:id").put(updateCourse);
+router.route("/delete/:id").delete(deleteCourse);
 
 export default router;

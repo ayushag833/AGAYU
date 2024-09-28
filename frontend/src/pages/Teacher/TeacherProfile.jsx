@@ -87,7 +87,13 @@ const TeacherProfile = () => {
          focus:invalid:border-red-500 focus:invalid:ring-red-500"
               />
             </div>
-            <img src={user.image} className="w-[5rem] bg-slate-50" />
+            <img
+              src={
+                user?.image ||
+                "https://upload.wikimedia.org/wikipedia/commons/e/e0/Userimage.png"
+              }
+              className="w-[5rem] bg-slate-50"
+            />
           </div>
           <div className="grid grid-cols-2 gap-5">
             <div>

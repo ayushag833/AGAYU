@@ -42,11 +42,12 @@ const TeacherCreateCourse = () => {
     try {
       const res = await createApi({
         ...formData,
+        content,
       }).unwrap();
       toast.success("Course created successfully");
     } catch (error) {
-      console.log(error, error.message);
-      toast.error("Can't create course at this time. Try again later!");
+      console.log(error.data.msg);
+      toast.error(error.data.msg);
     }
   };
 
@@ -86,7 +87,7 @@ const TeacherCreateCourse = () => {
       tags: prev.tags.filter((_, i) => i !== index),
     }));
   }
-  console.log(content);
+
   return (
     <div className="flex">
       <TeacherMenu />

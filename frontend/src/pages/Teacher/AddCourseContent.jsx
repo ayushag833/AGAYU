@@ -4,7 +4,6 @@ import Button from "../../components/Button";
 import { toast } from "react-toastify";
 
 const AddCourseContent = ({ setContent, setShowContent }) => {
-  // const [title, setTitle] = useState("");
   const [formData, setFormData] = useState({
     title: "",
     time: "",
@@ -16,7 +15,6 @@ const AddCourseContent = ({ setContent, setShowContent }) => {
     try {
       setShowContent(false);
       setContent((prev) => [...prev, formData.title]);
-      // setContentDetails((prev) => [...prev,...res, title]);
       toast.success("Content Details uploaded successfully");
     } catch (error) {
       console.log(error, error.message);

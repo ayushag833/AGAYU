@@ -13,10 +13,10 @@ import { MdOndemandVideo } from "react-icons/md";
 const Modal = ({ image, price, includes, boughtHandler, showButton }) => {
   const [show, setShow] = useState("absolute top-[10rem]");
   const controlModal = () => {
-    if (window.scrollY > 150 && window.scrollY < 3100) {
+    if (window.scrollY > 150 && window.scrollY < 3030) {
       setShow("fixed");
-    } else if (window.scrollY > 3100) {
-      setShow("absolute top-[195rem]");
+    } else if (window.scrollY > 3030) {
+      setShow("absolute top-[190rem]");
     } else {
       setShow("absolute top-[10rem]");
     }
@@ -53,11 +53,9 @@ const Modal = ({ image, price, includes, boughtHandler, showButton }) => {
               </Button>
             </div>
           )}
-          <h2 className="text-3xl font-bold mt-10 mb-5">
-            This Course Includes{" "}
-          </h2>
+          <h2 className="text-3xl font-bold mt-5 mb-5">This Course Includes</h2>
           <h2 className="grid gap-2">
-            {includes.split(".").map((include, index) => (
+            {includes.split("\n").map((include, index) => (
               <div key={index} className="flex gap-[0.3rem] items-center">
                 <h2 className=" text-[1rem] mr-[0.2rem]">
                   <div>
@@ -97,11 +95,11 @@ const Modal = ({ image, price, includes, boughtHandler, showButton }) => {
               </Button>
             </div>
           )}
-          <h2 className="text-3xl font-bold mt-10 mb-5">
+          <h2 className="text-3xl font-bold mt-5 mb-5">
             This Course Includes{" "}
           </h2>
           <h2 className="grid gap-2">
-            {includes.split(".").map((include, index) => (
+            {includes.split("\n").map((include, index) => (
               <div key={index} className="flex gap-[0.3rem] items-center">
                 <h2 className=" text-[1rem] mr-[0.2rem]">
                   <div>

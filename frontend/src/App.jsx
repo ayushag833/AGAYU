@@ -10,6 +10,7 @@ import PageNotFound from "./pages/PageNotFound";
 import Login from "./pages/Auth/Login";
 import Signup from "./pages/Auth/Signup";
 import CourseDetails from "./pages/Course/CourseDetails";
+import CourseView from "./pages/Course/CourseView";
 import Cart from "./pages/Auth/Cart";
 import StudentProfile from "./pages/Student/StudentProfile";
 import StudentCourses from "./pages/Student/StudentCourses";
@@ -37,6 +38,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/courses" element={<Courses />} />
           <Route path="/course/:id" element={<CourseDetails />} />
+          <Route path="/course/view/:id" element={<CourseView />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />

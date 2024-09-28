@@ -13,7 +13,7 @@ const CourseCard = ({ course }) => {
         <img
           src={course.image}
           alt="course-image"
-          className="rounded-md w-[10rem]"
+          className="rounded-md w-[20rem]"
         />
         <h2 className="mt-1 mx-1">{course.name}</h2>
         <h3 className="mx-1">{course.teacherName}</h3>

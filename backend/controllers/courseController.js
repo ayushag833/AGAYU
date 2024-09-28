@@ -12,92 +12,53 @@ const createNewCourse = async (req, res) => {
       modules,
       rightAudience,
       category,
+      content,
       requirements,
       tags,
     } = req.body;
-    // } = req.fields;
 
     switch (true) {
       case !name:
-        return res.json({ error: "Name is required" });
+        throw new Error("Name is required");
       case !title:
-        return res.json({ error: "Title is required" });
+        throw new Error("Title is required");
       case !description:
-        return res.json({ error: "Description is required" });
+        throw new Error("Description is required");
       case !price:
-        return res.json({ error: "Price is required" });
+        throw new Error("Price is required");
       case !includes:
-        return res.json({ error: "Includes are required" });
+        throw new Error("Includes is required");
       case !modules:
-        return res.json({ error: "Modules are required" });
+        throw new Error("Modules is required");
       case !rightAudience:
-        return res.json({ error: "Right Audience is required" });
+        throw new Error("RightAudience is required");
       case !requirements:
-        return res.json({ error: "Requirements are required" });
+        throw new Error("Requirements is required");
       case !tags:
-        return res.json({ error: "Tags are required" });
+        throw new Error("Tags is required");
       case !image:
-        return res.json({ error: "Image is required" });
+        throw new Error("Image is required");
       case !category:
-        return res.json({ error: "Category is required" });
+        throw new Error("Category is required");
+      case !content:
+        throw new Error("Content is required");
     }
+
+    const totalTime = content.reduce((acc, cur) => {
+      return acc + cur.time;
+    }, 0);
 
     const newCourse = new Course({
       ...req.body,
-      // ...req.fields,
       teacherName: req.user.fullName,
       user: req.user._id,
+      totalTime,
     });
     await newCourse.save();
     return res.status(201).json(newCourse);
   } catch (error) {
     console.log(error.message);
-    return res.status(500).json("Internal Serval Error");
-  }
-};
-
-const addHeading = async (req, res) => {
-  try {
-    const { heading, courseId } = req.body;
-    // const { heading, courseId } = req.fields;
-
-    const course = Course.findById(courseId);
-
-    if (!heading) {
-      return res.json({ error: "Heading is required" });
-    }
-    const newHeading = {
-      heading,
-    };
-    course.content.push(newHeading);
-    await course.save();
-    return res.status(201).json(course);
-  } catch (error) {
-    console.log(error.message);
-    return res.status(500).json("Internal Serval Error");
-  }
-};
-
-const addSubHeading = async (req, res) => {
-  try {
-    const { subHeading, headingId, courseId } = req.body;
-    // const { subHeading, headingId, courseId } = req.fields;
-
-    const course = Course.findById(courseId);
-    const heading = course.find(() => heading._id === headingId);
-
-    if (!subHeading) {
-      return res.json({ error: "Sub Heading is required" });
-    }
-    const newSubHeading = {
-      subHeading,
-    };
-    heading.subHeading.push(newSubHeading);
-    await course.save();
-    return res.status(201).json(course);
-  } catch (error) {
-    console.log(error.message);
-    return res.status(500).json("Internal Serval Error");
+    return res.status(500).json({ msg: error.message });
   }
 };
 
@@ -156,6 +117,30 @@ const getCourseById = async (req, res) => {
   }
 };
 
+const updateCourse = async (req, res) => {
+  try {
+    await Course.findByIdAndUpdate(
+      req.params.id,
+      { ...req.body },
+      { new: true }
+    );
+    return res.status(200).json({ message: "Course Updated Successfully" });
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json("Internal Serval Error");
+  }
+};
+
+const deleteCourse = async (req, res) => {
+  try {
+    await Course.findByIdAndDelete(req.params.id);
+    return res.status(200).json({ message: "Course Deleted Successfully" });
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json("Internal Serval Error");
+  }
+};
+
 export {
   createNewCourse,
   getLatestCourses,
@@ -163,6 +148,6 @@ export {
   getPopularCourses,
   getBudgetCourses,
   getCourseById,
-  addHeading,
-  addSubHeading,
+  updateCourse,
+  deleteCourse,
 };
