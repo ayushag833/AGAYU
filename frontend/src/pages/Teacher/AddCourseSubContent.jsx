@@ -4,7 +4,6 @@ import Button from "../../components/Button";
 import { toast } from "react-toastify";
 import Loader from "../../components/Loader";
 import { useUploadMutation } from "../../redux/api/usersApiSlice";
-import { timeout } from "nodemon/lib/config";
 
 const AddCourseSubContent = ({
   setShowSubContent,
