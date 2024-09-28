@@ -79,6 +79,7 @@ const TeacherProfile = () => {
               <input
                 type="file"
                 name="image"
+                accept=".jpg, .jpeg, .png, .webp"
                 onChange={imageHandler}
                 className="mt-1 mb-5 block bg-slate-50 rounded-md text-sm
          focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500

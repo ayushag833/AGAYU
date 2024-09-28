@@ -1,18 +1,22 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import {
-  useUpdateUserMutation,
-  useUploadMutation,
-} from "../../redux/api/usersApiSlice";
-import { userInformation } from "../../redux/slices/userSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useUploadMutation } from "../../redux/api/usersApiSlice";
 import Button from "../../components/Button";
 import TeacherMenu from "./TeacherMenu";
 import { useGetAllCategoriesQuery } from "../../redux/api/categoriesApiSlice";
+import { useCreateNewCourseMutation } from "../../redux/api/coursesApiSlice";
+import AddCourseContent from "./AddCourseContent";
+import { FaPlus } from "react-icons/fa";
+import { RxCross2 } from "react-icons/rx";
+import AddCourseSubContent from "./AddCourseSubContent";
 
 const TeacherCreateCourse = () => {
-  // const userDetails = useSelector((state) => state.user);
-  // const user = userDetails?.userInfo;
+  const [content, setContent] = useState([]);
+  const [showContent, setShowContent] = useState(false);
+  const [showSubContent, setShowSubContent] = useState({
+    show: false,
+    contentIndex: null,
+  });
 
   const [formData, setFormData] = useState({
     name: "",
@@ -29,23 +33,20 @@ const TeacherCreateCourse = () => {
     tagsInput: "",
   });
 
-  const dispatch = useDispatch();
-  const [updateApi] = useUpdateUserMutation();
+  const [createApi] = useCreateNewCourseMutation();
   const [uploadApi] = useUploadMutation();
   const { data: categories } = useGetAllCategoriesQuery();
 
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      // const res = await updateApi({
-      //   id: user._id,
-      //   ...formData,
-      // }).unwrap();
-      // dispatch(userInformation(res));
-      // toast.success("User updated successfully");
+      const res = await createApi({
+        ...formData,
+      }).unwrap();
+      toast.success("Course created successfully");
     } catch (error) {
       console.log(error, error.message);
-      toast.error("Can't update User at this time. Try again later!");
+      toast.error("Can't create course at this time. Try again later!");
     }
   };
 
@@ -60,7 +61,6 @@ const TeacherCreateCourse = () => {
     try {
       const res = await uploadApi(e.target.files[0]).unwrap();
       toast.success(res?.message);
-      // dispatch(userInformation({ ...user, image: res.file }));
       setFormData((prev) => {
         return { ...prev, image: res.file };
       });
@@ -86,10 +86,23 @@ const TeacherCreateCourse = () => {
       tags: prev.tags.filter((_, i) => i !== index),
     }));
   }
-
+  console.log(content);
   return (
     <div className="flex">
       <TeacherMenu />
+      {showContent && (
+        <AddCourseContent
+          setContent={setContent}
+          setShowContent={setShowContent}
+        />
+      )}
+      {showSubContent.show && (
+        <AddCourseSubContent
+          setShowSubContent={setShowSubContent}
+          contentIndex={showSubContent.contentIndex}
+          setContent={setContent}
+        />
+      )}
       <div className="flex justify-center mt-[2rem] w-[70rem]">
         <form className="ml-[5rem]" onSubmit={submitHandler}>
           <h1 className="text-center text-white mt-5 mb-10 text-xl">
@@ -99,7 +112,7 @@ const TeacherCreateCourse = () => {
           <div>
             <label
               htmlFor="name"
-              className="block text-sm font-medium text-slate-200"
+              className="block text-md font-medium text-slate-200"
             >
               Name
             </label>
@@ -109,7 +122,7 @@ const TeacherCreateCourse = () => {
               placeholder="Course Name"
               value={formData.name}
               onChange={changeHandler}
-              className="mt-1 mb-5 block w-[50rem] px-3 py-2 border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400
+              className="mt-1 mb-5 block w-[50rem] px-3 py-2 border-slate-300 rounded-md text-md shadow-sm placeholder-slate-400
            focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500
            invalid:border-red-500 invalid:text-red-600
            focus:invalid:border-red-500 focus:invalid:ring-red-500"
@@ -118,7 +131,7 @@ const TeacherCreateCourse = () => {
           <div>
             <label
               htmlFor="title"
-              className="block text-sm font-medium text-slate-200"
+              className="block text-md font-medium text-slate-200"
             >
               Title
             </label>
@@ -128,7 +141,7 @@ const TeacherCreateCourse = () => {
               placeholder="Enter Title"
               value={formData.title}
               onChange={changeHandler}
-              className="mt-1 mb-5 block w-[50rem] px-3 py-2 border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400
+              className="mt-1 mb-5 block w-[50rem] px-3 py-2 border-slate-300 rounded-md text-md shadow-sm placeholder-slate-400
          focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500
          invalid:border-red-500 invalid:text-red-600
          focus:invalid:border-red-500 focus:invalid:ring-red-500"
@@ -137,7 +150,7 @@ const TeacherCreateCourse = () => {
           <div className="mt-5">
             <label
               htmlFor="description"
-              className="block text-sm font-medium text-slate-200"
+              className="block text-md font-medium text-slate-200"
             >
               Description
             </label>
@@ -147,7 +160,7 @@ const TeacherCreateCourse = () => {
               placeholder="Enter Description"
               value={formData.description}
               onChange={changeHandler}
-              className="mt-1 mb-5 block w-full h-[10rem] px-3 py-2 resize-none border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400
+              className="mt-1 mb-5 block w-full h-[10rem] px-3 py-2 resize-none border-slate-300 rounded-md text-md shadow-sm placeholder-slate-400
            focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500
            invalid:border-red-500 invalid:text-red-600
            focus:invalid:border-red-500 focus:invalid:ring-red-500"
@@ -156,7 +169,7 @@ const TeacherCreateCourse = () => {
           <div>
             <label
               htmlFor="price"
-              className="block text-sm font-medium text-slate-200"
+              className="block text-md font-medium text-slate-200"
             >
               Price
             </label>
@@ -166,7 +179,7 @@ const TeacherCreateCourse = () => {
               placeholder="Enter Price"
               value={formData.price}
               onChange={changeHandler}
-              className="mt-1 mb-5 block w-[50rem] px-3 py-2 border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400
+              className="mt-1 mb-5 block w-[50rem] px-3 py-2 border-slate-300 rounded-md text-md shadow-sm placeholder-slate-400
            focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500
            invalid:border-red-500 invalid:text-red-600
            focus:invalid:border-red-500 focus:invalid:ring-red-500"
@@ -177,7 +190,7 @@ const TeacherCreateCourse = () => {
             <div>
               <label
                 htmlFor="image"
-                className="block text-sm font-medium text-slate-200"
+                className="block text-md font-medium text-slate-200"
               >
                 Thumbnail
               </label>
@@ -185,7 +198,8 @@ const TeacherCreateCourse = () => {
                 type="file"
                 name="image"
                 onChange={imageHandler}
-                className="mt-1 mb-5 block bg-slate-50 rounded-md text-sm
+                accept=".jpg, .jpeg, .png, .webp"
+                className="mt-1 mb-5 block bg-slate-50 rounded-md text-md
          focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500
          invalid:border-red-500 invalid:text-red-600
          focus:invalid:border-red-500 focus:invalid:ring-red-500"
@@ -193,10 +207,87 @@ const TeacherCreateCourse = () => {
             </div>
             <img src={formData?.image} className="w-[5rem]" />
           </div>
+          <div>
+            <h1 className="text-md font-medium text-slate-200 mb-2">
+              Course Content
+            </h1>
+            {content?.map((contentDetail, index) => (
+              <div className="text-white" key={index}>
+                <div className="border-2 p-2 mb-2 rounded-md">
+                  <div className="flex justify-between p-2 mb-2 items-center">
+                    <h1>
+                      {contentDetail.title
+                        ? contentDetail.title
+                        : contentDetail}
+                    </h1>
+                    <RxCross2
+                      className="text-xl font-extrabold duration-150 ease-in-out hover:opacity-80 cursor-pointer"
+                      onClick={() => {
+                        setContent((prev) =>
+                          prev.filter((_, i) => i !== index)
+                        );
+                      }}
+                    />
+                  </div>
+                  {contentDetail?.subContent?.map((subContentDetail, ind) => (
+                    <div
+                      className="flex justify-between p-2 mb-2 items-center border"
+                      key={ind}
+                    >
+                      <h1>{subContentDetail.title}</h1>
+                      <RxCross2
+                        className="text-xl font-extrabold duration-150 ease-in-out hover:opacity-80 cursor-pointer"
+                        onClick={() => {
+                          setContent((prev) => {
+                            const updated = [...prev];
+                            updated[index].subContent = updated[
+                              index
+                            ].subContent.filter((_, i) => i !== ind);
+                            return updated;
+                          });
+                        }}
+                      />
+                    </div>
+                  ))}
+                  <div
+                    className="flex justify-center w-fit items-center p-2 text-sm font-medium text-slate-200 border-2 cursor-pointer rounded-md"
+                    onClick={() => {
+                      setShowSubContent({
+                        show: true,
+                        contentIndex: index,
+                      });
+                    }}
+                  >
+                    <h1 className="p-2 text-sm font-medium text-slate-200">
+                      Add Video Content
+                    </h1>
+                    <h1 className="text-lg mx-1 mb-1">
+                      <FaPlus />
+                    </h1>
+                  </div>
+                </div>
+              </div>
+            ))}
+            <div
+              className="flex"
+              onClick={() => {
+                setShowContent(true);
+              }}
+            >
+              <div className="flex justify-center items-center p-2 text-sm font-medium text-slate-200 border-2 cursor-pointer rounded-md">
+                <h1 className="flex p-2 text-sm font-medium text-slate-200">
+                  Add Course Content
+                </h1>
+                <h1 className="text-lg mx-1 mb-1">
+                  <FaPlus />
+                </h1>
+              </div>
+            </div>
+          </div>
           <div className="mt-5">
             <label
               htmlFor="includes"
-              className="block text-sm font-medium text-slate-200"
+              className="block text-md font-medium text-slate-200"
             >
               What this course Includes?
             </label>
@@ -206,7 +297,7 @@ const TeacherCreateCourse = () => {
               placeholder="Enter Details"
               value={formData.includes}
               onChange={changeHandler}
-              className="mt-1 mb-5 block w-full h-[10rem] px-3 py-2 resize-none border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400
+              className="mt-1 mb-5 block w-full h-[10rem] px-3 py-2 resize-none border-slate-300 rounded-md text-md shadow-sm placeholder-slate-400
            focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500
            invalid:border-red-500 invalid:text-red-600
            focus:invalid:border-red-500 focus:invalid:ring-red-500"
@@ -215,7 +306,7 @@ const TeacherCreateCourse = () => {
           <div className="mt-5">
             <label
               htmlFor="modules"
-              className="block text-sm font-medium text-slate-200"
+              className="block text-md font-medium text-slate-200"
             >
               Modules
             </label>
@@ -225,7 +316,7 @@ const TeacherCreateCourse = () => {
               placeholder="Enter Modules"
               value={formData.modules}
               onChange={changeHandler}
-              className="mt-1 mb-5 block w-full h-[10rem] px-3 py-2 resize-none border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400
+              className="mt-1 mb-5 block w-full h-[10rem] px-3 py-2 resize-none border-slate-300 rounded-md text-md shadow-sm placeholder-slate-400
            focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500
            invalid:border-red-500 invalid:text-red-600
            focus:invalid:border-red-500 focus:invalid:ring-red-500"
@@ -234,7 +325,7 @@ const TeacherCreateCourse = () => {
           <div className="mt-5">
             <label
               htmlFor="rightAudience"
-              className="block text-sm font-medium text-slate-200"
+              className="block text-md font-medium text-slate-200"
             >
               Right Audience
             </label>
@@ -244,7 +335,7 @@ const TeacherCreateCourse = () => {
               placeholder="Enter Right Audience"
               value={formData.rightAudience}
               onChange={changeHandler}
-              className="mt-1 mb-5 block w-full h-[10rem] px-3 py-2 resize-none border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400
+              className="mt-1 mb-5 block w-full h-[10rem] px-3 py-2 resize-none border-slate-300 rounded-md text-md shadow-sm placeholder-slate-400
            focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500
            invalid:border-red-500 invalid:text-red-600
            focus:invalid:border-red-500 focus:invalid:ring-red-500"
@@ -253,7 +344,7 @@ const TeacherCreateCourse = () => {
           <div>
             <label
               htmlFor="category"
-              className="block text-sm font-medium text-slate-200"
+              className="block text-md font-medium text-slate-200"
             >
               Category
             </label>
@@ -262,42 +353,42 @@ const TeacherCreateCourse = () => {
               id="category"
               value={formData.category}
               onChange={changeHandler}
-              className="mt-1 mb-5 block w-[50rem] px-3 py-2 border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400
+              className="mt-1 mb-5 block w-[50rem] px-3 py-2 border-slate-300 rounded-md text-md shadow-sm placeholder-slate-400
          focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500
          invalid:border-red-500 invalid:text-red-600
          focus:invalid:border-red-500 focus:invalid:ring-red-500"
             >
               <option value="">Select Category</option>
               {categories?.AllCategories?.map((category) => (
-                <option value={category.title} key={category._id}>
+                <option value={category._id} key={category._id}>
                   {category.title}
                 </option>
               ))}
             </select>
           </div>
-          <div>
+          <div className="mt-5">
             <label
               htmlFor="requirements"
-              className="block text-sm font-medium text-slate-200"
+              className="block text-md font-medium text-slate-200"
             >
               Requirements
             </label>
-            <input
+            <textarea
               type="text"
               name="requirements"
               placeholder="Enter Requirements"
               value={formData.requirements}
               onChange={changeHandler}
-              className="mt-1 mb-5 block w-[50rem] px-3 py-2 border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400
+              className="mt-1 mb-5 block w-full h-[10rem] px-3 py-2 resize-none border-slate-300 rounded-md text-md shadow-sm placeholder-slate-400
            focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500
            invalid:border-red-500 invalid:text-red-600
            focus:invalid:border-red-500 focus:invalid:ring-red-500"
-            />
+            ></textarea>
           </div>
           <div>
             <label
               htmlFor="tags"
-              className="block text-sm font-medium text-slate-200"
+              className="block text-md font-medium text-slate-200"
             >
               Tags
             </label>
@@ -305,10 +396,10 @@ const TeacherCreateCourse = () => {
               type="text"
               name="tagsInput"
               placeholder="Enter Tags"
-              value={formData.tagsInput} // Bind tagsInput to the input field
+              value={formData.tagsInput}
               onChange={changeHandler}
               onKeyDown={handleTagKeyDown}
-              className="mt-1 mb-5 block w-[50rem] px-3 py-2 border-slate-300 rounded-md text-sm shadow-sm placeholder-slate-400
+              className="mt-1 mb-5 block w-[50rem] px-3 py-2 border-slate-300 rounded-md text-md shadow-sm placeholder-slate-400
            focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500
            invalid:border-red-500 invalid:text-red-600
            focus:invalid:border-red-500 focus:invalid:ring-red-500"
@@ -320,7 +411,7 @@ const TeacherCreateCourse = () => {
                 {formData.tags.map((tag, index) => (
                   <div
                     key={index}
-                    className="flex items-center bg-gray-200 text-gray-700 rounded-full px-3 py-1 text-sm"
+                    className="flex items-center bg-gray-200 text-gray-700 rounded-full px-3 py-1 text-md"
                   >
                     <span>{tag}</span>
                     <button

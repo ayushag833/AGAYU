@@ -36,8 +36,16 @@ const courseSchema = mongoose.Schema(
     },
     content: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Content",
+        title: String,
+        totalTime: String,
+        subContent: [
+          {
+            title: String,
+            description: String,
+            video: String,
+            time: String,
+          },
+        ],
       },
     ],
     category: {

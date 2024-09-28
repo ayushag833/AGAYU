@@ -22,8 +22,7 @@ const createCategory = async (req, res) => {
 
 const getCategory = async (req, res) => {
   try {
-    const { id } = req.params;
-    const Category = await category.findById(id);
+    const Category = await category.findById(req.params.id);
     return res.status(200).json({ Category });
   } catch (error) {
     console.log(error.message);
@@ -43,10 +42,9 @@ const getAllCategory = async (req, res) => {
 
 const updateCategory = async (req, res) => {
   try {
-    const { id } = req.params;
     const { title } = req.body;
     const updateCategory = await category.findByIdAndUpdate(
-      id,
+      req.params.id,
       { title },
       { new: true }
     );
@@ -59,8 +57,7 @@ const updateCategory = async (req, res) => {
 
 const deleteCategory = async (req, res) => {
   try {
-    const { id } = req.params;
-    await category.findByIdAndDelete(id);
+    await category.findByIdAndDelete(req.params.id);
     return res.status(200).json({ message: "category deleted successfully" });
   } catch (error) {
     console.log(error.message);

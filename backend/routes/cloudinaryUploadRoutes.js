@@ -16,6 +16,7 @@ router.post("/", (req, res) => {
       const upload = await uploadFile(req.file, "AGAYU");
       return res.status(200).json({
         file: upload.secure_url,
+        duration: upload.duration,
         message: "File uploaded successfully",
       });
     } else {

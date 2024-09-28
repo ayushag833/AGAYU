@@ -65,7 +65,7 @@ const CourseDetails = () => {
               <div className="mt-[5rem] ml-[8rem] w-6/12">
                 <h1 className="text-5xl font-bold py-6">{course.name}</h1>
                 <h2 className="text-xl font-bold mb-4">{course.title}</h2>
-                <h3 className="mb-4">Created By {course.teacherName}</h3>
+                <h3 className="mb-4">Created By: {course.teacherName}</h3>
                 <div className="flex gap-[10rem] mb-[2rem]">
                   <h3 className="flex flex-col gap-1">
                     <span className="flex items-center gap-[0.3rem]">
@@ -86,7 +86,9 @@ const CourseDetails = () => {
                     </span>
                     <span className="flex items-center gap-[0.3rem]">
                       <FaFirefox />
-                      {course.tags}
+                      {course?.tags?.map((tag, i) => (
+                        <div key={i}>{tag}</div>
+                      ))}
                     </span>
                   </h3>
                 </div>
@@ -96,10 +98,10 @@ const CourseDetails = () => {
             <div className="border-2 p-5 mt-[5rem] ml-[8rem] w-6/12">
               <h2 className="text-3xl font-bold mb-5">What you'll learn ?</h2>
               <h2 className="grid grid-cols-2 gap-5">
-                {course.modules.split(".").map((module, index) => (
+                {course?.modules?.split("\n")?.map((module, index) => (
                   <div key={index} className="flex gap-[0.3rem]">
                     <h2>&#9989;</h2>
-                    <h2>{module}.</h2>
+                    <h2>{module}</h2>
                   </div>
                 ))}
               </h2>
@@ -108,7 +110,7 @@ const CourseDetails = () => {
               <h2 className="text-3xl font-bold mb-5">Course content</h2>
               <div>
                 <div className="p-5">
-                  {course?.content?.heading.map((item, index) => {
+                  {course?.content?.heading?.map((item, index) => {
                     const accordionOpened = activeIndex === index;
                     return (
                       <div
@@ -138,7 +140,7 @@ const CourseDetails = () => {
                           <div>
                             {accordionOpened && (
                               <div className="mt-5">
-                                {item.subHeading.map((it, ind) => (
+                                {item?.subHeading?.map((it, ind) => (
                                   <div
                                     key={ind}
                                     className="cursor-pointer mt-1"
@@ -175,25 +177,29 @@ const CourseDetails = () => {
             <div className="border-2 p-5 mt-[5rem] ml-[8rem] w-6/12">
               <h2 className="text-3xl font-bold mb-5">Requirements</h2>
               <h2 className="grid gap-2">
-                {course.requirements.split(".").map((requirement, index) => (
-                  <div key={index} className="flex gap-[0.3rem]">
-                    <h2 className=" text-[0.5rem] mt-[0.5rem] mr-[0.2rem]">
-                      <FaCircle />
-                    </h2>
-                    <h2>{requirement}.</h2>
-                  </div>
-                ))}
+                {course?.requirements
+                  ?.split("\n")
+                  ?.map((requirement, index) => (
+                    <div key={index} className="flex gap-[0.3rem]">
+                      <h2 className=" text-[0.5rem] mt-[0.5rem] mr-[0.2rem]">
+                        <FaCircle />
+                      </h2>
+                      <h2>{requirement}</h2>
+                    </div>
+                  ))}
               </h2>
             </div>
             <div className="border-2 p-5 mt-[5rem] ml-[8rem] w-6/12">
               <h2 className="text-3xl font-bold mb-5">Description</h2>
               <h2 className="grid gap-2">
-                {course.description.split(".").map((desc, index) => (
+                {/* <div>{course?.description}</div> */}
+
+                {course?.description?.split("\n")?.map((desc, index) => (
                   <div key={index} className="flex gap-[0.3rem]">
                     <h2 className=" text-[0.5rem] mt-[0.5rem] mr-[0.2rem]">
                       <FaCircle />
                     </h2>
-                    <h2>{desc}.</h2>
+                    <h2>{desc}</h2>
                   </div>
                 ))}
               </h2>
@@ -203,12 +209,12 @@ const CourseDetails = () => {
                 Who this course is for?
               </h2>
               <h2 className="grid gap-2">
-                {course.rightAudience.split(".").map((ra, index) => (
+                {course?.rightAudience?.split("\n")?.map((ra, index) => (
                   <div key={index} className="flex gap-[0.3rem]">
                     <h2 className=" text-[0.5rem] mt-[0.5rem] mr-[0.2rem]">
                       <FaCircle />
                     </h2>
-                    <h2>{ra}.</h2>
+                    <h2>{ra}</h2>
                   </div>
                 ))}
               </h2>
@@ -221,7 +227,7 @@ const CourseDetails = () => {
                 ) : latestCoursesError ? (
                   <Message variant="error">{error?.data}</Message>
                 ) : (
-                  latestCourses.map((course) => (
+                  latestCourses?.map((course) => (
                     <CourseCard key={course._id} course={course} />
                   ))
                 )}

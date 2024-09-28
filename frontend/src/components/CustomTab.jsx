@@ -10,13 +10,13 @@ const CustomTab = ({ variant, children, customCSS }) => {
     }
   };
   return (
-    <div>
-      <h3
-        className={`${getVariant()} ${customCSS} text-sm text-center font-medium rounded-full px-2.5 py-0.5`}
+    <span>
+      <span
+        className={`${getVariant()} ${customCSS} text-sm text-center font-medium rounded-full mr-2 px-2.5 py-0.5`}
       >
         {children}
-      </h3>
-    </div>
+      </span>
+    </span>
   );
 };
 

@@ -7,13 +7,15 @@ const createNewCourse = async (req, res) => {
       title,
       description,
       price,
+      image,
       includes,
       modules,
       rightAudience,
+      category,
       requirements,
       tags,
-      image,
-    } = req.fields;
+    } = req.body;
+    // } = req.fields;
 
     switch (true) {
       case !name:
@@ -36,9 +38,13 @@ const createNewCourse = async (req, res) => {
         return res.json({ error: "Tags are required" });
       case !image:
         return res.json({ error: "Image is required" });
+      case !category:
+        return res.json({ error: "Category is required" });
     }
+
     const newCourse = new Course({
-      ...req.fields,
+      ...req.body,
+      // ...req.fields,
       teacherName: req.user.fullName,
       user: req.user._id,
     });
@@ -52,7 +58,8 @@ const createNewCourse = async (req, res) => {
 
 const addHeading = async (req, res) => {
   try {
-    const { heading, courseId } = req.fields;
+    const { heading, courseId } = req.body;
+    // const { heading, courseId } = req.fields;
 
     const course = Course.findById(courseId);
 
@@ -73,7 +80,8 @@ const addHeading = async (req, res) => {
 
 const addSubHeading = async (req, res) => {
   try {
-    const { subHeading, headingId, courseId } = req.fields;
+    const { subHeading, headingId, courseId } = req.body;
+    // const { subHeading, headingId, courseId } = req.fields;
 
     const course = Course.findById(courseId);
     const heading = course.find(() => heading._id === headingId);

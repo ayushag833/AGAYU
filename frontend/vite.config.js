@@ -20,10 +20,16 @@ export default defineConfig({
       ],
     }),
   ],
+  // resolve: {
+  //   alias: {
+  //     fs: "browserfs/dist/shims/fs.js",
+  //     path: "path-browserify",
+  //     process: "process/browser",
+  //   },
+  // },
   server: {
     proxy: {
       "/api/": "http://localhost:8000",
-      // "/uploads/": "http://localhost:8000",
     },
   },
 });

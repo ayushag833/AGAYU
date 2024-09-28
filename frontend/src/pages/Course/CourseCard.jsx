@@ -10,15 +10,21 @@ const CourseCard = ({ course }) => {
       onClick={() => navigate(`/course/${course._id}`)}
     >
       <div>
-        <img src={course.image} alt="course-image" className="rounded-md" />
+        <img
+          src={course.image}
+          alt="course-image"
+          className="rounded-md w-[10rem]"
+        />
         <h2 className="mt-1 mx-1">{course.name}</h2>
         <h3 className="mx-1">{course.teacherName}</h3>
       </div>
       <div className="flex justify-between items-center w-[20rem] gap-2">
         <div className="ml-1">
-          <CustomTab variant="outside" customCSS="mt-1">
-            {course.tags}
-          </CustomTab>
+          {course?.tags?.map((tag, i) => (
+            <CustomTab variant="outside" customCSS="mt-1" key={i}>
+              {tag}
+            </CustomTab>
+          ))}
         </div>
         <div className="mr-1 flex flex-col gap-2 justify-center">
           <CustomTab variant="inside" customCSS="mr-1">

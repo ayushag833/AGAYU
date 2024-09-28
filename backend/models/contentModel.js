@@ -4,10 +4,12 @@ const contentSchema = mongoose.Schema(
   {
     title: String,
     totalTime: String,
-    subSection: [
+    subContent: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "subContent",
+        title: String,
+        description: String,
+        video: String,
+        time: String,
       },
     ],
   },

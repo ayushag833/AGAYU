@@ -1,6 +1,6 @@
 import express from "express";
 const router = express.Router();
-import formidable from "express-formidable";
+// import formidable from "express-formidable";
 
 import {
   authenticate,
@@ -20,21 +20,22 @@ import {
 
 router
   .route("/")
-  .post(authenticate, authorizeAsTeacher, formidable(), createNewCourse)
+  .post(authenticate, authorizeAsTeacher, createNewCourse)
+  // .post(authenticate, authorizeAsTeacher, formidable(), createNewCourse)
   .get(fetchAllCourses);
 
 router.post(
   "/heading",
   authenticate,
   authorizeAsTeacher,
-  formidable(),
+  // formidable(),
   addHeading
 );
 router.post(
   "/subheading",
   authenticate,
   authorizeAsTeacher,
-  formidable(),
+  // formidable(),
   addSubHeading
 );
 router.route("/latest").get(getLatestCourses);
