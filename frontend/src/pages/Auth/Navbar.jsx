@@ -3,8 +3,7 @@ import logo from "../../assets/logo.png";
 import { useNavigate, useLocation } from "react-router-dom";
 import { getSearchQuery } from "../../redux/slices/searchSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { FaSearch } from "react-icons/fa";
-import { FaRegUserCircle } from "react-icons/fa";
+import { IoMdSearch } from "react-icons/io";
 import { BsCart3 } from "react-icons/bs";
 import { useLogoutMutation } from "../../redux/api/usersApiSlice";
 import { userLogout } from "../../redux/slices/userSlice";
@@ -95,20 +94,15 @@ const Navbar = () => {
           </ul>
         </nav>
         <div className="flex w-3/4">
-          <form
-            onSubmit={submitHandler}
-            className="flex my-5 rounded-full w-3/5"
-          >
-            <h1 className="text-black relative left-3 top-[0.05rem] p-3 text-center rounded-tl-full rounded-bl-full text-base bg-slate-100 ">
-              <FaSearch />
-            </h1>
+          <form onSubmit={submitHandler} className="flex my-5 w-3/5 relative">
+            <IoMdSearch className="text-black p-2 absolute text-center top-[0.15rem] left-[0.15rem] rounded-full text-[2.3rem] bg-slate-100" />
             <input
               type="text"
               placeholder="Search Anything"
               value={data}
               name="Course_Name"
               onChange={(e) => setData(e.target.value)}
-              className="bg-slate-100 rounded-tr-full h-[2.5rem] rounded-br-full focus:outline-none w-full sm:w-11/12 text-base md:text-base"
+              className="bg-slate-100 rounded-full pl-[2.4rem] h-[2.5rem] focus:outline-none w-full text-base"
             />
           </form>
           <div className="flex gap-5 mx-5 my-auto p-1 text-4xl cursor-pointer">

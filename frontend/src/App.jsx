@@ -2,10 +2,10 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import Home from "./pages/User/Home";
-import Courses from "./pages/User/Courses";
-import About from "./pages/User/About";
-import Contact from "./pages/User/Contact";
+import Home from "./pages/NormalUser/Home";
+import Courses from "./pages/NormalUser/Courses";
+import About from "./pages/NormalUser/About";
+import Contact from "./pages/NormalUser/Contact";
 import PageNotFound from "./pages/PageNotFound";
 import Login from "./pages/Auth/Login";
 import Signup from "./pages/Auth/Signup";
@@ -27,6 +27,10 @@ import TeacherChangePassword from "./pages/Teacher/TeacherChangePassword";
 import TeacherCourses from "./pages/Teacher/TeacherCourses";
 import TeacherCreateCourse from "./pages/Teacher/TeacherCreateCourse";
 import TeacherRevenue from "./pages/Teacher/TeacherRevenue";
+import AdminChangePassword from "./pages/Admin/AdminChangePassword";
+import AdminDelete from "./pages/Admin/AdminDelete";
+import AdminProfile from "./pages/Admin/AdminProfile";
+import AdminCourses from "./pages/Admin/AdminCourses";
 
 const App = () => {
   return (
@@ -97,7 +101,21 @@ const App = () => {
           </Route>
 
           {/* Admin Routes */}
-          <Route path="/admin" element={<ProtectedRoutesAdmin />}></Route>
+          <Route path="" element={<ProtectedRoutesAdmin />}>
+            <Route
+              path="/profile/admin/update/:id"
+              element={<AdminProfile />}
+            />
+            <Route path="/profile/admin/delete/:id" element={<AdminDelete />} />
+            <Route
+              path="/profile/admin/courses/:id"
+              element={<AdminCourses />}
+            />
+            <Route
+              path="/profile/admin/password/:id"
+              element={<AdminChangePassword />}
+            />
+          </Route>
         </Routes>
         <Footer />
       </BrowserRouter>

@@ -1,13 +1,13 @@
 import ChangePassword from "../NormalUser/ChangePassword";
-import StudentMenu from "./StudentMenu";
+import AdminMenu from "./AdminMenu";
 
-const StudentChangePassword = () => {
+const AdminChangePassword = () => {
   return (
     <div className="flex">
-      <StudentMenu />
+      <AdminMenu />
       <ChangePassword />
     </div>
   );
 };
 
-export default StudentChangePassword;
+export default AdminChangePassword;

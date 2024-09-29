@@ -1,13 +1,13 @@
 import DeleteAccount from "../NormalUser/DeleteAccount";
-import StudentMenu from "./StudentMenu";
+import AdminMenu from "./AdminMenu";
 
-const StudentDelete = () => {
+const AdminDelete = () => {
   return (
     <div className="flex">
-      <StudentMenu />
+      <AdminMenu />
       <DeleteAccount />
     </div>
   );
 };
 
-export default StudentDelete;
+export default AdminDelete;
