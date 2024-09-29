@@ -1,6 +1,6 @@
-const BASE_URL = "";
+// const BASE_URL = "";
 // const BASE_URL = "http://localhost:8000";
-// const BASE_URL = "https://agayu.onrender.com/";
+const BASE_URL = "https://agayu.onrender.com/";
 const USERS_URL = "/api/users";
 const CATEGORY_URL = "/api/category";
 const COURSES_URL = "/api/courses";
