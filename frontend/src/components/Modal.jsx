@@ -13,10 +13,10 @@ import { MdOndemandVideo } from "react-icons/md";
 const Modal = ({ image, price, includes, boughtHandler, showButton }) => {
   const [show, setShow] = useState("absolute top-[10rem]");
   const controlModal = () => {
-    if (window.scrollY > 150 && window.scrollY < 3030) {
+    if (window.scrollY > 150 && window.scrollY < 2700) {
       setShow("fixed");
-    } else if (window.scrollY > 3030) {
-      setShow("absolute top-[164rem]");
+    } else if (window.scrollY > 2700) {
+      setShow("absolute top-[170rem]");
     } else {
       setShow("absolute top-[10rem]");
     }
