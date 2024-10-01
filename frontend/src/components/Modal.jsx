@@ -16,7 +16,7 @@ const Modal = ({ image, price, includes, boughtHandler, showButton }) => {
     if (window.scrollY > 150 && window.scrollY < 3030) {
       setShow("fixed");
     } else if (window.scrollY > 3030) {
-      setShow("absolute top-[190rem]");
+      setShow("absolute top-[164rem]");
     } else {
       setShow("absolute top-[10rem]");
     }
