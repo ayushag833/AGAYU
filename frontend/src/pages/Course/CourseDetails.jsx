@@ -150,7 +150,7 @@ const CourseDetails = () => {
                               }`}
                             />
                             <div className="cursor-pointer">
-                              <div>
+                              <div className="w-[25rem]">
                                 {index + 1}.) {item.title}
                               </div>
                               <div className="absolute right-3 top-5">
@@ -172,7 +172,9 @@ const CourseDetails = () => {
                                         <div>
                                           {ind + 1}) {it.title}:
                                         </div>
-                                        <div>{it.description}</div>
+                                        <div className="w-[28rem]">
+                                          {it.description}
+                                        </div>
                                         <div className="absolute right-3">
                                           <ShowTime time={it.time} />
                                         </div>
@@ -251,9 +253,7 @@ const CourseDetails = () => {
             </div>
           </div>
           <Modal
-            image={course.image}
-            price={course.price}
-            includes={course.includes}
+            course={course}
             boughtHandler={boughtHandler}
             showButton={showButton}
           />

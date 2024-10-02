@@ -11,7 +11,8 @@ import Login from "./pages/Auth/Login";
 import Signup from "./pages/Auth/Signup";
 import CourseDetails from "./pages/Course/CourseDetails";
 import CourseView from "./pages/Course/CourseView";
-import Cart from "./pages/Auth/Cart";
+import Cart from "./pages/Cart";
+import Favorites from "./pages/Favorites";
 import StudentProfile from "./pages/Student/StudentProfile";
 import StudentCourses from "./pages/Student/StudentCourses";
 import StudentDelete from "./pages/Student/StudentDelete";
@@ -48,6 +49,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/favorites" element={<Favorites />} />
           <Route path="*" element={<PageNotFound />} />
 
           {/* Protected Routes - Student*/}

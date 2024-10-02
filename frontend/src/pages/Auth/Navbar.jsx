@@ -18,6 +18,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { userInfo } = useSelector((state) => state.user);
+  const { cartItems } = useSelector((state) => state.cart);
   const [LogoutMutation] = useLogoutMutation();
 
   const location = useLocation();
@@ -141,6 +142,12 @@ const Navbar = () => {
                             {userInfo.fullName}
                           </li>
                           <li
+                            onClick={() => navigate("/favorites")}
+                            className="hover:underline duration-150 ease-in-out hover:opacity-80 whitespace-nowrap"
+                          >
+                            Favorites
+                          </li>
+                          <li
                             onClick={logoutHandler}
                             className="hover:underline duration-150 ease-in-out hover:opacity-80 whitespace-nowrap"
                           >
@@ -174,11 +181,14 @@ const Navbar = () => {
                 </div>
               )}
             </div>
-            <div className="flex items-center">
+            <div className="flex items-center relative">
               <BsCart3
                 className="text-white text-3xl duration-150 ease-in-out hover:opacity-80"
                 onClick={() => navigate("/cart")}
               />
+              <span className="absolute left-4 bottom-5 text-sm h-[1.2rem] w-[1.2rem] rounded-full text-center text-white bg-green-500">
+                {cartItems.length}
+              </span>
             </div>
             <div
               className="text-white text-base mx-5 my-auto whitespace-nowrap duration-150 ease-in-out hover:opacity-80"

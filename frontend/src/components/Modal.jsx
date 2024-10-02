@@ -9,9 +9,14 @@ import {
 } from "react-icons/fa";
 import { RiArticleFill } from "react-icons/ri";
 import { MdOndemandVideo } from "react-icons/md";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../redux/slices/cartSlice";
+import HeartIcon from "../pages/HeartIcon";
 
-const Modal = ({ image, price, includes, boughtHandler, showButton }) => {
+const Modal = ({ course, boughtHandler, showButton }) => {
   const [show, setShow] = useState("absolute top-[10rem]");
+  const dispatch = useDispatch();
+
   const controlModal = () => {
     if (window.scrollY > 150 && window.scrollY < 2700) {
       setShow("fixed");
@@ -36,16 +41,23 @@ const Modal = ({ image, price, includes, boughtHandler, showButton }) => {
           className={`${show} top-[1rem] right-[5rem] bg-slate-900 w-[25rem] shadow-slate-500 p-5 shadow-[0px_0px_3px_3px_rgba(0,0,0,0.5)] ease-in-out`}
         >
           <img
-            src={image}
+            src={course.image}
             alt="course-image"
             className="w-[25rem] rounded-md"
           />
+          <div className="relative top-2 right-2">
+            <HeartIcon course={course} />
+          </div>
           <h1 className="text-3xl font-bold mt-5 text-center">
-            &#8377;{price}
+            &#8377;{course.price}
           </h1>
           {showButton && (
             <div>
-              <Button color="green" width="true">
+              <Button
+                color="green"
+                width="true"
+                onClick={() => dispatch(addToCart(course))}
+              >
                 Add to Cart
               </Button>
               <Button color="black" width="true" onClick={boughtHandler}>
@@ -55,7 +67,7 @@ const Modal = ({ image, price, includes, boughtHandler, showButton }) => {
           )}
           <h2 className="text-3xl font-bold mt-5 mb-5">This Course Includes</h2>
           <h2 className="grid gap-2">
-            {includes.split("\n").map((include, index) => (
+            {course.includes.split("\n").map((include, index) => (
               <div key={index} className="flex gap-[0.3rem] items-center">
                 <h2 className=" text-[1rem] mr-[0.2rem]">
                   <div>
@@ -78,16 +90,21 @@ const Modal = ({ image, price, includes, boughtHandler, showButton }) => {
           className={`${show} right-[5rem] bg-slate-900 w-[25rem] shadow-slate-500 p-5 shadow-[0px_0px_3px_3px_rgba(0,0,0,0.5)] ease-in-out`}
         >
           <img
-            src={image}
+            src={course.image}
             alt="course-image"
             className="w-[25rem] rounded-md"
           />
+          <HeartIcon course={course} />
           <h1 className="text-3xl font-bold mt-5 text-center">
-            &#8377;{price}
+            &#8377;{course.price}
           </h1>
           {showButton && (
             <div>
-              <Button color="green" width="true">
+              <Button
+                color="green"
+                width="true"
+                onClick={() => dispatch(addToCart(course))}
+              >
                 Add to Cart
               </Button>
               <Button color="black" width="true" onClick={boughtHandler}>
@@ -95,11 +112,9 @@ const Modal = ({ image, price, includes, boughtHandler, showButton }) => {
               </Button>
             </div>
           )}
-          <h2 className="text-3xl font-bold mt-5 mb-5">
-            This Course Includes{" "}
-          </h2>
+          <h2 className="text-3xl font-bold mt-5 mb-5">This Course Includes</h2>
           <h2 className="grid gap-2">
-            {includes.split("\n").map((include, index) => (
+            {course.includes.split("\n").map((include, index) => (
               <div key={index} className="flex gap-[0.3rem] items-center">
                 <h2 className=" text-[1rem] mr-[0.2rem]">
                   <div>
