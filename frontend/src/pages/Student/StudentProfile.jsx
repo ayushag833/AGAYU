@@ -1,4 +1,4 @@
-import Profile from "../NormalUser/Profile";
+import Profile from "../AuthUser/Profile";
 import StudentMenu from "./StudentMenu";
 
 const StudentProfile = () => {

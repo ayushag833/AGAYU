@@ -1,4 +1,4 @@
-import DeleteAccount from "../NormalUser/DeleteAccount";
+import DeleteAccount from "../AuthUser/DeleteAccount";
 import AdminMenu from "./AdminMenu";
 
 const AdminDelete = () => {

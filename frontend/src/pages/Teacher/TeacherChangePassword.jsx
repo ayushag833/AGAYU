@@ -1,4 +1,4 @@
-import ChangePassword from "../NormalUser/ChangePassword";
+import ChangePassword from "../AuthUser/ChangePassword";
 import TeacherMenu from "./TeacherMenu";
 
 const TeacherChangePassword = () => {

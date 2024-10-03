@@ -1,4 +1,4 @@
-import ChangePassword from "../NormalUser/ChangePassword";
+import ChangePassword from "../AuthUser/ChangePassword";
 import AdminMenu from "./AdminMenu";
 
 const AdminChangePassword = () => {
