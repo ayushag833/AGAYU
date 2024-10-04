@@ -1,4 +1,6 @@
 import Course from "../models/courseModel.js";
+import User from "../models/userModel.js";
+import Category from "../models/categoryModel.js";
 
 const createNewCourse = async (req, res) => {
   try {
@@ -48,13 +50,21 @@ const createNewCourse = async (req, res) => {
       return acc + cur.time;
     }, 0);
 
-    const newCourse = new Course({
+    const newCourse = await Course.create({
       ...req.body,
       teacherName: req.user.fullName,
       user: req.user._id,
       totalTime,
     });
-    await newCourse.save();
+
+    const existingCategory = await Category.findById(category);
+    existingCategory.courses.push(newCourse._id);
+    await existingCategory.save();
+
+    const existingUser = await User.findById(req.user._id);
+    existingUser.coursesCreated.push(newCourse._id);
+    await existingUser.save();
+
     return res.status(201).json(newCourse);
   } catch (error) {
     console.log(error.message);

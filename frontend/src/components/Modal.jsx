@@ -13,17 +13,19 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../redux/slices/cartSlice";
 import HeartIcon from "../pages/HeartIcon";
 
-const Modal = ({ course, boughtHandler, showButton }) => {
-  const [show, setShow] = useState("absolute top-[10rem]");
+const Modal = ({ course, boughtHandler, showButton, difference }) => {
+  const [show, setShow] = useState("absolute top-[7rem]");
   const dispatch = useDispatch();
 
   const controlModal = () => {
-    if (window.scrollY > 150 && window.scrollY < 2700) {
-      setShow("fixed");
-    } else if (window.scrollY > 2700) {
-      setShow("absolute top-[170rem]");
-    } else {
-      setShow("absolute top-[10rem]");
+    if (difference) {
+      if (window.scrollY > 160 && window.scrollY < difference - 660) {
+        setShow("fixed top-[2rem]");
+      } else if (window.scrollY > difference - 660) {
+        setShow("absolute bottom-[45rem]");
+      } else {
+        setShow("absolute top-[7rem]");
+      }
     }
   };
 
@@ -32,20 +34,20 @@ const Modal = ({ course, boughtHandler, showButton }) => {
     return () => {
       window.removeEventListener("scroll", controlModal);
     };
-  }, []);
+  }, [window.scrollY]);
 
   return (
-    <div>
+    <div className="relative">
       {show === "fixed" ? (
         <div
-          className={`${show} top-[1rem] right-[5rem] bg-slate-900 w-[25rem] shadow-slate-500 p-5 shadow-[0px_0px_3px_3px_rgba(0,0,0,0.5)] ease-in-out`}
+          className={`${show} right-[5rem] bg-slate-900 w-[25rem] shadow-slate-500 p-5 shadow-[0px_0px_3px_3px_rgba(0,0,0,0.5)] ease-in-out`}
         >
           <img
             src={course.image}
             alt="course-image"
             className="w-[25rem] rounded-md"
           />
-          <div className="relative top-2 right-2">
+          <div className="relative bottom-[13rem] left-[1rem]">
             <HeartIcon course={course} />
           </div>
           <h1 className="text-3xl font-bold mt-5 text-center">
@@ -94,7 +96,9 @@ const Modal = ({ course, boughtHandler, showButton }) => {
             alt="course-image"
             className="w-[25rem] rounded-md"
           />
-          <HeartIcon course={course} />
+          <div className="relative bottom-[13rem] left-[1rem]">
+            <HeartIcon course={course} />
+          </div>{" "}
           <h1 className="text-3xl font-bold mt-5 text-center">
             &#8377;{course.price}
           </h1>

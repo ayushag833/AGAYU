@@ -26,11 +26,18 @@ const userModel = mongoose.Schema(
         ref: "Course",
       },
     ],
+    coursesCreated: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Course",
+      },
+    ],
     phone: {
       type: String,
       unique: true,
       minlength: [10, "minimum 10 digit phone number is required"],
       maxlength: [11, "maximum 11 digit phone number is required"],
+      match: [/^\d{10,11}$/, "Phone number must contain only digits"],
     },
     image: {
       type: String,

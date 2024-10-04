@@ -25,13 +25,17 @@ import ProtectedRoutesAdmin from "./components/ProtectedRoutesAdmin";
 import TeacherProfile from "./pages/Teacher/TeacherProfile";
 import TeacherDelete from "./pages/Teacher/TeacherDelete";
 import TeacherChangePassword from "./pages/Teacher/TeacherChangePassword";
-import TeacherCourses from "./pages/Teacher/TeacherCourses";
 import TeacherCreateCourse from "./pages/Teacher/TeacherCreateCourse";
 import TeacherRevenue from "./pages/Teacher/TeacherRevenue";
+import ManageCourses from "./pages/Teacher/ManageCourses";
+import UpdateCourse from "./pages/Teacher/UpdateCourse";
 import AdminChangePassword from "./pages/Admin/AdminChangePassword";
 import AdminDelete from "./pages/Admin/AdminDelete";
 import AdminProfile from "./pages/Admin/AdminProfile";
-import AdminCourses from "./pages/Admin/AdminCourses";
+import AdminManageCourses from "./pages/Admin/AdminManageCourses";
+import ManageCategory from "./pages/Admin/ManageCategory";
+import ManageStudents from "./pages/Admin/ManageStudents";
+import ManageTeachers from "./pages/Admin/ManageTeachers";
 
 const App = () => {
   return (
@@ -85,10 +89,6 @@ const App = () => {
               element={<TeacherDelete />}
             />
             <Route
-              path="/profile/teacher/courses/:id"
-              element={<TeacherCourses />}
-            />
-            <Route
               path="/profile/teacher/password/:id"
               element={<TeacherChangePassword />}
             />
@@ -99,6 +99,14 @@ const App = () => {
             <Route
               path="/profile/teacher/revenue/:id"
               element={<TeacherRevenue />}
+            />
+            <Route
+              path="/profile/teacher/courses/:id"
+              element={<ManageCourses />}
+            />
+            <Route
+              path="/profile/teacher/courses/update/:id"
+              element={<UpdateCourse />}
             />
           </Route>
 
@@ -111,7 +119,19 @@ const App = () => {
             <Route path="/profile/admin/delete/:id" element={<AdminDelete />} />
             <Route
               path="/profile/admin/courses/:id"
-              element={<AdminCourses />}
+              element={<AdminManageCourses />}
+            />
+            <Route
+              path="/profile/admin/category/:id"
+              element={<ManageCategory />}
+            />
+            <Route
+              path="/profile/admin/students/:id"
+              element={<ManageStudents />}
+            />
+            <Route
+              path="/profile/admin/teachers/:id"
+              element={<ManageTeachers />}
             />
             <Route
               path="/profile/admin/password/:id"

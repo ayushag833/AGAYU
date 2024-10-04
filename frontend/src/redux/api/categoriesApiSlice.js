@@ -4,10 +4,10 @@ import { CATEGORY_URL } from "../constants";
 const categoryApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     createCategory: builder.mutation({
-      query: ({ title }) => ({
+      query: ({ ...data }) => ({
         url: CATEGORY_URL,
         method: "POST",
-        body: title,
+        body: data,
       }),
     }),
 
@@ -20,10 +20,10 @@ const categoryApiSlice = apiSlice.injectEndpoints({
     }),
 
     updateCategory: builder.mutation({
-      query: ({ id, title }) => ({
+      query: ({ id, ...data }) => ({
         url: `${CATEGORY_URL}/update/${id}`,
         method: "PUT",
-        body: title,
+        body: data,
       }),
     }),
 

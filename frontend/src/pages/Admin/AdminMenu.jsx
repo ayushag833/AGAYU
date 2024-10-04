@@ -76,7 +76,40 @@ const AdminMenu = () => {
           }
         >
           <BiBookBookmark className="text-xl mr-1 mb-1 inline-block" />
-          My Courses
+          Manage Courses
+        </NavLink>
+        <NavLink
+          to={`/profile/${role}/category/${id}`}
+          className={({ isActive }) =>
+            isActive
+              ? "p-2 m-5 text-center bg-green-500 hover:underline rounded-full"
+              : "p-2 m-5 text-center hover:underline"
+          }
+        >
+          <BiBookBookmark className="text-xl mr-1 mb-1 inline-block" />
+          Manage Category
+        </NavLink>
+        <NavLink
+          to={`/profile/${role}/students/${id}`}
+          className={({ isActive }) =>
+            isActive
+              ? "p-2 m-5 text-center bg-green-500 hover:underline rounded-full"
+              : "p-2 m-5 text-center hover:underline"
+          }
+        >
+          <BiBookBookmark className="text-xl mr-1 mb-1 inline-block" />
+          Manage Students
+        </NavLink>
+        <NavLink
+          to={`/profile/${role}/teachers/${id}`}
+          className={({ isActive }) =>
+            isActive
+              ? "p-2 m-5 text-center bg-green-500 hover:underline rounded-full"
+              : "p-2 m-5 text-center hover:underline"
+          }
+        >
+          <BiBookBookmark className="text-xl mr-1 mb-1 inline-block" />
+          Manage Teachers
         </NavLink>
         <div
           className="p-2 m-5 text-center  hover:underline rounded-full cursor-pointer"

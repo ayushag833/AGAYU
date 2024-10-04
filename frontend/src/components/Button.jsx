@@ -18,7 +18,7 @@ const Button = ({ color, children, onClick, width, customCSS }) => {
       <button
         className={`${getColor()} ${
           width ? "w-full" : ""
-        } my-2 block px-3 py-2 text-white border-slate-300 rounded-md font-medium text-sm shadow-sm ${customCSS}`}
+        } my-2 block px-3 py-2 text-white  whitespace-nowrap border-slate-300 rounded-md font-medium text-sm shadow-sm ${customCSS}`}
         onClick={onClick}
       >
         {children}

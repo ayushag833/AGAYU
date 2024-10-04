@@ -141,11 +141,20 @@ const deleteUser = async (req, res) => {
 
 const showPurchasedCourses = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
-    }
-    res.status(200).json(user.coursesPurchased);
+    const user = await User.findById(req.params.id).populate(
+      "coursesPurchased"
+    );
+    return res.status(200).json(user.coursesPurchased);
+  } catch (error) {
+    console.log("error in showing courses", error.message);
+    return res.status(500).json({ Error: error.message });
+  }
+};
+
+const showCreatedCourses = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id).populate("coursesCreated");
+    return res.status(200).json(user.coursesCreated);
   } catch (error) {
     console.log("error in showing courses", error.message);
     return res.status(500).json({ Error: error.message });
@@ -161,4 +170,5 @@ export {
   updatePassword,
   deleteUser,
   showPurchasedCourses,
+  showCreatedCourses,
 };

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useGetCourseByIdQuery } from "../../redux/api/coursesApiSlice";
 import Loader from "../../components/Loader";
 import Message from "../../components/Message";
@@ -13,7 +13,6 @@ import { FaCircle, FaFirefox } from "react-icons/fa";
 import { useGetLatestCoursesQuery } from "../../redux/api/coursesApiSlice";
 import CourseCard from "./CourseCard";
 import { IoIosArrowDown } from "react-icons/io";
-import VideoPopup from "../../components/VideoPopup";
 import ShowTime from "../../components/ShowTime";
 import { FaArrowRight } from "react-icons/fa";
 
@@ -22,10 +21,12 @@ const CourseDetails = () => {
   const navigate = useNavigate();
   const [bought, setBought] = useState(false);
   const [showButton, setShowButton] = useState(true);
-  // const [showVideo, setShowVideo] = useState(false);
   const [activeIndex, setActiveIndex] = useState(null);
-  // const [videoUrl, setVideoUrl] = useState("");
-  // const [videoText, setVideoText] = useState("");
+  const [difference, setDifference] = useState(null);
+
+  const smallRef = useRef(null);
+  const bigRef = useRef(null);
+
   const { data: course, isLoading, isError } = useGetCourseByIdQuery(id);
   const {
     data: latestCourses,
@@ -35,17 +36,13 @@ const CourseDetails = () => {
   } = useGetLatestCoursesQuery();
 
   useEffect(() => {
-    if (localStorage.getItem(`bought-${id}`)) {
-      setBought(true);
-      setShowButton(false);
+    if (bigRef.current && smallRef.current) {
+      setDifference(
+        bigRef.current.getBoundingClientRect().height -
+          smallRef.current.getBoundingClientRect().height
+      );
     }
-  }, []);
-
-  // const handleVideoClick = (videoUrl, videoText) => {
-  //   setVideoUrl(videoUrl);
-  //   setVideoText(videoText);
-  //   setShowVideo(true);
-  // };
+  }, [course]);
 
   const boughtHandler = () => {
     setBought(true);
@@ -55,7 +52,7 @@ const CourseDetails = () => {
   };
 
   return (
-    <div className="text-white ">
+    <div className="text-white relative" ref={bigRef}>
       {isLoading ? (
         <Loader />
       ) : isError ? (
@@ -210,8 +207,6 @@ const CourseDetails = () => {
             <div className="border-2 p-5 mt-[5rem] ml-[8rem] w-6/12">
               <h2 className="text-3xl font-bold mb-5">Description</h2>
               <h2 className="grid gap-2">
-                {/* <div>{course?.description}</div> */}
-
                 {course?.description?.split("\n")?.map((desc, index) => (
                   <div key={index} className="flex gap-[0.3rem]">
                     <h2 className=" text-[0.5rem] mt-[0.5rem] mr-[0.2rem]">
@@ -237,7 +232,7 @@ const CourseDetails = () => {
                 ))}
               </h2>
             </div>
-            <div className="m-10">
+            <div className="m-10" ref={smallRef}>
               <h1 className="mb-5 text-3xl font-bold">Recommendations</h1>
               <div className="grid grid-cols-4 gap-10">
                 {latestCoursesLoading ? (
@@ -256,6 +251,7 @@ const CourseDetails = () => {
             course={course}
             boughtHandler={boughtHandler}
             showButton={showButton}
+            difference={difference}
           />
         </div>
       )}

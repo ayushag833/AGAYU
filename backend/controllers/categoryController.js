@@ -1,4 +1,4 @@
-import category from "../models/categoryModel.js";
+import Category from "../models/categoryModel.js";
 
 const createCategory = async (req, res) => {
   try {
@@ -7,12 +7,12 @@ const createCategory = async (req, res) => {
       return res.status(400).json({ Error: "Please provide category name!" });
     }
 
-    const existingCategory = await category.findOne({ title });
+    const existingCategory = await Category.findOne({ title });
     if (existingCategory) {
       return res.status(400).json({ Error: "Category already exists!" });
     }
 
-    const newCategory = await category.create({ title });
+    const newCategory = await Category.create({ title });
     return res.status(201).json({ newCategory });
   } catch (error) {
     console.log(error.message);
@@ -22,8 +22,8 @@ const createCategory = async (req, res) => {
 
 const getCategory = async (req, res) => {
   try {
-    const Category = await category.findById(req.params.id);
-    return res.status(200).json({ Category });
+    const category = await Category.findById(req.params.id);
+    return res.status(200).json({ category });
   } catch (error) {
     console.log(error.message);
     return res.status(500).json({ Error: error.message });
@@ -32,7 +32,7 @@ const getCategory = async (req, res) => {
 
 const getAllCategory = async (req, res) => {
   try {
-    const AllCategories = await category.find({});
+    const AllCategories = await Category.find({});
     return res.status(201).json({ AllCategories });
   } catch (error) {
     console.log(error.message);
@@ -43,7 +43,7 @@ const getAllCategory = async (req, res) => {
 const updateCategory = async (req, res) => {
   try {
     const { title } = req.body;
-    const updateCategory = await category.findByIdAndUpdate(
+    const updateCategory = await Category.findByIdAndUpdate(
       req.params.id,
       { title },
       { new: true }
@@ -57,7 +57,7 @@ const updateCategory = async (req, res) => {
 
 const deleteCategory = async (req, res) => {
   try {
-    await category.findByIdAndDelete(req.params.id);
+    await Category.findByIdAndDelete(req.params.id);
     return res.status(200).json({ message: "category deleted successfully" });
   } catch (error) {
     console.log(error.message);

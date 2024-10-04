@@ -70,17 +70,6 @@ const TeacherMenu = () => {
           Change password
         </NavLink>
         <NavLink
-          to={`/profile/${role}/courses/${id}`}
-          className={({ isActive }) =>
-            isActive
-              ? "p-2 m-5 text-center bg-green-500 hover:underline rounded-full"
-              : "p-2 m-5 text-center hover:underline"
-          }
-        >
-          <BiBookBookmark className="text-xl mr-1 mb-1 inline-block" />
-          My Courses
-        </NavLink>
-        <NavLink
           to={`/profile/${role}/createcourse/${id}`}
           className={({ isActive }) =>
             isActive
@@ -90,6 +79,17 @@ const TeacherMenu = () => {
         >
           <IoCreateSharp className="text-xl mr-1 mb-1 inline-block" />
           Create Course
+        </NavLink>
+        <NavLink
+          to={`/profile/${role}/courses/${id}`}
+          className={({ isActive }) =>
+            isActive
+              ? "p-2 m-5 text-center bg-green-500 hover:underline rounded-full"
+              : "p-2 m-5 text-center hover:underline"
+          }
+        >
+          <BiBookBookmark className="text-xl mr-1 mb-1 inline-block" />
+          My Courses
         </NavLink>
         <NavLink
           to={`/profile/${role}/revenue/${id}`}

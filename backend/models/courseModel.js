@@ -51,7 +51,7 @@ const courseSchema = mongoose.Schema(
     ],
     category: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "category",
+      ref: "Category",
     },
     requirements: {
       type: String,

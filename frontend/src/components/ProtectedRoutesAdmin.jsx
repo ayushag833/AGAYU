@@ -4,7 +4,7 @@ import { Outlet, Navigate } from "react-router";
 
 const ProtectedRoutesAdmin = () => {
   const user = useSelector((state) => state.user);
-  return user?.userInfo?.isAdmin ? (
+  return user?.userInfo?.role === "admin" ? (
     <Outlet />
   ) : (
     <Navigate to="/login" replace />
