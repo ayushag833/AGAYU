@@ -34,8 +34,7 @@ import AdminDelete from "./pages/Admin/AdminDelete";
 import AdminProfile from "./pages/Admin/AdminProfile";
 import AdminManageCourses from "./pages/Admin/AdminManageCourses";
 import ManageCategory from "./pages/Admin/ManageCategory";
-import ManageStudents from "./pages/Admin/ManageStudents";
-import ManageTeachers from "./pages/Admin/ManageTeachers";
+import ManageUsers from "./pages/Admin/ManageUsers";
 
 const App = () => {
   return (
@@ -125,14 +124,7 @@ const App = () => {
               path="/profile/admin/category/:id"
               element={<ManageCategory />}
             />
-            <Route
-              path="/profile/admin/students/:id"
-              element={<ManageStudents />}
-            />
-            <Route
-              path="/profile/admin/teachers/:id"
-              element={<ManageTeachers />}
-            />
+            <Route path="/profile/admin/users/:id" element={<ManageUsers />} />
             <Route
               path="/profile/admin/password/:id"
               element={<AdminChangePassword />}

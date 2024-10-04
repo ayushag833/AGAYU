@@ -74,7 +74,7 @@ const createNewCourse = async (req, res) => {
 
 const fetchAllCourses = async (req, res) => {
   try {
-    const allCourses = await Course.find({});
+    const allCourses = await Course.find({}).sort({ createdAt: -1 });
     return res.status(200).json(allCourses);
   } catch (error) {
     console.log(error.message);
@@ -151,6 +151,30 @@ const deleteCourse = async (req, res) => {
   }
 };
 
+const approveCourse = async (req, res) => {
+  try {
+    const { id, approvedByAdmin } = req.body;
+    await Course.findByIdAndUpdate(id, { approvedByAdmin });
+
+    const existingUser = await User.findById(req.user._id);
+    if (approvedByAdmin) {
+      if (!existingUser.coursesApproved.includes(id)) {
+        existingUser.coursesApproved.push(id);
+      }
+    } else {
+      existingUser.coursesApproved = existingUser.coursesApproved.filter(
+        (courseId) => courseId.toString() !== id
+      );
+    }
+    await existingUser.save();
+
+    return res.status(200).json({ message: "Course Approved Successfully" });
+  } catch (error) {
+    console.log(error.message);
+    return res.status(500).json("Internal Server Error");
+  }
+};
+
 export {
   createNewCourse,
   getLatestCourses,
@@ -160,4 +184,5 @@ export {
   getCourseById,
   updateCourse,
   deleteCourse,
+  approveCourse,
 };

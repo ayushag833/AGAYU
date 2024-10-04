@@ -11,6 +11,7 @@ import {
   deleteUser,
   showPurchasedCourses,
   showCreatedCourses,
+  showApprovedCourses,
 } from "../controllers/userController.js";
 
 import {
@@ -29,5 +30,6 @@ router.route("/delete/:id").delete(authenticate, deleteUser);
 router.route("/password/:id").put(authenticate, updatePassword);
 router.route("/purchasedCourses/:id").get(authenticate, showPurchasedCourses);
 router.route("/createdCourses/:id").get(authenticate, showCreatedCourses);
+router.route("/approvedCourses/:id").get(authenticate, showApprovedCourses);
 
 export default router;

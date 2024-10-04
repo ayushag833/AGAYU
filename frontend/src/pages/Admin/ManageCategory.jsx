@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import StudentMenu from "./AdminMenu";
 import {
   useCreateCategoryMutation,
@@ -12,10 +12,16 @@ import { toast } from "react-toastify";
 const ManageCategory = () => {
   const [title, setTitle] = useState("");
   const [value, setValue] = useState(null);
+  const [active, setActive] = useState(0);
+
   const { data: allCategory } = useGetAllCategoriesQuery();
   const [createApi] = useCreateCategoryMutation();
   const [updateApi] = useUpdateCategoryMutation();
   const [deleteApi] = useDeleteCategoryMutation();
+
+  useEffect(() => {
+    if (allCategory?.AllCategories) setValue(allCategory?.AllCategories[0]);
+  }, [allCategory]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -89,11 +95,16 @@ const ManageCategory = () => {
         </form>
         <h1 className="text-2xl mt-5">Edit / Delete Category</h1>
         <div className="flex relative gap-10 mt-5 text-lg">
-          {allCategory?.AllCategories?.map((category) => (
+          {allCategory?.AllCategories?.map((category, ind) => (
             <div key={category._id}>
               <div
-                className="border p-5 rounded-full cursor-pointer hover:bg-gray-800 hover:scale-[1.05] transition-all"
-                onClick={() => setValue(category)}
+                className={`border p-5 rounded-full cursor-pointer hover:bg-gray-800 hover:scale-[1.1] transition-all ${
+                  active == ind && "bg-gray-800 scale-[1.1]"
+                }`}
+                onClick={() => {
+                  setActive(ind);
+                  setValue(category);
+                }}
               >
                 {category.title}
               </div>
@@ -101,7 +112,7 @@ const ManageCategory = () => {
           ))}
           <div className="flex">
             {value && (
-              <form className="absolute top-[8rem] left-[13rem] flex flex-col border p-5 rounded-md justify-center items-center">
+              <form className="absolute top-[8rem] left-[12rem] flex flex-col border p-5 rounded-md justify-center items-center">
                 <input
                   type="text"
                   name="name"

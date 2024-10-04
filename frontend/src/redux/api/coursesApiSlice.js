@@ -45,6 +45,14 @@ const coursesApiSlice = apiSlice.injectEndpoints({
         method: "DELETE",
       }),
     }),
+
+    approveCourse: builder.mutation({
+      query: ({ ...data }) => ({
+        url: `${COURSES_URL}/approve`,
+        method: "PUT",
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -57,4 +65,5 @@ export const {
   useGetCourseByIdQuery,
   useUpdateCourseMutation,
   useDeleteCourseMutation,
+  useApproveCourseMutation,
 } = coursesApiSlice;

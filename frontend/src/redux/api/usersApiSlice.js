@@ -72,6 +72,10 @@ const userApiSlice = apiSlice.injectEndpoints({
     showCreatedCourses: builder.query({
       query: (id) => `${USERS_URL}/createdCourses/${id}`,
     }),
+
+    showApprovedCourses: builder.query({
+      query: (id) => `${USERS_URL}/approvedCourses/${id}`,
+    }),
   }),
 });
 
@@ -86,4 +90,5 @@ export const {
   useUpdatePasswordMutation,
   useShowPurchasedCoursesQuery,
   useShowCreatedCoursesQuery,
+  useShowApprovedCoursesQuery,
 } = userApiSlice;

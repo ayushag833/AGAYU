@@ -161,6 +161,16 @@ const showCreatedCourses = async (req, res) => {
   }
 };
 
+const showApprovedCourses = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    return res.status(200).json(user.coursesApproved);
+  } catch (error) {
+    console.log("error in showing courses", error.message);
+    return res.status(500).json({ Error: error.message });
+  }
+};
+
 export {
   createUser,
   loginUser,
@@ -171,4 +181,5 @@ export {
   deleteUser,
   showPurchasedCourses,
   showCreatedCourses,
+  showApprovedCourses,
 };
