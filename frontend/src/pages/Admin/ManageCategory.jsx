@@ -3,7 +3,6 @@ import StudentMenu from "./AdminMenu";
 import {
   useCreateCategoryMutation,
   useGetAllCategoriesQuery,
-  useGetCategoryQuery,
   useUpdateCategoryMutation,
   useDeleteCategoryMutation,
 } from "../../redux/api/categoriesApiSlice";
@@ -13,7 +12,6 @@ import { toast } from "react-toastify";
 const ManageCategory = () => {
   const [title, setTitle] = useState("");
   const [value, setValue] = useState(null);
-  // const { data: category } = useGetCategoryQuery(id);
   const { data: allCategory } = useGetAllCategoriesQuery();
   const [createApi] = useCreateCategoryMutation();
   const [updateApi] = useUpdateCategoryMutation();
@@ -22,7 +20,6 @@ const ManageCategory = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      console.log(title);
       await createApi({ title }).unwrap();
       toast.success("Category created successfully");
       setTitle("");
@@ -39,8 +36,8 @@ const ManageCategory = () => {
       toast.success("Category updated successfully");
       setTitle("");
     } catch (error) {
-      console.log(error.data.msg);
-      toast.error(error.data.msg);
+      console.log(error?.data?.Error);
+      toast.error(error?.data?.Error);
     }
   };
 
@@ -53,8 +50,8 @@ const ManageCategory = () => {
         toast.success("Category deleted successfully");
         setTitle("");
       } catch (error) {
-        console.log(error.data.msg);
-        toast.error(error.data.msg);
+        console.log(error?.data?.Error);
+        toast.error(error?.data?.Error);
       }
     }
   };
