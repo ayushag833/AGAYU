@@ -1,5 +1,38 @@
 import mongoose from "mongoose";
 
+const subContentSchema = mongoose.Schema(
+  {
+    title: String,
+    description: String,
+    video: String,
+    time: String,
+  },
+  { timestamps: true }
+);
+
+const contentSchema = mongoose.Schema(
+  {
+    title: String,
+    time: String,
+    subContent: [subContentSchema],
+  },
+  { timestamps: true }
+);
+
+const reviewSchema = mongoose.Schema(
+  {
+    name: { type: String, required: true },
+    rating: { type: Number, required: true },
+    comment: { type: String, required: true },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
+  },
+  { timestamps: true }
+);
+
 const courseSchema = mongoose.Schema(
   {
     name: {
@@ -17,6 +50,7 @@ const courseSchema = mongoose.Schema(
     price: {
       type: Number,
       required: true,
+      default: 0,
     },
     image: {
       type: String,
@@ -35,20 +69,7 @@ const courseSchema = mongoose.Schema(
       required: true,
     },
     totalTime: String,
-    content: [
-      {
-        title: String,
-        time: String,
-        subContent: [
-          {
-            title: String,
-            description: String,
-            video: String,
-            time: String,
-          },
-        ],
-      },
-    ],
+    content: [contentSchema],
     category: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Category",
@@ -57,6 +78,9 @@ const courseSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    reviews: [reviewSchema],
+    rating: { type: Number, required: true, default: 0 },
+    numReviews: { type: Number, required: true, default: 0 },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
