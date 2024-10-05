@@ -35,6 +35,7 @@ import AdminProfile from "./pages/Admin/AdminProfile";
 import AdminManageCourses from "./pages/Admin/AdminManageCourses";
 import ManageCategory from "./pages/Admin/ManageCategory";
 import ManageUsers from "./pages/Admin/ManageUsers";
+import SearchPage from "./pages/SearchPage";
 
 const App = () => {
   return (
@@ -53,6 +54,7 @@ const App = () => {
           <Route path="/signup" element={<Signup />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/favorites" element={<Favorites />} />
+          <Route path="/searchPage" element={<SearchPage />} />
           <Route path="*" element={<PageNotFound />} />
 
           {/* Protected Routes - Student*/}

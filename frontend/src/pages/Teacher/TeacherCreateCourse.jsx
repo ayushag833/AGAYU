@@ -32,6 +32,8 @@ const TeacherCreateCourse = () => {
     tags: [],
     tagsInput: "",
     readyToPublished: false,
+    language: "",
+    levels: "",
   });
 
   const [createApi] = useCreateNewCourseMutation();
@@ -60,6 +62,9 @@ const TeacherCreateCourse = () => {
         requirements: "",
         tags: [],
         tagsInput: "",
+        readyToPublished: false,
+        language: "",
+        levels: "",
       });
     } catch (error) {
       console.log(error.data.msg);
@@ -421,7 +426,7 @@ const TeacherCreateCourse = () => {
            focus:invalid:border-red-500 focus:invalid:ring-red-500"
             />
           </div>
-          <div>
+          <div className="mb-5">
             {formData.tags.length > 0 && (
               <div className="flex flex-wrap gap-2">
                 {formData.tags.map((tag, index) => (
@@ -440,6 +445,49 @@ const TeacherCreateCourse = () => {
                 ))}
               </div>
             )}
+          </div>
+          <div>
+            <label
+              htmlFor="levels"
+              className="block text-md font-medium text-slate-200"
+            >
+              Levels
+            </label>
+            <select
+              name="levels"
+              id="levels"
+              value={formData.levels}
+              onChange={changeHandler}
+              className="mt-1 mb-5 block w-[50rem] px-3 py-2 border-slate-300 rounded-md text-md shadow-sm placeholder-slate-400
+         focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500
+         invalid:border-red-500 invalid:text-red-600
+         focus:invalid:border-red-500 focus:invalid:ring-red-500"
+            >
+              <option value="">Select Level</option>
+              <option value="All Levels">All Levels</option>
+              <option value="Beginner">Beginner</option>
+              <option value="Intermediate">Intermediate</option>
+              <option value="Advanced">Advanced</option>
+            </select>
+          </div>
+          <div>
+            <label
+              htmlFor="language"
+              className="block text-md font-medium text-slate-200"
+            >
+              Language
+            </label>
+            <input
+              type="text"
+              name="language"
+              placeholder="Course Language"
+              value={formData.language}
+              onChange={changeHandler}
+              className="mt-1 mb-5 block w-[50rem] px-3 py-2 border-slate-300 rounded-md text-md shadow-sm placeholder-slate-400
+           focus:outline-none focus:border-sky-500 focus:ring-2 focus:ring-sky-500
+           invalid:border-red-500 invalid:text-red-600
+           focus:invalid:border-red-500 focus:invalid:ring-red-500"
+            />
           </div>
           <div>
             <label

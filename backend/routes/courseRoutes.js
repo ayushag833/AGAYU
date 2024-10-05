@@ -17,8 +17,10 @@ import {
   updateCourse,
   deleteCourse,
   approveCourse,
+  fetchCourses,
 } from "../controllers/courseController.js";
 
+router.route("/search").get(fetchCourses);
 router
   .route("/")
   .post(authenticate, authorizeAsTeacher, createNewCourse)

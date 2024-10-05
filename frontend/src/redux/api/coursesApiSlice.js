@@ -15,6 +15,11 @@ const coursesApiSlice = apiSlice.injectEndpoints({
       query: () => COURSES_URL,
     }),
 
+    fetchCourses: builder.query({
+      query: ({ search, page }) =>
+        `${COURSES_URL}/search/?search=${search}&page=${page}`,
+    }),
+
     getLatestCourses: builder.query({
       query: () => `${COURSES_URL}/latest`,
     }),
@@ -59,6 +64,7 @@ const coursesApiSlice = apiSlice.injectEndpoints({
 export const {
   useCreateNewCourseMutation,
   useFetchAllCoursesQuery,
+  useFetchCoursesQuery,
   useGetLatestCoursesQuery,
   useGetBudgetCoursesQuery,
   useGetPopularCoursesQuery,

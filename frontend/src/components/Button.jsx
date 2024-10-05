@@ -1,6 +1,6 @@
 import React from "react";
 
-const Button = ({ color, children, onClick, width, customCSS }) => {
+const Button = ({ color, children, onClick, width, customCSS, disabled }) => {
   const getColor = () => {
     switch (color) {
       case "green":
@@ -18,8 +18,11 @@ const Button = ({ color, children, onClick, width, customCSS }) => {
       <button
         className={`${getColor()} ${
           width ? "w-full" : ""
-        } my-2 block px-3 py-2 text-white  whitespace-nowrap border-slate-300 rounded-md font-medium text-sm shadow-sm ${customCSS}`}
+        } my-2 block px-3 py-2 text-white  whitespace-nowrap border-slate-300 rounded-md font-medium text-sm shadow-sm ${customCSS} ${
+          disabled && "bg-gray-400 hover:bg-gray-400"
+        }`}
         onClick={onClick}
+        disabled={disabled}
       >
         {children}
       </button>

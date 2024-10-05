@@ -98,6 +98,15 @@ const courseSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    language: {
+      type: String,
+      required: true,
+    },
+    levels: {
+      type: String,
+      enum: ["All Levels", "Beginner", "Intermediate", "Advanced"],
+      required: true,
+    },
     tags: [
       {
         type: String,

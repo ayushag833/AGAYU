@@ -57,6 +57,7 @@ const createNewCourse = async (req, res) => {
       totalTime,
     });
 
+    // await Category.findById(category, { $push: { courses: newCourse._id } });
     const existingCategory = await Category.findById(category);
     existingCategory.courses.push(newCourse._id);
     await existingCategory.save();
@@ -175,6 +176,51 @@ const approveCourse = async (req, res) => {
   }
 };
 
+const fetchCourses = async (req, res) => {
+  try {
+    const pageSize = 1;
+    const page = Number(req.query.page) || 1;
+
+    const searchFields = [
+      "name",
+      "title",
+      "description",
+      "includes",
+      "modules",
+      "rightAudience",
+      // "category",
+      "requirements",
+      "teacherName",
+      // "tags",
+    ];
+
+    const search = req.query.search
+      ? {
+          $or: searchFields.map((field) => ({
+            [field]: { $regex: new RegExp(req.query.search, "i") },
+          })),
+        }
+      : {};
+    console.log(search);
+
+    const count = await Course.countDocuments({ ...search }).populate(
+      "category"
+    );
+    const courses = await Course.find({ ...search })
+      .populate("category")
+      .limit(pageSize)
+      .skip(pageSize * (page - 1));
+
+    res.json({
+      courses,
+      pages: Math.ceil(count / pageSize),
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json("Internal Server Error");
+  }
+};
+
 export {
   createNewCourse,
   getLatestCourses,
@@ -185,4 +231,5 @@ export {
   updateCourse,
   deleteCourse,
   approveCourse,
+  fetchCourses,
 };

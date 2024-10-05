@@ -30,8 +30,9 @@ const Navbar = () => {
   }, [location]);
 
   const submitHandler = (e) => {
+    if (data.trim().length == 0) return;
     e.preventDefault();
-    navigate(`/courses?search=${data}`);
+    navigate(`/searchPage?search=${data}&page=${1}`);
     dispatch(getSearchQuery(data));
   };
 
@@ -101,7 +102,7 @@ const Navbar = () => {
               type="text"
               placeholder="Search Anything"
               value={data}
-              name="Course_Name"
+              // name="Course_Name"
               onChange={(e) => setData(e.target.value)}
               className="bg-slate-100 rounded-full pl-[2.4rem] h-[2.5rem] focus:outline-none w-full text-base"
             />
