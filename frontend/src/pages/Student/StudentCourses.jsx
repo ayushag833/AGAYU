@@ -7,9 +7,9 @@ import CourseCard from "../Course/CourseCard";
 import { useSelector } from "react-redux";
 
 const StudentCourses = () => {
-  const userDetails = useSelector((state) => state.user);
-  const id = userDetails.userInfo._id;
-  const { data, isLoading, isError, error } = useShowPurchasedCoursesQuery(id);
+  // const userDetails = useSelector((state) => state.user);
+  // const id = userDetails.userInfo._id;
+  // const { data, isLoading, isError, error } = useShowPurchasedCoursesQuery(id);
 
   return (
     <div className="flex">
