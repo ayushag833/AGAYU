@@ -18,5 +18,5 @@
     "dotenv": "^16.4.5",
     "jsonwebtoken": "^9.0.2",
     "nodemon": "^3.1.7"
-  }
+  } 
 }

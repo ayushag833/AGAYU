@@ -28,7 +28,7 @@ const CourseView = () => {
   const [createReviewApi] = useCreateReviewMutation();
 
   const myReview = course?.reviews?.find(
-    (review) => review.user._id === userInfo._id
+    (review) => review?.user?._id === userInfo?._id
   );
 
   useEffect(() => {
@@ -41,7 +41,7 @@ const CourseView = () => {
     e.preventDefault();
     try {
       await createReviewApi({
-        id: course._id,
+        id: course?._id,
         comment,
         rating,
       }).unwrap();
@@ -55,8 +55,6 @@ const CourseView = () => {
       toast.error(error?.data);
     }
   };
-
-  console.log(course?.reviews);
 
   return (
     <div>
@@ -135,8 +133,11 @@ const CourseView = () => {
                     <p className="my-4">{myReview?.comment}</p>
                     {myReview && <Ratings value={myReview?.rating} />}
                   </div>
-                  <div className="w-[3.5rem] bg-white border-2 rounded-full h-fit mt-5">
-                    <img src={myReview.user.image} />
+                  <div>
+                    <img
+                      src={myReview.user.image}
+                      className="border-2 rounded-full w-[3.5rem] h-[3.5rem] object-cover object-top mt-5"
+                    />
                   </div>
                 </div>
               </div>

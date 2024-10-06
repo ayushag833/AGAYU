@@ -56,8 +56,11 @@ const ImageSlider = ({ courses, reviews }) => {
                   <p className="my-4">{review?.comment}</p>
                   <Ratings value={review?.rating} />
                 </div>
-                <div className="w-[3.5rem] border-2 bg-white rounded-full h-fit mt-5">
-                  <img src={review.user.image} />
+                <div>
+                  <img
+                    src={review.user.image}
+                    className="border-2 rounded-full bg-white w-[3.5rem] h-[3.5rem] object-cover object-top mt-5"
+                  />
                 </div>
               </div>
             </div>
