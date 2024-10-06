@@ -58,6 +58,22 @@ const coursesApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
+
+    createReview: builder.mutation({
+      query: ({ id, ...data }) => ({
+        url: `${COURSES_URL}/${id}/reviews`,
+        method: "POST",
+        body: data,
+      }),
+    }),
+
+    getFilteredProducts: builder.query({
+      query: ({ ...data }) => ({
+        url: `${COURSES_URL}/filterCourses`,
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -72,4 +88,5 @@ export const {
   useUpdateCourseMutation,
   useDeleteCourseMutation,
   useApproveCourseMutation,
+  useCreateReviewMutation,
 } = coursesApiSlice;

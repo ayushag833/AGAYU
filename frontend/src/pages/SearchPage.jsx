@@ -25,7 +25,7 @@ const SearchPage = () => {
         {`Search Results for "${query}"`}
       </h1>
       <h1 className="text-white text-2xl text-center font-bold mt-[2rem] mb-[2rem] ml-[5rem]">
-        {`${courses?.courses?.length} results found`}
+        {`${courses?.count} results found`}
       </h1>
       <div className="flex">
         <Filtering />

@@ -19,9 +19,9 @@ const Modal = ({ course, boughtHandler, showButton, difference }) => {
 
   const controlModal = () => {
     if (difference) {
-      if (window.scrollY > 160 && window.scrollY < difference - 660) {
+      if (window.scrollY > 160 && window.scrollY < difference - 970) {
         setShow("fixed top-[2rem]");
-      } else if (window.scrollY > difference - 660) {
+      } else if (window.scrollY > difference - 970) {
         setShow("absolute bottom-[45rem]");
       } else {
         setShow("absolute top-[7rem]");
@@ -34,7 +34,7 @@ const Modal = ({ course, boughtHandler, showButton, difference }) => {
     return () => {
       window.removeEventListener("scroll", controlModal);
     };
-  }, [window.scrollY]);
+  }, [difference]);
 
   return (
     <div className="relative">

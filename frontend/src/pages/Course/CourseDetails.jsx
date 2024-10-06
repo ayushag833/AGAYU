@@ -15,6 +15,8 @@ import CourseCard from "./CourseCard";
 import { IoIosArrowDown } from "react-icons/io";
 import ShowTime from "../../components/ShowTime";
 import { FaArrowRight } from "react-icons/fa";
+import Ratings from "../../components/Ratings";
+import ImageSlider from "../../components/ImageSlider";
 
 const CourseDetails = () => {
   const { id } = useParams();
@@ -65,7 +67,7 @@ const CourseDetails = () => {
                 <h1 className="text-5xl font-bold py-6">{course.name}</h1>
                 <h2 className="text-xl font-bold mb-4">{course.title}</h2>
                 <h3 className="mb-4">Created By: {course.teacherName}</h3>
-                <div className="flex gap-[10rem] mb-[2rem]">
+                <div className="flex gap-[10rem]">
                   <h3 className="flex flex-col gap-1">
                     <span className="flex items-center gap-[0.3rem]">
                       <MdDateRange />
@@ -91,9 +93,19 @@ const CourseDetails = () => {
                     </span>
                   </h3>
                 </div>
+                {course?.numReviews > 0 && (
+                  <div className="mb-5 flex gap-2 items-center">
+                    <h3 className="text-xl">Rating : </h3>
+                    {course?.overallRating && course?.numReviews && (
+                      <Ratings
+                        value={course?.overallRating}
+                        text={`${course?.numReviews} reviews`}
+                      />
+                    )}
+                  </div>
+                )}
               </div>
             </div>
-            {/* <div className="border-2 p-5 mt-[5rem] ml-[8rem] w-6/12 bg-gradient-to-b from-indigo-800 via-pink-800 to-purple-800"> */}
             <div className="border-2 p-5 mt-[5rem] ml-[8rem] w-6/12">
               <h2 className="text-3xl font-bold mb-5">What you'll learn ?</h2>
               <h2 className="grid grid-cols-2 gap-5">
@@ -110,10 +122,10 @@ const CourseDetails = () => {
                 <h2 className="text-3xl font-bold mb-5">Course content</h2>
                 <div>
                   <h3
-                    className="hover:underline flex cursor-pointer hover:text-slate-300 transition border-2 rounded-md p-2 mb-2 w-fit"
+                    className="hover:underline flex cursor-pointer transition border-2 rounded-md p-2 mb-2 w-fit"
                     onClick={() => navigate(`/course/view/${course._id}`)}
                   >
-                    <div> View Course</div>
+                    <div className="hover:text-slate-300 "> View Course</div>
                     <FaArrowRight className="mt-1 ml-1" />
                   </h3>
                   <h3 className="ml-[1.2rem]">
@@ -232,15 +244,25 @@ const CourseDetails = () => {
                 ))}
               </h2>
             </div>
+            <div className="p-5 mt-[3rem] ml-[7rem]">
+              {course?.reviews?.length > 0 && (
+                <div className="w-[80rem]">
+                  <h1 className="text-3xl font-bold text-white mb-5">
+                    Reviews from Students :
+                  </h1>
+                  <ImageSlider reviews={course?.reviews} />
+                </div>
+              )}
+            </div>
             <div className="m-10" ref={smallRef}>
-              <h1 className="mb-5 text-3xl font-bold">Recommendations</h1>
+              <h1 className="mb-5 text-3xl font-bold">{`More Courses from ${course?.teacherName}:`}</h1>
               <div className="grid grid-cols-4 gap-10">
-                {latestCoursesLoading ? (
+                {isLoading ? (
                   <Loader />
-                ) : latestCoursesError ? (
+                ) : isError ? (
                   <Message variant="error">{error?.data}</Message>
                 ) : (
-                  latestCourses?.map((course) => (
+                  course?.user?.coursesCreated?.map((course) => (
                     <CourseCard key={course._id} course={course} />
                   ))
                 )}

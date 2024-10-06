@@ -79,8 +79,16 @@ const courseSchema = mongoose.Schema(
       required: true,
     },
     reviews: [reviewSchema],
-    rating: { type: Number, required: true, default: 0 },
-    numReviews: { type: Number, required: true, default: 0 },
+    overallRating: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+    numReviews: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
@@ -100,12 +108,12 @@ const courseSchema = mongoose.Schema(
     },
     language: {
       type: String,
-      required: true,
+      // required: true,
     },
     levels: {
       type: String,
       enum: ["All Levels", "Beginner", "Intermediate", "Advanced"],
-      required: true,
+      // required: true,
     },
     tags: [
       {

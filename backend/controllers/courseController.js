@@ -17,6 +17,8 @@ const createNewCourse = async (req, res) => {
       content,
       requirements,
       tags,
+      language,
+      levels,
     } = req.body;
 
     switch (true) {
@@ -44,6 +46,10 @@ const createNewCourse = async (req, res) => {
         throw new Error("Category is required");
       case !content:
         throw new Error("Content is required");
+      case !language:
+        throw new Error("Language is required");
+      case !levels:
+        throw new Error("Levels is required");
     }
 
     const totalTime = content.reduce((acc, cur) => {
@@ -57,7 +63,7 @@ const createNewCourse = async (req, res) => {
       totalTime,
     });
 
-    // await Category.findById(category, { $push: { courses: newCourse._id } });
+    // await Category.findByIdAndUpdate(category, { $push: { courses: newCourse._id } });
     const existingCategory = await Category.findById(category);
     existingCategory.courses.push(newCourse._id);
     await existingCategory.save();
@@ -115,7 +121,19 @@ const getBudgetCourses = async (req, res) => {
 
 const getCourseById = async (req, res) => {
   try {
-    const course = await Course.findById(req.params.id);
+    const course = await Course.findById(req.params.id).populate([
+      {
+        path: "reviews.user",
+        select: "image",
+      },
+      {
+        path: "user",
+        select: "coursesCreated",
+        populate: {
+          path: "coursesCreated",
+        },
+      },
+    ]);
     if (course) {
       return res.status(200).json(course);
     } else {
@@ -188,9 +206,11 @@ const fetchCourses = async (req, res) => {
       "includes",
       "modules",
       "rightAudience",
-      // "category",
       "requirements",
       "teacherName",
+      "language",
+      "levels",
+      // "category",
       // "tags",
     ];
 
@@ -214,10 +234,66 @@ const fetchCourses = async (req, res) => {
     res.json({
       courses,
       pages: Math.ceil(count / pageSize),
+      count,
     });
   } catch (error) {
     console.error(error);
     res.status(500).json("Internal Server Error");
+  }
+};
+
+const addCourseReview = async (req, res) => {
+  try {
+    const { rating, comment } = req.body;
+    const course = await Course.findById(req.params.id);
+
+    if (course) {
+      const alreadyReviewed = course.reviews.find(
+        (r) => r.user.toString() === req.user._id.toString()
+      );
+
+      if (alreadyReviewed) {
+        res.status(400);
+        throw new Error("Course already reviewed");
+      }
+
+      const review = {
+        name: req.user.fullName,
+        rating: Number(rating),
+        comment,
+        user: req.user._id,
+      };
+
+      course.reviews.push(review);
+
+      course.numReviews = course.reviews.length;
+
+      course.overallRating =
+        course.reviews.reduce((acc, item) => item.rating + acc, 0) /
+        course.reviews.length;
+
+      await course.save();
+      res.status(201).json({ message: "Review added" });
+    } else {
+      res.status(404);
+      throw new Error("Course not found");
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(400).json(error?.message);
+  }
+};
+
+const filterCourses = async (req, res) => {
+  try {
+    const { checked } = req.body;
+    let args = {};
+    if (checked.length > 0) args.category = checked;
+    const courses = await Course.find(args);
+    res.json(courses);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json(error?.message);
   }
 };
 
@@ -232,4 +308,6 @@ export {
   deleteCourse,
   approveCourse,
   fetchCourses,
+  addCourseReview,
+  filterCourses,
 };

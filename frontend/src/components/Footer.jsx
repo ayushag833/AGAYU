@@ -1,44 +1,3 @@
-// import React from "react";
-
-// const Footer = () => {
-//   return (
-//     <div className="text-white">
-//       <h1>Teach thw world</h1>
-//       <div className="flex">
-//         <div>
-//           <ul>
-//             <li> Udemy Business</li>
-//             <li>Teach on Udemy</li>
-//             <li>Get the app</li>
-//             <li>About us</li>
-//             <li>Contact us</li>
-//           </ul>
-//         </div>
-//         <div>
-//           <ul>
-//             <li> Careers</li>
-//             <li>Blog</li>
-//             <li>Help and Support</li>
-//             <li>Affiliate</li>
-//             <li>Investors</li>
-//           </ul>
-//         </div>
-//         <div>
-//           <ul>
-//             <li> Terms</li>
-//             <li>Privacy policy</li>
-//             <li>Cookie settings</li>
-//             <li>Sitemap</li>
-//             <li>Accessibility statement</li>
-//           </ul>
-//         </div>
-//       </div>
-//       <h3>&copy; 202</h3>
-//     </div>
-//   );
-// };
-
-import React from "react";
 import Logo from "../assets/logo.png";
 import { FaFacebook, FaGoogle, FaTwitter, FaYoutube } from "react-icons/fa";
 
@@ -59,7 +18,7 @@ const Community = ["Forums", "Chapters", "Events"];
 const Footer = () => {
   return (
     <div className="bg-richblack-800 text-white">
-      <div className="flex lg:flex-row gap-8 items-center justify-between text-richblack-400 leading-6 mx-auto relative py-14">
+      <div className="flex lg:flex-row gap-8 items-center justify-between text-richblack-400 leading-6 mx-auto relative my-14">
         <div className="border-b border-t pt-10 w-full flex flex-col lg:flex-row pb-5">
           <div className=" flex flex-wrap flex-row justify-around pl-3 lg:pr-5 w-full">
             <div className="flex flex-col gap-3 mb-7 lg:pl-0">

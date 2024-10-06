@@ -1,0 +1,8 @@
+.reviewSlider .slick-track {
+  display: flex;
+  gap: 2rem;
+}
+
+.reviewSlider .slick-dots button::before {
+  color: white !important;
+}

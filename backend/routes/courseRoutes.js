@@ -18,6 +18,8 @@ import {
   deleteCourse,
   approveCourse,
   fetchCourses,
+  addCourseReview,
+  filterCourses,
 } from "../controllers/courseController.js";
 
 router.route("/search").get(fetchCourses);
@@ -34,5 +36,7 @@ router
   .route("/delete/:id")
   .delete(authenticate, authorizeAsTeacher, deleteCourse);
 router.route("/approve").put(authenticate, authorizeAsAdmin, approveCourse);
+router.route("/:id/reviews").post(authenticate, addCourseReview);
+router.route("/filterCourses").post(filterCourses);
 
 export default router;
