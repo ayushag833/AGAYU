@@ -196,8 +196,8 @@ const approveCourse = async (req, res) => {
 
 const fetchCourses = async (req, res) => {
   try {
-    const pageSize = 1;
-    const page = Number(req.query.page) || 1;
+    const { search, page, category } = req.body;
+    const pageSize = 4;
 
     const searchFields = [
       "name",
@@ -210,31 +210,29 @@ const fetchCourses = async (req, res) => {
       "teacherName",
       "language",
       "levels",
-      // "category",
-      // "tags",
+      //"category",
+      //"tags"
     ];
 
-    const search = req.query.search
+    const searchItems = search
       ? {
           $or: searchFields.map((field) => ({
-            [field]: { $regex: new RegExp(req.query.search, "i") },
+            [field]: { $regex: new RegExp(search, "i") },
           })),
         }
       : {};
-    console.log(search);
 
-    const count = await Course.countDocuments({ ...search }).populate(
-      "category"
-    );
-    const courses = await Course.find({ ...search })
-      .populate("category")
+    const categoryFilter =
+      category && category.length > 0 ? { category: { $in: category } } : {};
+
+    const courses = await Course.find({ ...searchItems, ...categoryFilter })
       .limit(pageSize)
       .skip(pageSize * (page - 1));
-
+    console.log(courses.length);
     res.json({
       courses,
-      pages: Math.ceil(count / pageSize),
-      count,
+      pages: Math.ceil(courses.length / pageSize),
+      count: courses.length,
     });
   } catch (error) {
     console.error(error);
@@ -288,7 +286,7 @@ const filterCourses = async (req, res) => {
   try {
     const { checked } = req.body;
     let args = {};
-    if (checked.length > 0) args.category = checked;
+    if (checked?.length > 0) args.category = checked;
     const courses = await Course.find(args);
     res.json(courses);
   } catch (error) {

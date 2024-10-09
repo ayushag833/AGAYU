@@ -15,9 +15,12 @@ const coursesApiSlice = apiSlice.injectEndpoints({
       query: () => COURSES_URL,
     }),
 
-    fetchCourses: builder.query({
-      query: ({ search, page }) =>
-        `${COURSES_URL}/search/?search=${search}&page=${page}`,
+    fetchCourses: builder.mutation({
+      query: ({ ...data }) => ({
+        url: `${COURSES_URL}/search`,
+        method: "POST",
+        body: data,
+      }),
     }),
 
     getLatestCourses: builder.query({
@@ -66,21 +69,13 @@ const coursesApiSlice = apiSlice.injectEndpoints({
         body: data,
       }),
     }),
-
-    getFilteredProducts: builder.query({
-      query: ({ ...data }) => ({
-        url: `${COURSES_URL}/filterCourses`,
-        method: "POST",
-        body: data,
-      }),
-    }),
   }),
 });
 
 export const {
   useCreateNewCourseMutation,
   useFetchAllCoursesQuery,
-  useFetchCoursesQuery,
+  useFetchCoursesMutation,
   useGetLatestCoursesQuery,
   useGetBudgetCoursesQuery,
   useGetPopularCoursesQuery,

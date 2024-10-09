@@ -32,7 +32,7 @@ const Navbar = () => {
   const submitHandler = (e) => {
     if (data.trim().length == 0) return;
     e.preventDefault();
-    navigate(`/searchPage?search=${data}&page=${1}`);
+    navigate(`/searchPage?search=${data}`);
     dispatch(getSearchQuery(data));
   };
 

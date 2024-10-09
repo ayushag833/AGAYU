@@ -15,7 +15,7 @@ const router = express.Router();
 
 router
   .route("/")
-  .get(authenticate, getAllCategory)
+  .get(getAllCategory)
   .post(authenticate, authorizeAsAdmin, createCategory);
 router.get("/:id", authenticate, getCategory);
 router.put("/update/:id", authenticate, authorizeAsAdmin, updateCategory);
