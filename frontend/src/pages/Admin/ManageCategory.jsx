@@ -94,11 +94,11 @@ const ManageCategory = () => {
           </div>
         </form>
         <h1 className="text-2xl mt-5">Edit / Delete Category</h1>
-        <div className="flex relative gap-10 mt-5 text-lg">
+        <div className="flex relative gap-10 mt-5 text-md">
           {allCategory?.AllCategories?.map((category, ind) => (
             <div key={category._id}>
               <div
-                className={`border p-5 rounded-full cursor-pointer hover:bg-gray-800 hover:scale-[1.1] transition-all ${
+                className={`border p-4 rounded-full cursor-pointer hover:bg-gray-800 hover:scale-[1.1] transition-all ${
                   active == ind && "bg-gray-800 scale-[1.1]"
                 }`}
                 onClick={() => {
@@ -112,7 +112,7 @@ const ManageCategory = () => {
           ))}
           <div className="flex">
             {value && (
-              <form className="absolute top-[8rem] left-[12rem] flex flex-col border p-5 rounded-md justify-center items-center">
+              <form className="absolute top-[6rem] left-[10rem] flex flex-col border p-5 rounded-md justify-center items-center">
                 <input
                   type="text"
                   name="name"

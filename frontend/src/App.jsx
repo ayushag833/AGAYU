@@ -36,6 +36,7 @@ import AdminManageCourses from "./pages/Admin/AdminManageCourses";
 import ManageCategory from "./pages/Admin/ManageCategory";
 import ManageUsers from "./pages/Admin/ManageUsers";
 import SearchPage from "./pages/SearchPage";
+import ProtectedRoutes from "./components/ProtectedRoutes";
 
 const App = () => {
   return (
@@ -50,12 +51,17 @@ const App = () => {
           <Route path="/course/view/:id" element={<CourseView />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/favorites" element={<Favorites />} />
           <Route path="/searchPage" element={<SearchPage />} />
           <Route path="*" element={<PageNotFound />} />
+
+          {/* Protected Routes - User*/}
+
+          <Route path="" element={<ProtectedRoutes />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+          </Route>
 
           {/* Protected Routes - Student*/}
 
@@ -131,6 +137,7 @@ const App = () => {
               path="/profile/admin/password/:id"
               element={<AdminChangePassword />}
             />
+            <Route path="/course/adminview/:id" element={<CourseDetails />} />
           </Route>
         </Routes>
         <Footer />

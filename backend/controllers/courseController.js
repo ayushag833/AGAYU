@@ -193,19 +193,6 @@ const approveCourse = async (req, res) => {
   try {
     const { id, approvedByAdmin } = req.body;
     await Course.findByIdAndUpdate(id, { approvedByAdmin });
-
-    const existingUser = await User.findById(req.user._id);
-    if (approvedByAdmin) {
-      if (!existingUser.coursesApproved.includes(id)) {
-        existingUser.coursesApproved.push(id);
-      }
-    } else {
-      existingUser.coursesApproved = existingUser.coursesApproved.filter(
-        (courseId) => courseId.toString() !== id
-      );
-    }
-    await existingUser.save();
-
     return res.status(200).json({ message: "Course Approved Successfully" });
   } catch (error) {
     console.log(error.message);
@@ -305,19 +292,6 @@ const addCourseReview = async (req, res) => {
   }
 };
 
-const filterCourses = async (req, res) => {
-  try {
-    const { checked } = req.body;
-    let args = {};
-    if (checked?.length > 0) args.category = checked;
-    const courses = await Course.find(args);
-    res.json(courses);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json(error?.message);
-  }
-};
-
 export {
   createNewCourse,
   getLatestCourses,
@@ -330,5 +304,4 @@ export {
   approveCourse,
   fetchCourses,
   addCourseReview,
-  filterCourses,
 };

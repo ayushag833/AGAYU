@@ -32,12 +32,6 @@ const userModel = mongoose.Schema(
         ref: "Course",
       },
     ],
-    coursesApproved: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Course",
-      },
-    ],
     phone: {
       type: String,
       unique: true,

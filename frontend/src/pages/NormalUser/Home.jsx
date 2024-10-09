@@ -4,13 +4,21 @@ import {
   useGetLatestCoursesQuery,
   useGetPopularCoursesQuery,
 } from "../../redux/api/coursesApiSlice";
-import CourseCard from "../Course/CourseCard";
 import Loader from "../../components/Loader";
 import Message from "../../components/Message";
 import Carousel from "../../components/Carousel";
 import ImageSlider from "../../components/ImageSlider";
+import teacherImg from "../../assets/Teacher.jpg";
+import Button from "../../components/Button";
+import { useNavigate } from "react-router";
+import { useSelector } from "react-redux";
+import { FaArrowRight } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 const Home = () => {
+  const navigate = useNavigate();
+  const { userInfo } = useSelector((state) => state.user);
+
   const {
     data: latestCourses,
     isLoading: latestCoursesLoading,
@@ -66,6 +74,30 @@ const Home = () => {
             <>{<ImageSlider courses={budgetCourses} />}</>
           )}
         </div>
+      </div>
+      <div className="flex p-10 gap-10">
+        <div className="mt-[5rem]">
+          <h1 className="text-[2.2rem] mb-10 text-green-500 capitalize">
+            Share your knowledge, Shape the future.
+          </h1>
+          <h2 className="text-2xl mb-10 ">
+            Teaching empowers you to inspire and uplift others. By sharing your
+            knowledge, you can make a lasting impact and help someone unlock
+            their potential.
+          </h2>
+          <Button
+            color="green"
+            onClick={() => {
+              userInfo
+                ? toast.error("You need to log out first!")
+                : navigate("/login?role=teacher");
+            }}
+            customCSS="text-[1.3rem] flex gap-2 p-10"
+          >
+            Teach on Agayu <FaArrowRight />
+          </Button>
+        </div>
+        <img src={teacherImg} className="h-[30rem] border-2 rounded-xl" />
       </div>
     </div>
   );

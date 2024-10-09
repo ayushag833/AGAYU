@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import AdminMenu from "./AdminMenu";
 import {
   useFetchAllCoursesQuery,
@@ -8,32 +8,26 @@ import Loader from "../../components/Loader";
 import Message from "../../components/Message";
 import Button from "../../components/Button";
 import { toast } from "react-toastify";
-import { useShowApprovedCoursesQuery } from "../../redux/api/usersApiSlice";
-import { useParams } from "react-router";
+import { useNavigate } from "react-router";
 
 const AdminManageCourses = () => {
-  const { id } = useParams();
-  const [approveInd, setApproveInd] = useState([]);
-  const { data, isLoading, isError, error } = useFetchAllCoursesQuery();
-  const { data: indexes } = useShowApprovedCoursesQuery(id);
+  const { data, isLoading, isError, error, refetch } =
+    useFetchAllCoursesQuery();
   const [approveApi] = useApproveCourseMutation();
+
+  const navigate = useNavigate();
 
   const approveCourse = async (id, approvedByAdmin) => {
     try {
       await approveApi({ id, approvedByAdmin }).unwrap();
       if (approvedByAdmin) toast.success("Course Approved successfully");
       else toast.error("Course Not Approved successfully");
+      refetch();
     } catch (error) {
       console.log(error);
       toast.error(error?.data?.Error);
     }
   };
-
-  useEffect(() => {
-    if (data && indexes) {
-      setApproveInd(indexes);
-    }
-  }, [data, indexes]);
 
   return (
     <div className="flex">
@@ -66,29 +60,29 @@ const AdminManageCourses = () => {
                   <div className="text-lg text-white">{item.name}</div>
                   <div className="mt-2 text-white">{item.teacherName}</div>
                   <div className="flex justify-between mt-3 items-center">
-                    {approveInd.some((i) => item._id === i) ? (
+                    {item.approvedByAdmin ? (
                       <Button
                         color="green"
-                        onClick={() => {
-                          setApproveInd((prev) =>
-                            prev.filter((i) => i !== item._id)
-                          );
-                          approveCourse(item._id, false);
-                        }}
+                        onClick={() => approveCourse(item._id, false)}
                       >
                         Approved
                       </Button>
                     ) : (
                       <Button
                         color="red"
-                        onClick={() => {
-                          setApproveInd((prev) => [...prev, item._id]);
-                          approveCourse(item._id, true);
-                        }}
+                        onClick={() => approveCourse(item._id, true)}
                       >
                         Not Approved
                       </Button>
                     )}
+                    <Button
+                      color="black"
+                      onClick={() => {
+                        navigate(`/course/adminview/${item._id}`);
+                      }}
+                    >
+                      View Course
+                    </Button>
                   </div>
                 </div>
               </div>
