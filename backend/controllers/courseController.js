@@ -218,8 +218,6 @@ const fetchCourses = async (req, res) => {
     const { search, page = 1, category, overallRating = 0 } = req.body;
     const pageSize = 4;
 
-    console.log(overallRating);
-
     const searchFields = [
       "name",
       "title",
@@ -253,7 +251,7 @@ const fetchCourses = async (req, res) => {
     })
       .limit(pageSize)
       .skip(pageSize * (page - 1));
-    console.log(courses.length);
+
     res.json({
       courses,
       pages: Math.ceil(courses.length / pageSize),
