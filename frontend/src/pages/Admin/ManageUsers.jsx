@@ -24,7 +24,8 @@ const ManageUsers = () => {
   }, [refetch]);
 
   const deleteHandler = async (id) => {
-    if (window.confirm("Are you sure")) {
+    const val = prompt('Type "DELETE" to permanently delete user account.');
+    if (val === "DELETE") {
       try {
         await deleteUser(id);
         refetch();

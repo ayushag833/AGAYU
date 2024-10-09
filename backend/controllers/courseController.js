@@ -148,11 +148,24 @@ const getCourseById = async (req, res) => {
 
 const updateCourse = async (req, res) => {
   try {
+    // Removing the course id from old category database
+    const course = await Course.findById(req.params.id);
+    await Category.findByIdAndUpdate(course.category, {
+      $pull: { courses: req.params.id },
+    });
+
+    // Updating the course
     await Course.findByIdAndUpdate(
       req.params.id,
       { ...req.body },
       { new: true }
     );
+
+    // Adding the course id to new category database
+    await Category.findByIdAndUpdate(req.body.category, {
+      $addToSet: { courses: req.params.id },
+    });
+
     return res.status(200).json({ message: "Course Updated Successfully" });
   } catch (error) {
     console.log(error.message);
@@ -162,6 +175,12 @@ const updateCourse = async (req, res) => {
 
 const deleteCourse = async (req, res) => {
   try {
+    // Removing the course id from old category database
+    const course = await Course.findById(req.params.id);
+    await Category.findByIdAndUpdate(course.category, {
+      $pull: { courses: req.params.id },
+    });
+
     await Course.findByIdAndDelete(req.params.id);
     return res.status(200).json({ message: "Course Deleted Successfully" });
   } catch (error) {

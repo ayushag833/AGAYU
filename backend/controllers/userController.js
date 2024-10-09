@@ -6,8 +6,14 @@ const createUser = async (req, res) => {
   try {
     const { fullName, email, password, role } = req.body;
 
-    if (!fullName || !email || !password || !role) {
-      return res.status(400).json({ Error: "Please provide all the details!" });
+    if (!fullName) {
+      return res.status(400).json({ Error: "Please enter your Full Name" });
+    }
+    if (!email) {
+      return res.status(400).json({ Error: "Please enter your Email" });
+    }
+    if (!password) {
+      return res.status(400).json({ Error: "Please enter your Password" });
     }
 
     const userExists = await User.findOne({ email });
@@ -41,8 +47,11 @@ const createUser = async (req, res) => {
 const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
-    if (!email || !password) {
-      return res.status(400).json({ Error: "Please provide all the details!" });
+    if (!email) {
+      return res.status(400).json({ Error: "Please enter your Email" });
+    }
+    if (!password) {
+      return res.status(400).json({ Error: "Please enter your Password" });
     }
 
     const userExists = await User.findOne({ email });

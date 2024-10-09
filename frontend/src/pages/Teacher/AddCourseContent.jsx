@@ -17,10 +17,8 @@ const AddCourseContent = ({ setContent, setShowContent }) => {
       setContent((prev) => [...prev, formData.title]);
       toast.success("Content Details uploaded successfully");
     } catch (error) {
-      console.log(error, error.message);
-      toast.error(
-        "Can't upload Content details at this time. Try again later!"
-      );
+      console.log(error?.data?.Error);
+      toast.error(error?.data?.Error);
     }
   };
 

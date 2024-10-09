@@ -37,8 +37,8 @@ const Profile = () => {
       dispatch(userInformation(res));
       toast.success("User updated successfully");
     } catch (error) {
-      console.log(error, error.message);
-      toast.error("Can't update User at this time. Try again later!");
+      console.log(error?.data?.Error);
+      toast.error(error?.data?.Error);
     }
   };
 

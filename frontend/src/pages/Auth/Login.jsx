@@ -23,7 +23,6 @@ const Login = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-
     try {
       const res = await loginApi({
         email,
@@ -33,8 +32,8 @@ const Login = () => {
       toast.success("User logged in successfully");
       navigate("/");
     } catch (error) {
-      console.log(error, error.message);
-      toast.error("Can't login User at this time. Try again later!");
+      console.log(error?.data?.Error);
+      toast.error(error?.data?.Error);
     }
   };
 

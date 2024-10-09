@@ -48,8 +48,8 @@ const AddCourseSubContent = ({
       });
       toast.success("Video Details uploaded successfully");
     } catch (error) {
-      console.log(error, error.message);
-      toast.error("Can't upload video at this time. Try again later!");
+      console.log(error?.data?.Error);
+      toast.error(error?.data?.Error);
     }
   };
 

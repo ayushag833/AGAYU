@@ -41,8 +41,8 @@ const Signup = () => {
       toast.success("User created successfully");
       navigate("/");
     } catch (error) {
-      console.log(error, error.message);
-      toast.error("Can't create User at this time. Try again later!");
+      console.log(error?.data?.Error);
+      toast.error(error?.data?.Error);
     }
   };
 
