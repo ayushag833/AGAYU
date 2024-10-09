@@ -2,7 +2,7 @@ import React from "react";
 
 const Loader = () => {
   return (
-    <div className="grid place-items-center">
+    <div className="grid place-items-center mt-[5rem]">
       <div role="status">
         <svg
           aria-hidden="true"

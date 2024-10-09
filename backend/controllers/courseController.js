@@ -215,8 +215,10 @@ const approveCourse = async (req, res) => {
 
 const fetchCourses = async (req, res) => {
   try {
-    const { search, page, category } = req.body;
+    const { search, page = 1, category, overallRating = 0 } = req.body;
     const pageSize = 4;
+
+    console.log(overallRating);
 
     const searchFields = [
       "name",
@@ -244,7 +246,11 @@ const fetchCourses = async (req, res) => {
     const categoryFilter =
       category && category.length > 0 ? { category: { $in: category } } : {};
 
-    const courses = await Course.find({ ...searchItems, ...categoryFilter })
+    const courses = await Course.find({
+      ...searchItems,
+      ...categoryFilter,
+      overallRating: { $gte: Number(overallRating) },
+    })
       .limit(pageSize)
       .skip(pageSize * (page - 1));
     console.log(courses.length);

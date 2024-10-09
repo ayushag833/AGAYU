@@ -15,6 +15,7 @@ const SearchPage = () => {
   const [page, setPage] = useState(1);
   const [courses, setCourses] = useState([]);
   const [checkedCategories, setCheckedCategories] = useState([]);
+  const [checkedRatings, setCheckedRatings] = useState(null);
 
   const { data: categories } = useGetAllCategoriesQuery();
   const [fetchCourses, { isLoading, isError, error }] =
@@ -22,7 +23,7 @@ const SearchPage = () => {
 
   useEffect(() => {
     submitHandler();
-  }, [checkedCategories, page]);
+  }, [page, checkedCategories, checkedRatings]);
 
   const handleCategoriesCheck = (isChecked, categoryId) => {
     setCheckedCategories((prevChecked) => {
@@ -36,12 +37,17 @@ const SearchPage = () => {
     });
   };
 
+  const handleRatingsCheck = (ratingValue) => {
+    setCheckedRatings(ratingValue);
+  };
+
   const submitHandler = async () => {
     try {
       const res = await fetchCourses({
         search: query,
         page,
         category: checkedCategories,
+        overallRating: checkedRatings,
       }).unwrap();
       setCourses(res);
     } catch (error) {
@@ -49,11 +55,10 @@ const SearchPage = () => {
       toast.error(error?.data?.Error);
     }
   };
-  console.log(checkedCategories);
   return (
     <div className="flex w-full justify-center items-center h-full">
       {isLoading ? (
-        <div className="mt-[5rem]">
+        <div>
           <Loader />
         </div>
       ) : isError ? (
@@ -72,6 +77,9 @@ const SearchPage = () => {
                 handleCategoriesCheck={handleCategoriesCheck}
                 setCheckedCategories={setCheckedCategories}
                 checkedCategories={checkedCategories}
+                handleRatingsCheck={handleRatingsCheck}
+                checkedRatings={checkedRatings}
+                setCheckedRatings={setCheckedRatings}
               />
             </div>
           ) : (
@@ -88,6 +96,9 @@ const SearchPage = () => {
                   handleCategoriesCheck={handleCategoriesCheck}
                   setCheckedCategories={setCheckedCategories}
                   checkedCategories={checkedCategories}
+                  handleRatingsCheck={handleRatingsCheck}
+                  checkedRatings={checkedRatings}
+                  setCheckedRatings={setCheckedRatings}
                 />
                 <div className="mt-[2.5rem] ml-[3rem] grid grid-cols-3 h-fit gap-[2rem]">
                   {courses?.courses?.map((course) => (
