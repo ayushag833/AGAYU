@@ -37,7 +37,7 @@ const ManageCourses = () => {
         <Loader />
       ) : isError ? (
         <div>
-          <Message variant="error">{error?.error}</Message>
+          <Message variant="error">{error}</Message>
         </div>
       ) : (
         <div>
