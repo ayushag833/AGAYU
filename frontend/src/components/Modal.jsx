@@ -9,13 +9,21 @@ import {
 } from "react-icons/fa";
 import { RiArticleFill } from "react-icons/ri";
 import { MdOndemandVideo } from "react-icons/md";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../redux/slices/cartSlice";
 import HeartIcon from "../pages/HeartIcon";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router";
+import { useShowPurchasedCoursesQuery } from "../redux/api/usersApiSlice";
 
-const Modal = ({ course, boughtHandler, showButton, difference }) => {
+const Modal = ({ course, difference, boughtHandler }) => {
+  const { userInfo } = useSelector((state) => state.user);
+  const { cartItems } = useSelector((state) => state.cart);
   const [show, setShow] = useState("absolute top-[7rem]");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { data, isLoading } = useShowPurchasedCoursesQuery(userInfo._id);
 
   const controlModal = () => {
     if (difference) {
@@ -53,16 +61,65 @@ const Modal = ({ course, boughtHandler, showButton, difference }) => {
           <h1 className="text-3xl font-bold mt-5 text-center">
             &#8377;{course.price}
           </h1>
-          {showButton && (
+          {isLoading ? (
+            <div className="text-white text-xl text-center my-5">
+              Loading...
+            </div>
+          ) : data?.some((item) => item._id === course._id) ? (
             <div>
               <Button
                 color="green"
                 width="true"
-                onClick={() => dispatch(addToCart(course))}
+                onClick={() => navigate(`/course/view/${course._id}`)}
               >
-                Add to Cart
+                Go to course
               </Button>
-              <Button color="black" width="true" onClick={boughtHandler}>
+            </div>
+          ) : (
+            <div>
+              {console.log(
+                cartItems?.some((cartItem) => cartItem._id === course._id)
+              )}
+              {cartItems?.some((cartItem) => cartItem._id === course._id) ? (
+                <Button
+                  color="green"
+                  width="true"
+                  onClick={() => {
+                    userInfo.role !== "student"
+                      ? toast.error(
+                          "Kindly login from student account to buy the course!"
+                        )
+                      : navigate("/cart");
+                  }}
+                >
+                  Go to Cart
+                </Button>
+              ) : (
+                <Button
+                  color="green"
+                  width="true"
+                  onClick={() => {
+                    userInfo.role !== "student"
+                      ? toast.error(
+                          "Kindly login from student account to buy the course!"
+                        )
+                      : dispatch(addToCart(course));
+                  }}
+                >
+                  Add to Cart
+                </Button>
+              )}
+              <Button
+                color="black"
+                width="true"
+                onClick={() => {
+                  userInfo.role !== "student"
+                    ? toast.error(
+                        "Kindly login from student account to buy the course!"
+                      )
+                    : boughtHandler(userInfo._id);
+                }}
+              >
                 Buy Now
               </Button>
             </div>
@@ -102,16 +159,62 @@ const Modal = ({ course, boughtHandler, showButton, difference }) => {
           <h1 className="text-3xl font-bold mt-5 text-center">
             &#8377;{course.price}
           </h1>
-          {showButton && (
+          {isLoading ? (
+            <div className="text-white text-xl text-center my-5">
+              Loading...
+            </div>
+          ) : data?.some((item) => item._id === course._id) ? (
             <div>
               <Button
                 color="green"
                 width="true"
-                onClick={() => dispatch(addToCart(course))}
+                onClick={() => navigate(`/course/view/${course._id}`)}
               >
-                Add to Cart
+                Go to course
               </Button>
-              <Button color="black" width="true" onClick={boughtHandler}>
+            </div>
+          ) : (
+            <div>
+              {cartItems?.some((cartItem) => cartItem._id === course._id) ? (
+                <Button
+                  color="green"
+                  width="true"
+                  onClick={() => {
+                    userInfo.role !== "student"
+                      ? toast.error(
+                          "Kindly login from student account to buy the course!"
+                        )
+                      : navigate("/cart");
+                  }}
+                >
+                  Go to Cart
+                </Button>
+              ) : (
+                <Button
+                  color="green"
+                  width="true"
+                  onClick={() => {
+                    userInfo.role !== "student"
+                      ? toast.error(
+                          "Kindly login from student account to buy the course!"
+                        )
+                      : dispatch(addToCart(course));
+                  }}
+                >
+                  Add to Cart
+                </Button>
+              )}
+              <Button
+                color="black"
+                width="true"
+                onClick={() => {
+                  userInfo.role !== "student"
+                    ? toast.error(
+                        "Kindly login from student account to buy the course!"
+                      )
+                    : boughtHandler(userInfo._id);
+                }}
+              >
                 Buy Now
               </Button>
             </div>

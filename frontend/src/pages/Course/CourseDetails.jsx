@@ -5,52 +5,50 @@ import Message from "../../components/Message";
 import { useParams } from "react-router";
 import moment from "moment";
 import Modal from "../../components/Modal";
-import { useNavigate } from "react-router";
-import { toast } from "react-toastify";
 import { GrLanguage } from "react-icons/gr";
 import { MdDateRange } from "react-icons/md";
 import { FaCircle, FaFirefox } from "react-icons/fa";
-import { useGetLatestCoursesQuery } from "../../redux/api/coursesApiSlice";
 import CourseCard from "./CourseCard";
 import { IoIosArrowDown } from "react-icons/io";
 import ShowTime from "../../components/ShowTime";
-import { FaArrowRight } from "react-icons/fa";
 import Ratings from "../../components/Ratings";
 import ImageSlider from "../../components/ImageSlider";
+import { usePurchaseCourseMutation } from "../../redux/api/usersApiSlice";
+import { toast } from "react-toastify";
 
 const CourseDetails = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
-  const [bought, setBought] = useState(false);
-  const [showButton, setShowButton] = useState(true);
   const [activeIndex, setActiveIndex] = useState(null);
   const [difference, setDifference] = useState(null);
+  const {
+    data: course,
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useGetCourseByIdQuery(id);
+  const [purchaseApi] = usePurchaseCourseMutation();
 
   const smallRef = useRef(null);
   const bigRef = useRef(null);
-
-  const { data: course, isLoading, isError } = useGetCourseByIdQuery(id);
-  const {
-    data: latestCourses,
-    isLoading: latestCoursesLoading,
-    isError: latestCoursesError,
-    error,
-  } = useGetLatestCoursesQuery();
-
   useEffect(() => {
+    refetch();
     if (bigRef.current && smallRef.current) {
       setDifference(
         bigRef.current.getBoundingClientRect().height -
           smallRef.current.getBoundingClientRect().height
       );
     }
-  }, [course]);
+  }, [refetch, course]);
 
-  const boughtHandler = () => {
-    setBought(true);
-    setShowButton(false);
-    localStorage.setItem(`bought-${id}`, true);
-    toast.success("You succcessfully bought the course");
+  const boughtHandler = async (userId) => {
+    try {
+      const res = await purchaseApi({ userId, courseId: id }).unwrap();
+      toast.success(res);
+    } catch (error) {
+      console.log(error?.error);
+      toast.error(error?.error);
+    }
   };
 
   return (
@@ -121,14 +119,7 @@ const CourseDetails = () => {
               <div className="flex justify-between">
                 <h2 className="text-3xl font-bold mb-5">Course content</h2>
                 <div>
-                  <h3
-                    className="hover:underline flex cursor-pointer transition border-2 rounded-md p-2 mb-2 w-fit"
-                    onClick={() => navigate(`/course/view/${course._id}`)}
-                  >
-                    <div className="hover:text-slate-300 "> View Course</div>
-                    <FaArrowRight className="mt-1 ml-1" />
-                  </h3>
-                  <h3 className="ml-[1.2rem]">
+                  <h3 className="ml-[1.2rem] mt-[0.5rem] mr-[0.5rem]">
                     <ShowTime time={course.totalTime} />
                   </h3>
                 </div>
@@ -271,9 +262,8 @@ const CourseDetails = () => {
           </div>
           <Modal
             course={course}
-            boughtHandler={boughtHandler}
-            showButton={showButton}
             difference={difference}
+            boughtHandler={boughtHandler}
           />
         </div>
       )}

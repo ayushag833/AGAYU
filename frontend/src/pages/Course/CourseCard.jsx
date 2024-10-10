@@ -25,7 +25,7 @@ const CourseCard = ({ course }) => {
               <h3 className="mx-1">{course?.teacherName}</h3>
             </div>
           </div>
-          <div className="flex justify-between items-center w-[20rem] gap-2">
+          <div className="flex justify-between items-center w-[20rem] gap-2 mt-1">
             <div className="ml-1">
               {course?.tags?.map((tag, i) => (
                 <CustomTab variant="outside" customCSS="mt-1" key={i}>

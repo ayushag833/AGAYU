@@ -18,8 +18,8 @@ const CourseView = () => {
   const { userInfo } = useSelector((state) => state.user);
   const { id } = useParams();
   const [subContent, setSubContent] = useState(null);
-  const [currIndex, setCurrIndex] = useState(0);
-  const [cIndex, setCIndex] = useState(0);
+  const [currIndex, setCurrIndex] = useState(0); // currentSubContentIndex
+  const [cIndex, setCIndex] = useState(0); // currentContentIndex
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(0);
   const [ratingMove, setRatingMove] = useState(0);
@@ -136,7 +136,7 @@ const CourseView = () => {
                   <div>
                     <img
                       src={myReview.user.image}
-                      className="border-2 rounded-full w-[3.5rem] h-[3.5rem] object-cover object-top mt-5"
+                      className="border-2 rounded-full bg-white w-[3.5rem] h-[3.5rem] object-cover object-top mt-5"
                     />
                   </div>
                 </div>

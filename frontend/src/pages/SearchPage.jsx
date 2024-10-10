@@ -23,7 +23,7 @@ const SearchPage = () => {
 
   useEffect(() => {
     submitHandler();
-  }, [page, checkedCategories, checkedRatings]);
+  }, [page, checkedCategories, checkedRatings, query]);
 
   const handleCategoriesCheck = (isChecked, categoryId) => {
     setCheckedCategories((prevChecked) => {

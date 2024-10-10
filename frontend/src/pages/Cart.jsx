@@ -1,15 +1,54 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FaTrash } from "react-icons/fa";
 import { removeFromCart, clearCart } from "../redux/slices/cartSlice";
+import {
+  usePurchaseCourseMutation,
+  useShowPurchasedCoursesQuery,
+} from "../redux/api/usersApiSlice";
+import { toast } from "react-toastify";
 
 const Cart = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { userInfo } = useSelector((state) => state.user);
 
-  const { cartItems } = useSelector((state) => state.cart);
+  const { data, refetch } = useShowPurchasedCoursesQuery(userInfo._id);
+  const [purchaseApi] = usePurchaseCourseMutation();
+
+  let { cartItems } = useSelector((state) => state.cart);
+
+  cartItems = cartItems.filter((cartItem) =>
+    data?.some((item) => item._id !== cartItem._id)
+  );
+
+  let itemsToRemove = cartItems.filter(
+    (cartItem) => !data?.some((item) => item._id !== cartItem._id)
+  );
+  itemsToRemove.forEach((cartItem) => {
+    dispatch(removeFromCart(cartItem._id));
+  });
+
+  useEffect(() => {
+    refetch();
+  }, [data, refetch]);
+
+  const boughtHandler = async (courseIds) => {
+    try {
+      const res = await purchaseApi({
+        userId: userInfo._id,
+        courseId: courseIds,
+      }).unwrap();
+      dispatch(clearCart());
+      refetch();
+      toast.success(res);
+    } catch (error) {
+      console.log(error?.error);
+      toast.error(error?.error);
+    }
+  };
 
   return (
     <>
@@ -83,9 +122,9 @@ const Cart = () => {
                   <div className="w-full flex justify-between">
                     <Button
                       color="green"
-                      onClick={() => {
-                        navigate("/");
-                      }}
+                      onClick={() =>
+                        boughtHandler(cartItems.map((item) => item._id))
+                      }
                       customCSS="text-xl"
                       width
                     >

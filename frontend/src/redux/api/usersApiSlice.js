@@ -65,6 +65,14 @@ const userApiSlice = apiSlice.injectEndpoints({
       }),
     }),
 
+    purchaseCourse: builder.mutation({
+      query: ({ ...data }) => ({
+        url: `${USERS_URL}/purchaseCourse`,
+        method: "POST",
+        body: data,
+      }),
+    }),
+
     showPurchasedCourses: builder.query({
       query: (id) => `${USERS_URL}/purchasedCourses/${id}`,
     }),
@@ -86,4 +94,5 @@ export const {
   useUpdatePasswordMutation,
   useShowPurchasedCoursesQuery,
   useShowCreatedCoursesQuery,
+  usePurchaseCourseMutation,
 } = userApiSlice;

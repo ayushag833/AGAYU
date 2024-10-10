@@ -13,7 +13,6 @@ import CustomModal from "../../components/CustomModal";
 import { FaHeart } from "react-icons/fa";
 import { RxDashboard } from "react-icons/rx";
 import { IoLogOutOutline } from "react-icons/io5";
-import { FaSignInAlt } from "react-icons/fa";
 import { MdLogin } from "react-icons/md";
 
 const Navbar = () => {

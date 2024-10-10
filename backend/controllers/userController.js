@@ -148,6 +148,20 @@ const deleteUser = async (req, res) => {
   }
 };
 
+const purchaseCourse = async (req, res) => {
+  try {
+    const { userId, courseId } = req.body;
+    const coursesToAdd = Array.isArray(courseId) ? courseId : [courseId];
+    await User.findByIdAndUpdate(userId, {
+      $push: { coursesPurchased: { $each: coursesToAdd } },
+    });
+    return res.status(200).json("You have successfully bought the course");
+  } catch (error) {
+    console.log("error in showing courses", error.message);
+    return res.status(500).json({ Error: error.message });
+  }
+};
+
 const showPurchasedCourses = async (req, res) => {
   try {
     const user = await User.findById(req.params.id).populate(
@@ -180,4 +194,5 @@ export {
   deleteUser,
   showPurchasedCourses,
   showCreatedCourses,
+  purchaseCourse,
 };

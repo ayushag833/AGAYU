@@ -9,6 +9,7 @@ import { RiLockPasswordFill } from "react-icons/ri";
 import { toast } from "react-toastify";
 import { userLogout } from "../../redux/slices/userSlice";
 import { useLogoutMutation } from "../../redux/api/usersApiSlice";
+import { MdCurrencyRupee } from "react-icons/md";
 
 const AdminMenu = () => {
   const userDetails = useSelector((state) => state.user);
@@ -99,6 +100,17 @@ const AdminMenu = () => {
         >
           <BiBookBookmark className="text-xl mr-1 mb-1 inline-block" />
           Manage Users
+        </NavLink>
+        <NavLink
+          to={`/profile/${role}/revenue/${id}`}
+          className={({ isActive }) =>
+            isActive
+              ? "p-2 m-5 text-center bg-green-500 hover:underline rounded-full"
+              : "p-2 m-5 text-center hover:underline"
+          }
+        >
+          <MdCurrencyRupee className="text-xl mr-1 mb-1 inline-block" />
+          Total Revenue
         </NavLink>
         <div
           className="p-2 m-5 text-center  hover:underline rounded-full cursor-pointer"

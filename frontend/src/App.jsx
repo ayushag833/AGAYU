@@ -37,6 +37,7 @@ import ManageCategory from "./pages/Admin/ManageCategory";
 import ManageUsers from "./pages/Admin/ManageUsers";
 import SearchPage from "./pages/SearchPage";
 import ProtectedRoutes from "./components/ProtectedRoutes";
+import AdminRevenue from "./pages/Admin/AdminRevenue";
 
 const App = () => {
   return (
@@ -138,6 +139,10 @@ const App = () => {
               element={<AdminChangePassword />}
             />
             <Route path="/course/adminview/:id" element={<CourseDetails />} />
+            <Route
+              path="/profile/admin/revenue/:id"
+              element={<AdminRevenue />}
+            />
           </Route>
         </Routes>
         <Footer />
