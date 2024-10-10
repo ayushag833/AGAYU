@@ -64,10 +64,13 @@ const loginUser = async (req, res) => {
     if (!checkPassword) {
       return res.status(400).json({ Error: "Password does not match!" });
     }
-    const userexist = await User.findOne({ email }).select("-password");
-
+    const obj = await User.findOne({ email }).select("-password");
+    const userexist = obj.toObject();
     const token = generateToken(res, userExists._id);
-    return res.status(200).json({ ...userexist, token });
+    return res.status(200).json({
+      ...userexist,
+      token,
+    });
   } catch (error) {
     console.log(error.message);
     return res.status(500).json({ Error: error.message });
