@@ -60,7 +60,7 @@ const ManageUsers = () => {
       {isLoading ? (
         <Loader />
       ) : error ? (
-        <Message variant="error">{error?.data?.data || error.error}</Message>
+        <Message variant="error">{console.log(error)}</Message>
       ) : (
         <div className="flex">
           <AdminMenu />
