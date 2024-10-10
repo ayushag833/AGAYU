@@ -11,7 +11,13 @@ import { toast } from "react-toastify";
 import AdminMenu from "./AdminMenu";
 
 const ManageUsers = () => {
-  const { data: users, refetch, isLoading, error } = useGetAllUsersQuery();
+  const {
+    data: users,
+    refetch,
+    isLoading,
+    isError,
+    error,
+  } = useGetAllUsersQuery();
   const [deleteUser] = useDeleteUserMutation();
   const [updateUser] = useUpdateUserMutation();
 
@@ -59,7 +65,7 @@ const ManageUsers = () => {
     <div className="">
       {isLoading ? (
         <Loader />
-      ) : error ? (
+      ) : isError ? (
         <Message variant="error">{console.log(error)}</Message>
       ) : (
         <div className="flex">
