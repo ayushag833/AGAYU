@@ -2,19 +2,24 @@ import jwt from "jsonwebtoken";
 import User from "../models/userModel.js";
 
 const authenticate = async (req, res, next) => {
-  try {
-    const token = req.cookies.jwt;
-    if (token) {
+  const { authorization } = req.headers;
+  let token;
+  if (authorization && authorization.startsWith("Bearer ")) {
+    token = authorization.split(" ")[1];
+  } else {
+    return res.status(401).json({ message: "Authorization header missing" });
+  }
+  if (token) {
+    try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      const user = await User.findById(decoded.userId).select("-password");
-      req.user = user;
-    } else {
-      return res.status(400).json({ Error: "Authentication Failed!" });
+      req.user = await User.findById(decoded.userId).select("-password");
+      next();
+    } catch (error) {
+      console.log(error.message);
+      return res.status(400).json({ Error: error.message });
     }
-    next();
-  } catch (error) {
-    console.log(error.message);
-    return res.status(400).json({ Error: error.message });
+  } else {
+    return res.status(400).json({ Error: "Not authorized, no token." });
   }
 };
 

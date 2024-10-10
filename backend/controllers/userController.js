@@ -31,12 +31,13 @@ const createUser = async (req, res) => {
       role,
     });
     await newUser.save();
-    generateToken(res, newUser._id);
+    const token = generateToken(res, newUser._id);
     return res.status(201).json({
       _id: newUser._id,
       fullName: newUser.fullName,
       email: newUser.email,
       role: newUser.role,
+      token,
     });
   } catch (error) {
     console.log(error.message);
@@ -65,8 +66,8 @@ const loginUser = async (req, res) => {
     }
     const userexist = await User.findOne({ email }).select("-password");
 
-    generateToken(res, userExists._id);
-    return res.status(200).json(userexist);
+    const token = generateToken(res, userExists._id);
+    return res.status(200).json({ ...userexist, token });
   } catch (error) {
     console.log(error.message);
     return res.status(500).json({ Error: error.message });
