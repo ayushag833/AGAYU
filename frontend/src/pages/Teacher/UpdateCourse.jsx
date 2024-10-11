@@ -41,7 +41,7 @@ const UpdateCourse = () => {
     requirements: "",
     tags: [],
     tagsInput: "",
-    readyToPublished: false,
+    readyToPublished: null,
     language: "",
     levels: "",
   });
@@ -376,7 +376,9 @@ const UpdateCourse = () => {
          invalid:border-red-500 invalid:text-red-600
          focus:invalid:border-red-500 focus:invalid:ring-red-500"
             >
-              <option value="">Select Category</option>
+              <option value="" disabled>
+                Select Category
+              </option>
               {categories?.AllCategories?.map((category) => (
                 <option value={category._id} key={category._id}>
                   {category.title}
@@ -460,7 +462,9 @@ const UpdateCourse = () => {
          invalid:border-red-500 invalid:text-red-600
          focus:invalid:border-red-500 focus:invalid:ring-red-500"
             >
-              <option value="">Select Level</option>
+              <option value="" disabled>
+                Select Level
+              </option>
               <option value="All Levels">All Levels</option>
               <option value="Beginner">Beginner</option>
               <option value="Intermediate">Intermediate</option>
@@ -503,7 +507,9 @@ const UpdateCourse = () => {
          invalid:border-red-500 invalid:text-red-600
          focus:invalid:border-red-500 focus:invalid:ring-red-500"
             >
-              <option value="false">Select Option</option>
+              <option value="" disabled>
+                Select Option
+              </option>
               <option value="true">YES</option>
               <option value="false">NO</option>
             </select>

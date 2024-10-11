@@ -166,7 +166,9 @@ const Profile = () => {
          invalid:border-red-500 invalid:text-red-600
          focus:invalid:border-red-500 focus:invalid:ring-red-500"
             >
-              <option value="">Select your Gender</option>
+              <option value="" disabled>
+                Select your Gender
+              </option>
               <option value="male">Male</option>
               <option value="female">Female</option>
               <option value="others">Others</option>

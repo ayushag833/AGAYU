@@ -81,7 +81,7 @@ const createNewCourse = async (req, res) => {
 
 const fetchAllCourses = async (req, res) => {
   try {
-    const allCourses = await Course.find({}).sort({ createdAt: -1 });
+    const allCourses = await Course.find({}).sort({ updatedAt: -1 });
     return res.status(200).json(allCourses);
   } catch (error) {
     console.log(error.message);
@@ -91,7 +91,7 @@ const fetchAllCourses = async (req, res) => {
 
 const getLatestCourses = async (req, res) => {
   try {
-    const topCourses = await Course.find({}).sort({ id: -1 }).limit(8);
+    const topCourses = await Course.find({}).sort({ createdAt: -1 }).limit(8);
     return res.status(200).json(topCourses);
   } catch (error) {
     console.log(error.message);
@@ -101,7 +101,9 @@ const getLatestCourses = async (req, res) => {
 
 const getPopularCourses = async (req, res) => {
   try {
-    const topCourses = await Course.find({}).sort().limit(8);
+    const topCourses = await Course.find({})
+      .sort({ overallRating: -1 })
+      .limit(8);
     return res.status(200).json(topCourses);
   } catch (error) {
     console.log(error.message);
