@@ -40,6 +40,7 @@ const Navbar = () => {
     }
     e.preventDefault();
     navigate(`/searchPage?search=${data}`);
+    setData("");
   };
 
   const logoutHandler = async () => {

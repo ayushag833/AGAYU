@@ -75,7 +75,7 @@ const SearchPage = () => {
                   .trim()
                   .replace(/\s+/g, " ")}"`}
               </h1>
-              <h1 className="text-white text-2xl ml-[5rem] font-bold mt-[3rem]">
+              <h1 className="text-white text-2xl ml-[5.3rem] font-bold mt-[3rem]">
                 Try adjusting your search. Here are some ideas:
               </h1>
               <h2 className="text-white text-xl ml-[6rem] font-bold mt-[1rem]">
