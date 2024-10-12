@@ -23,7 +23,7 @@ const Modal = ({ course, difference, boughtHandler }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { data, isLoading } = useShowPurchasedCoursesQuery(userInfo._id);
+  const { data, isLoading } = useShowPurchasedCoursesQuery(userInfo?._id);
 
   const controlModal = () => {
     if (difference) {
@@ -85,7 +85,11 @@ const Modal = ({ course, difference, boughtHandler }) => {
                   color="green"
                   width="true"
                   onClick={() => {
-                    userInfo.role !== "student"
+                    userInfo === null
+                      ? toast.error(
+                          "Kindly login from student account to buy the course!"
+                        )
+                      : userInfo.role !== "student"
                       ? toast.error(
                           "Kindly login from student account to buy the course!"
                         )
@@ -99,7 +103,11 @@ const Modal = ({ course, difference, boughtHandler }) => {
                   color="green"
                   width="true"
                   onClick={() => {
-                    userInfo.role !== "student"
+                    userInfo === null
+                      ? toast.error(
+                          "Kindly login from student account to buy the course!"
+                        )
+                      : userInfo.role !== "student"
                       ? toast.error(
                           "Kindly login from student account to buy the course!"
                         )
@@ -113,7 +121,11 @@ const Modal = ({ course, difference, boughtHandler }) => {
                 color="black"
                 width="true"
                 onClick={() => {
-                  userInfo.role !== "student"
+                  userInfo === null
+                    ? toast.error(
+                        "Kindly login from student account to buy the course!"
+                      )
+                    : userInfo.role !== "student"
                     ? toast.error(
                         "Kindly login from student account to buy the course!"
                       )
@@ -180,7 +192,11 @@ const Modal = ({ course, difference, boughtHandler }) => {
                   color="green"
                   width="true"
                   onClick={() => {
-                    userInfo.role !== "student"
+                    userInfo === null
+                      ? toast.error(
+                          "Kindly login from student account to buy the course!"
+                        )
+                      : userInfo.role !== "student"
                       ? toast.error(
                           "Kindly login from student account to buy the course!"
                         )
@@ -194,7 +210,11 @@ const Modal = ({ course, difference, boughtHandler }) => {
                   color="green"
                   width="true"
                   onClick={() => {
-                    userInfo.role !== "student"
+                    userInfo === null
+                      ? toast.error(
+                          "Kindly login from student account to buy the course!"
+                        )
+                      : userInfo.role !== "student"
                       ? toast.error(
                           "Kindly login from student account to buy the course!"
                         )
@@ -208,7 +228,11 @@ const Modal = ({ course, difference, boughtHandler }) => {
                 color="black"
                 width="true"
                 onClick={() => {
-                  userInfo.role !== "student"
+                  userInfo === null
+                    ? toast.error(
+                        "Kindly login from student account to buy the course!"
+                      )
+                    : userInfo.role !== "student"
                     ? toast.error(
                         "Kindly login from student account to buy the course!"
                       )

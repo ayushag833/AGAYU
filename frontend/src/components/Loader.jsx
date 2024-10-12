@@ -3,7 +3,7 @@ import "./loader.css";
 
 const Loader = () => {
   return (
-    <div className="flex justify-center items-center w-[90rem] h-[25rem]">
+    <div className="flex justify-center items-center w-[90rem] h-[15rem]">
       <div class="loader"></div>
     </div>
   );

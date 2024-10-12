@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import logo from "../../assets/logo.png";
 import { useNavigate, useLocation } from "react-router-dom";
-import { getSearchQuery } from "../../redux/slices/searchSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { IoMdSearch } from "react-icons/io";
 import { BsCart3 } from "react-icons/bs";
@@ -35,10 +34,12 @@ const Navbar = () => {
   }, [location]);
 
   const submitHandler = (e) => {
-    if (data.trim().length == 0) return;
+    if (data.trim().length === 0) {
+      e.preventDefault();
+      return;
+    }
     e.preventDefault();
     navigate(`/searchPage?search=${data}`);
-    dispatch(getSearchQuery(data));
   };
 
   const logoutHandler = async () => {
@@ -115,7 +116,7 @@ const Navbar = () => {
             <div
               onMouseOver={() => setIsDropdownVisible(true)}
               onMouseOut={() => setIsDropdownVisible(false)}
-              className="relative left-2"
+              className="relative left-2 w-[2.2rem]"
             >
               <img
                 src={

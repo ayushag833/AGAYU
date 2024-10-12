@@ -42,9 +42,11 @@ const SearchPage = () => {
   };
 
   const submitHandler = async () => {
+    if (!query || query.trim().length === 0) return;
+    const normalizedQuery = query.trim().replace(/\s+/g, " ");
     try {
       const res = await fetchCourses({
-        search: query,
+        search: normalizedQuery,
         page,
         category: checkedCategories,
         overallRating: checkedRatings,
@@ -55,6 +57,7 @@ const SearchPage = () => {
       toast.error(error?.data?.Error);
     }
   };
+
   return (
     <div className="flex w-full justify-center items-center h-full">
       {isLoading ? (
@@ -67,25 +70,28 @@ const SearchPage = () => {
         <div className="w-full">
           {courses === undefined || courses?.count === 0 ? (
             <div className="w-full">
-              <h1 className="text-white text-3xl text-center font-bold mt-[3rem]">
-                {query == null
-                  ? "Please, Enter something in the search bar"
-                  : `Sorry, No Courses found for "${query}"`}
+              <h1 className="text-white text-3xl ml-[5rem] font-bold mt-[3rem]">
+                {`Sorry, No Courses found for "${query
+                  .trim()
+                  .replace(/\s+/g, " ")}"`}
               </h1>
-              <Filtering
-                categories={categories}
-                handleCategoriesCheck={handleCategoriesCheck}
-                setCheckedCategories={setCheckedCategories}
-                checkedCategories={checkedCategories}
-                handleRatingsCheck={handleRatingsCheck}
-                checkedRatings={checkedRatings}
-                setCheckedRatings={setCheckedRatings}
-              />
+              <h1 className="text-white text-2xl ml-[5rem] font-bold mt-[3rem]">
+                Try adjusting your search. Here are some ideas:
+              </h1>
+              <h2 className="text-white text-xl ml-[6rem] font-bold mt-[1rem]">
+                &#8226; Make sure all words are spelled correctly
+              </h2>
+              <h2 className="text-white text-xl ml-[6rem] font-bold">
+                &#8226; Try different search terms
+              </h2>
+              <h2 className="text-white text-xl ml-[6rem] font-bold">
+                &#8226; Try more general search terms
+              </h2>
             </div>
           ) : (
             <div className="w-full">
               <h1 className="text-white text-3xl text-center font-bold mt-[3rem]">
-                {`Search Results for "${query}"`}
+                {`Search Results for "${query.trim().replace(/\s+/g, " ")}"`}
               </h1>
               <h1 className="text-white text-2xl text-center font-bold mt-[2rem] mb-[2rem]">
                 {`${courses?.count} results found`}
