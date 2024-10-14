@@ -71,14 +71,17 @@ const userApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["Course", "User"],
     }),
 
     showPurchasedCourses: builder.query({
       query: (id) => `${USERS_URL}/purchasedCourses/${id}`,
+      providesTags: ["Course", "User"],
     }),
 
     showCreatedCourses: builder.query({
       query: (id) => `${USERS_URL}/createdCourses/${id}`,
+      providesTags: ["Course", "User"],
     }),
   }),
 });

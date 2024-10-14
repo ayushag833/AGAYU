@@ -23,7 +23,9 @@ const Modal = ({ course, difference, boughtHandler }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { data, isLoading } = useShowPurchasedCoursesQuery(userInfo?._id);
+  const { data, isLoading, refetch } = useShowPurchasedCoursesQuery(
+    userInfo?._id
+  );
 
   const controlModal = () => {
     if (difference) {
@@ -38,11 +40,14 @@ const Modal = ({ course, difference, boughtHandler }) => {
   };
 
   useEffect(() => {
+    if (userInfo?._id) {
+      refetch();
+    }
     window.addEventListener("scroll", controlModal);
     return () => {
       window.removeEventListener("scroll", controlModal);
     };
-  }, [difference]);
+  }, [difference, userInfo, refetch]);
 
   return (
     <div className="relative">

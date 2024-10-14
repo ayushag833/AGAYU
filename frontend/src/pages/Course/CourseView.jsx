@@ -6,7 +6,6 @@ import {
 import { useParams } from "react-router";
 import ShowTime from "../../components/ShowTime";
 import VideoPopup from "../../components/VideoPopup";
-import { FaArrowLeft } from "react-icons/fa";
 import { toast } from "react-toastify";
 import Button from "../../components/Button";
 import { FaRegStar, FaStar, FaStarHalfAlt } from "react-icons/fa";
@@ -82,24 +81,26 @@ const CourseView = () => {
                     <div>
                       <div className="mt-5">
                         {item?.subContent?.map((it, ind) => (
-                          <div key={ind} className="mt-1">
+                          <div
+                            key={ind}
+                            className={`mt-1 p-2 border w-[21rem] mb-3 rounded-md cursor-pointer ${
+                              ind === currIndex &&
+                              index === cIndex &&
+                              "bg-slate-200 text-black border-black"
+                            }`}
+                            onClick={() => {
+                              setCurrIndex(ind);
+                              setCIndex(index);
+                              setSubContent(it);
+                            }}
+                          >
                             <div className="flex gap-3">
-                              <div
-                                className="cursor-pointer"
-                                onClick={() => {
-                                  setCurrIndex(ind);
-                                  setCIndex(index);
-                                  setSubContent(it);
-                                }}
-                              >
+                              <div>
                                 <div className="flex justify-center items-center">
                                   {ind + 1}) {it.title}:
-                                  {ind === currIndex && index === cIndex && (
-                                    <FaArrowLeft className="ml-2" />
-                                  )}
                                 </div>
                               </div>
-                              <div className="absolute right-3">
+                              <div className="absolute right-[2rem]">
                                 <ShowTime time={it.time} />
                               </div>
                             </div>

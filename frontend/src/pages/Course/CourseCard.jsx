@@ -9,18 +9,20 @@ const CourseCard = ({ course }) => {
   return (
     <div>
       <div className="flex flex-col justify-between text-white mb-5 hover:scale-105 duration-150 ease-in-out">
-        <div>
+        <div
+          className="cursor-pointer"
+          onClick={() => navigate(`/course/${course._id}`)}
+        >
           <div className="relative">
             <img
               src={course?.image}
               alt="course-image"
               className="rounded-md w-[20rem]"
             />
-            <HeartIcon course={course} />
-            <div
-              className="cursor-pointer"
-              onClick={() => navigate(`/course/${course._id}`)}
-            >
+            <div className="">
+              <HeartIcon course={course} css={true} />
+            </div>
+            <div>
               <h2 className="mt-1 mx-1">{course?.name}</h2>
               <h3 className="mx-1">{course?.teacherName}</h3>
             </div>

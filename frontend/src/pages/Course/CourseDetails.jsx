@@ -253,9 +253,13 @@ const CourseDetails = () => {
                 ) : isError ? (
                   <Message variant="error">{error?.data}</Message>
                 ) : (
-                  course?.user?.coursesCreated?.map((course) => (
-                    <CourseCard key={course._id} course={course} />
-                  ))
+                  course?.user?.coursesCreated
+                    ?.filter(
+                      (courseCreated) => courseCreated._id !== course._id
+                    )
+                    .map((course) => (
+                      <CourseCard key={course._id} course={course} />
+                    ))
                 )}
               </div>
             </div>
