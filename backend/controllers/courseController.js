@@ -156,10 +156,14 @@ const updateCourse = async (req, res) => {
       $pull: { courses: req.params.id },
     });
 
+    const totalTime = course.content.reduce((acc, cur) => {
+      return acc + cur.time;
+    }, 0);
+
     // Updating the course
     await Course.findByIdAndUpdate(
       req.params.id,
-      { ...req.body },
+      { totalTime, ...req.body },
       { new: true }
     );
 
@@ -205,7 +209,7 @@ const approveCourse = async (req, res) => {
 const fetchCourses = async (req, res) => {
   try {
     const { search, page = 1, category, overallRating = 0 } = req.body;
-    const pageSize = 4;
+    const pageSize = 6;
 
     const searchFields = [
       "name",
@@ -233,6 +237,12 @@ const fetchCourses = async (req, res) => {
     const categoryFilter =
       category && category.length > 0 ? { category: { $in: category } } : {};
 
+    const count = await Course.countDocuments({
+      ...searchItems,
+      ...categoryFilter,
+      overallRating: { $gte: Number(overallRating) },
+    });
+
     const courses = await Course.find({
       ...searchItems,
       ...categoryFilter,
@@ -240,11 +250,11 @@ const fetchCourses = async (req, res) => {
     })
       .limit(pageSize)
       .skip(pageSize * (page - 1));
-
+    console.log(courses.length);
     res.json({
       courses,
-      pages: Math.ceil(courses.length / pageSize),
-      count: courses.length,
+      pages: Math.ceil(count / pageSize),
+      count,
     });
   } catch (error) {
     console.error(error);

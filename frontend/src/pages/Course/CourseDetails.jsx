@@ -252,6 +252,8 @@ const CourseDetails = () => {
                   <Loader />
                 ) : isError ? (
                   <Message variant="error">{error?.data}</Message>
+                ) : course?.user?.coursesCreated.length === 1 ? (
+                  <div className="text-xl">Sorry, No Courses Found</div>
                 ) : (
                   course?.user?.coursesCreated
                     ?.filter(

@@ -143,9 +143,7 @@ const AddCourseSubContent = ({
             </div>
             <div>
               {isLoading ? (
-                <div className="mt-[2rem]">
-                  <Loader />
-                </div>
+                <div className="mt-[2.3rem] text-xl">Uploading...</div>
               ) : (
                 btnClicked && (
                   <video

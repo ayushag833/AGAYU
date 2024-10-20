@@ -53,6 +53,8 @@ const UpdateCourse = () => {
     }
   }, [course]);
 
+  console.log(content);
+
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
@@ -258,9 +260,14 @@ const UpdateCourse = () => {
                         onClick={() => {
                           setContent((prev) => {
                             const updated = [...prev];
-                            updated[index].subContent = updated[
-                              index
-                            ].subContent.filter((_, i) => i !== ind);
+                            const currentItem = { ...updated[index] };
+                            if (currentItem.subContent) {
+                              currentItem.subContent =
+                                currentItem.subContent.filter(
+                                  (_, i) => i !== ind
+                                );
+                              updated[index] = currentItem;
+                            }
                             return updated;
                           });
                         }}

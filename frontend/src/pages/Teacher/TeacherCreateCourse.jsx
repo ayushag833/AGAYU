@@ -510,7 +510,7 @@ const TeacherCreateCourse = () => {
          invalid:border-red-500 invalid:text-red-600
          focus:invalid:border-red-500 focus:invalid:ring-red-500"
             >
-              <option value="" disabled>
+              <option value="" disabled selected>
                 Select Option
               </option>
               <option value="true">YES</option>
