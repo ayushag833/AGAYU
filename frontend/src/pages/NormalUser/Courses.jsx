@@ -14,14 +14,14 @@ const Courses = () => {
     <div>
       <div className="m-10 text-white">
         <h1 className="mb-5 text-3xl font-bold">All Courses</h1>
-        <div className="grid grid-cols-4 gap-10">
+        <div className="grid grid-cols-4 gap-10 w-full">
           {allCoursesLoading ? (
             <Loader />
           ) : allCoursesError ? (
             <Message variant="error">Error Occurred</Message>
           ) : (
             allCourses.map((course) => (
-              <CourseCard key={course._id} course={course} />
+              <CourseCard key={course._id} course={course} condition={true} />
             ))
           )}
         </div>

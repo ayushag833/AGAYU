@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import CustomTab from "../../components/CustomTab";
 import HeartIcon from "../HeartIcon";
 
-const CourseCard = ({ course }) => {
+const CourseCard = ({ course, condition }) => {
   if (!course.approvedByAdmin || !course.readyToPublished) return null;
   const navigate = useNavigate();
   return (
@@ -19,8 +19,8 @@ const CourseCard = ({ course }) => {
               alt="course-image"
               className="rounded-md w-[20rem]"
             />
-            <div className="">
-              <HeartIcon course={course} css={true} />
+            <div>
+              <HeartIcon course={course} css={true} condition={condition} />
             </div>
             <div>
               <h2 className="mt-1 mx-1">{course?.name}</h2>

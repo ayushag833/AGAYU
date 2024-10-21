@@ -5,7 +5,7 @@ import {
   removeFromfavorite,
 } from "../redux/slices/favoriteSlice";
 
-const HeartIcon = ({ course, css }) => {
+const HeartIcon = ({ course, css, condition }) => {
   const dispatch = useDispatch();
   const { favoriteItems } = useSelector((state) => state.favorite);
   const isFavorite = favoriteItems.some((item) => item?._id === course?._id);
@@ -20,7 +20,9 @@ const HeartIcon = ({ course, css }) => {
 
   return (
     <div
-      className="absolute top-3 right-6 cursor-pointer"
+      className={`absolute top-3 right-6 cursor-pointer ${
+        condition && "right-8"
+      }`}
       onClick={(e) => {
         e.stopPropagation();
         toggleFavorites();
