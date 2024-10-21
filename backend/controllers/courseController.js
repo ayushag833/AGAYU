@@ -91,7 +91,12 @@ const fetchAllCourses = async (req, res) => {
 
 const getLatestCourses = async (req, res) => {
   try {
-    const topCourses = await Course.find({}).sort({ createdAt: -1 }).limit(8);
+    const topCourses = await Course.find({
+      readyToPublished: true,
+      approvedByAdmin: true,
+    })
+      .sort({ createdAt: -1 })
+      .limit(8);
     return res.status(200).json(topCourses);
   } catch (error) {
     console.log(error.message);
@@ -101,7 +106,10 @@ const getLatestCourses = async (req, res) => {
 
 const getPopularCourses = async (req, res) => {
   try {
-    const topCourses = await Course.find({})
+    const topCourses = await Course.find({
+      readyToPublished: true,
+      approvedByAdmin: true,
+    })
       .sort({ overallRating: -1 })
       .limit(8);
     return res.status(200).json(topCourses);
@@ -113,7 +121,12 @@ const getPopularCourses = async (req, res) => {
 
 const getBudgetCourses = async (req, res) => {
   try {
-    const topCourses = await Course.find({}).sort({ price: 1 }).limit(8);
+    const topCourses = await Course.find({
+      readyToPublished: true,
+      approvedByAdmin: true,
+    })
+      .sort({ price: 1 })
+      .limit(8);
     return res.status(200).json(topCourses);
   } catch (error) {
     console.log(error.message);
@@ -209,7 +222,7 @@ const approveCourse = async (req, res) => {
 const fetchCourses = async (req, res) => {
   try {
     const { search, page = 1, category, overallRating = 0 } = req.body;
-    const pageSize = 6;
+    const pageSize = 4;
 
     const searchFields = [
       "name",

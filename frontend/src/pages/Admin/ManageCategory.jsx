@@ -14,14 +14,15 @@ const ManageCategory = () => {
   const [value, setValue] = useState(null);
   const [active, setActive] = useState(0);
 
-  const { data: allCategory } = useGetAllCategoriesQuery();
+  const { data: allCategory, refetch } = useGetAllCategoriesQuery();
   const [createApi] = useCreateCategoryMutation();
   const [updateApi] = useUpdateCategoryMutation();
   const [deleteApi] = useDeleteCategoryMutation();
 
   useEffect(() => {
+    refetch();
     if (allCategory?.AllCategories) setValue(allCategory?.AllCategories[0]);
-  }, [allCategory]);
+  }, [allCategory, refetch]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -29,6 +30,7 @@ const ManageCategory = () => {
       await createApi({ title }).unwrap();
       toast.success("Category created successfully");
       setTitle("");
+      refetch();
     } catch (error) {
       console.log(error?.data?.Error);
       toast.error(error?.data?.Error);
@@ -41,6 +43,7 @@ const ManageCategory = () => {
       await updateApi({ id: value._id, title: value.title }).unwrap();
       toast.success("Category updated successfully");
       setTitle("");
+      refetch();
     } catch (error) {
       console.log(error?.data?.Error);
       toast.error(error?.data?.Error);
@@ -55,6 +58,7 @@ const ManageCategory = () => {
         await deleteApi(value._id).unwrap();
         toast.success("Category deleted successfully");
         setTitle("");
+        refetch();
       } catch (error) {
         console.log(error?.data?.Error);
         toast.error(error?.data?.Error);
@@ -63,7 +67,7 @@ const ManageCategory = () => {
   };
 
   return (
-    <div className="flex">
+    <div className="flex relative">
       <StudentMenu />
       <div className="flex flex-col items-center mt-[2rem] h-[30rem] w-[70rem]  gap-[1rem] text-white">
         <div className="text-2xl">Create Category</div>
@@ -94,11 +98,11 @@ const ManageCategory = () => {
           </div>
         </form>
         <h1 className="text-2xl mt-5">Edit / Delete Category</h1>
-        <div className="flex relative gap-10 mt-5 text-md">
+        <div className="flex gap-10 mt-5 text-md flex-wrap ml-20">
           {allCategory?.AllCategories?.map((category, ind) => (
-            <div key={category._id}>
+            <div key={category._id} flex flex-wrap>
               <div
-                className={`border p-4 rounded-full cursor-pointer hover:bg-gray-800 hover:scale-[1.1] transition-all ${
+                className={`border p-4 rounded-full cursor-pointer hover:bg-gray-800 hover:scale-[1.1] transition-all whitespace-nowrap ${
                   active == ind && "bg-gray-800 scale-[1.1]"
                 }`}
                 onClick={() => {
@@ -112,7 +116,7 @@ const ManageCategory = () => {
           ))}
           <div className="flex">
             {value && (
-              <form className="absolute top-[6rem] left-[10rem] flex flex-col border p-5 rounded-md justify-center items-center">
+              <form className="absolute top-[32rem] left-[43rem] flex flex-col border p-5 rounded-md justify-center items-center bg-black">
                 <input
                   type="text"
                   name="name"

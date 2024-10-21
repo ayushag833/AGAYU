@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Filtering from "../components/Filtering";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useFetchCoursesMutation } from "../redux/api/coursesApiSlice";
 import { useGetAllCategoriesQuery } from "../redux/api/categoriesApiSlice";
-import CourseCard from "./Course/CourseCard";
 import Button from "../components/Button";
 import { toast } from "react-toastify";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
+import Ratings from "../components/Ratings";
+import CustomTab from "../components/CustomTab";
 
 const SearchPage = () => {
   const [searchParams] = useSearchParams();
@@ -16,6 +17,8 @@ const SearchPage = () => {
   const [courses, setCourses] = useState([]);
   const [checkedCategories, setCheckedCategories] = useState([]);
   const [checkedRatings, setCheckedRatings] = useState(null);
+
+  const navigate = useNavigate();
 
   const { data: categories } = useGetAllCategoriesQuery();
   const [fetchCourses, { isLoading, isError, error }] =
@@ -106,10 +109,54 @@ const SearchPage = () => {
                   checkedRatings={checkedRatings}
                   setCheckedRatings={setCheckedRatings}
                 />
-                <div className="mt-[2.5rem] ml-[3rem] grid grid-cols-3 h-fit gap-[2rem]">
-                  {courses?.courses?.map((course) => (
-                    <div className="ml-5" key={course._id}>
-                      <CourseCard course={course} />
+                <div className="mt-[2.5rem] ml-[3rem] w-[70%]">
+                  {courses?.courses?.map((item) => (
+                    <div
+                      key={item._id}
+                      className="flex items-enter mb-[1rem] pb-5 justify-between border-b"
+                    >
+                      <div
+                        className="flex cursor-pointer justify-between w-full"
+                        onClick={() => navigate(`/course/${item._id}`)}
+                      >
+                        <div className="w-[18rem] h-[10rem]">
+                          <img
+                            src={item.image}
+                            alt={item.name}
+                            className="w-full h-full object-cover rounded"
+                          />
+                        </div>
+
+                        <div className="flex-1 ml-4 text-2xl text-white">
+                          {item.name}
+
+                          <div className="mt-1 text-white text-[1.1rem]">
+                            {item.teacherName}
+                          </div>
+                          <div className="text-white text-[0.9rem]">
+                            {item.title}
+                          </div>
+
+                          <div className="mt-[-0.2rem] ml-[-0.2rem] flex gap-2 items-center text-[0.9rem]">
+                            {item?.overallRating && item?.numReviews && (
+                              <Ratings
+                                value={item?.overallRating}
+                                text={`${item?.numReviews} reviews`}
+                              />
+                            )}
+                          </div>
+                          <div className="mt-2 flex gap-2 items-center text-sm">
+                            {item?.tags?.map((tag, i) => (
+                              <CustomTab variant="outside" key={i}>
+                                {tag}
+                              </CustomTab>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="mt-2 text-white font-bold whitespace-nowrap">
+                        $ {item.price}
+                      </div>
                     </div>
                   ))}
                 </div>

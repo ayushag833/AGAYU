@@ -225,7 +225,7 @@ const UpdateCourse = () => {
          focus:invalid:border-red-500 focus:invalid:ring-red-500"
               />
             </div>
-            <img src={formData?.image} className="w-[8rem] border" />
+            <img src={formData?.image} className="w-[10rem] border" />
           </div>
           <div>
             <h1 className="text-md font-medium text-slate-200 mb-2">
