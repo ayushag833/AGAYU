@@ -13,8 +13,10 @@ import { IoIosArrowDown } from "react-icons/io";
 import ShowTime from "../../components/ShowTime";
 import Ratings from "../../components/Ratings";
 import ImageSlider from "../../components/ImageSlider";
-import { usePurchaseCourseMutation } from "../../redux/api/usersApiSlice";
+import { usePaymentCheckMutation } from "../../redux/api/usersApiSlice";
 import { toast } from "react-toastify";
+import { loadStripe } from "@stripe/stripe-js";
+import CustomTab from "../../components/CustomTab";
 
 const CourseDetails = () => {
   const { id } = useParams();
@@ -27,7 +29,7 @@ const CourseDetails = () => {
     error,
     refetch,
   } = useGetCourseByIdQuery(id);
-  const [purchaseApi] = usePurchaseCourseMutation();
+  const [paymentApi] = usePaymentCheckMutation();
 
   const smallRef = useRef(null);
   const bigRef = useRef(null);
@@ -41,12 +43,24 @@ const CourseDetails = () => {
     }
   }, [refetch, course]);
 
-  const boughtHandler = async (userId) => {
+  const boughtHandler = async () => {
     try {
-      const res = await purchaseApi({ userId, courseId: id }).unwrap();
+      const res = await paymentApi({
+        courseId: id,
+        discountPercentage: 10,
+      }).unwrap();
+
+      // Stripe Integration
+      const stripe = await loadStripe(
+        import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY
+      );
+      stripe.redirectToCheckout({
+        sessionId: res.id,
+      });
+
       toast.success(res);
     } catch (error) {
-      console.log(error?.error);
+      console.log(error);
       toast.error(error?.error);
     }
   };
@@ -67,7 +81,7 @@ const CourseDetails = () => {
                 <h3 className="mb-4">Created By: {course.teacherName}</h3>
                 <div className="flex gap-[10rem]">
                   <h3 className="flex flex-col gap-1">
-                    <span className="flex items-center gap-[0.3rem]">
+                    <span className="flex items-center gap-[0.3rem] whitespace-nowrap">
                       <MdDateRange />
                       Created At:{" "}
                       {moment(course.createdAt).format("MMM D, YYYY")}
@@ -78,16 +92,20 @@ const CourseDetails = () => {
                     </span>
                   </h3>
                   <h3 className="pb-5 flex flex-col gap-1">
-                    <span className="flex items-center gap-[0.3rem]">
+                    <span className="flex items-center gap-[0.3rem] whitespace-nowrap">
                       <MdDateRange />
                       Last Updated:{" "}
                       {moment(course.updatedAt).format("MMM D, YYYY")}
                     </span>
-                    <span className="flex items-center gap-[0.3rem]">
+                    <span className="flex items-center">
                       <FaFirefox />
-                      {course?.tags?.map((tag, i) => (
-                        <div key={i}>{tag}</div>
-                      ))}
+                      <div className="ml-2">
+                        {course?.tags?.map((tag, i) => (
+                          <CustomTab key={i} variant="outside">
+                            {tag}
+                          </CustomTab>
+                        ))}
+                      </div>
                     </span>
                   </h3>
                 </div>
@@ -260,7 +278,11 @@ const CourseDetails = () => {
                       (courseCreated) => courseCreated._id !== course._id
                     )
                     .map((course) => (
-                      <CourseCard key={course._id} course={course} />
+                      <CourseCard
+                        key={course._id}
+                        course={course}
+                        condition={true}
+                      />
                     ))
                 )}
               </div>

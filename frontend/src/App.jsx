@@ -38,6 +38,8 @@ import ManageUsers from "./pages/Admin/ManageUsers";
 import SearchPage from "./pages/SearchPage";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 import AdminRevenue from "./pages/Admin/AdminRevenue";
+import { Cancel } from "./pages/Cancel";
+import Success from "./pages/Success";
 
 const App = () => {
   return (
@@ -49,7 +51,6 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/courses" element={<Courses />} />
           <Route path="/course/:id" element={<CourseDetails />} />
-          <Route path="/course/view/:id" element={<CourseView />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/cart" element={<Cart />} />
@@ -83,6 +84,9 @@ const App = () => {
               path="/profile/student/password/:id"
               element={<StudentChangePassword />}
             />
+            <Route path="/course/view/:id" element={<CourseView />} />
+            <Route path="/cancel" element={<Cancel />} />
+            <Route path="/success/:courseIds" element={<Success />} />
           </Route>
 
           {/* Protected Routes - Teacher*/}

@@ -74,6 +74,15 @@ const userApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: ["Course", "User"],
     }),
 
+    paymentCheck: builder.mutation({
+      query: ({ ...data }) => ({
+        url: `${USERS_URL}/paymentCheck`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Course", "User"],
+    }),
+
     showPurchasedCourses: builder.query({
       query: (id) => `${USERS_URL}/purchasedCourses/${id}`,
       providesTags: ["Course", "User"],
@@ -98,4 +107,5 @@ export const {
   useShowPurchasedCoursesQuery,
   useShowCreatedCoursesQuery,
   usePurchaseCourseMutation,
+  usePaymentCheckMutation,
 } = userApiSlice;

@@ -70,6 +70,11 @@ const createNewCourse = async (req, res) => {
 
     const existingUser = await User.findById(req.user._id);
     existingUser.coursesCreated.push(newCourse._id);
+    existingUser.courseRevenue.push({
+      course: newCourse._id,
+      revenueByCourse: 0,
+      datePurchased: Date.now(),
+    });
     await existingUser.save();
 
     return res.status(201).json(newCourse);

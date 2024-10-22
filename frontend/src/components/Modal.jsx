@@ -134,7 +134,7 @@ const Modal = ({ course, difference, boughtHandler }) => {
                     ? toast.error(
                         "Kindly login from student account to buy the course!"
                       )
-                    : boughtHandler(userInfo._id);
+                    : boughtHandler();
                 }}
               >
                 Buy Now
@@ -241,7 +241,7 @@ const Modal = ({ course, difference, boughtHandler }) => {
                     ? toast.error(
                         "Kindly login from student account to buy the course!"
                       )
-                    : boughtHandler(userInfo._id);
+                    : boughtHandler();
                 }}
               >
                 Buy Now

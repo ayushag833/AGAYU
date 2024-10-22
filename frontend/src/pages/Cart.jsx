@@ -5,10 +5,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { FaTrash } from "react-icons/fa";
 import { removeFromCart, clearCart } from "../redux/slices/cartSlice";
 import {
-  usePurchaseCourseMutation,
   useShowPurchasedCoursesQuery,
+  usePaymentCheckMutation,
 } from "../redux/api/usersApiSlice";
 import { toast } from "react-toastify";
+import { loadStripe } from "@stripe/stripe-js";
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ const Cart = () => {
   const [discount, setDiscount] = useState(0);
 
   const { data, refetch } = useShowPurchasedCoursesQuery(userInfo._id);
-  const [purchaseApi] = usePurchaseCourseMutation();
+  const [paymentApi] = usePaymentCheckMutation();
 
   let { cartItems } = useSelector((state) => state.cart);
 
@@ -44,11 +45,19 @@ const Cart = () => {
 
   const boughtHandler = async (courseIds) => {
     try {
-      const res = await purchaseApi({
-        userId: userInfo._id,
+      const res = await paymentApi({
         courseId: courseIds,
+        discountPercentage: discount,
       }).unwrap();
-      dispatch(clearCart());
+
+      // Stripe Integration
+      const stripe = await loadStripe(
+        import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY
+      );
+      stripe.redirectToCheckout({
+        sessionId: res.id,
+      });
+
       refetch();
       toast.success(res);
     } catch (error) {

@@ -5,11 +5,13 @@ const userModel = mongoose.Schema(
     fullName: {
       type: String,
       required: true,
+      trim: true,
     },
     email: {
       type: String,
       required: true,
       unique: true,
+      trim: true,
     },
     password: {
       type: String,
@@ -20,18 +22,6 @@ const userModel = mongoose.Schema(
       enum: ["student", "teacher", "admin"],
       required: true,
     },
-    coursesPurchased: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Course",
-      },
-    ],
-    coursesCreated: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Course",
-      },
-    ],
     phone: {
       type: String,
       unique: true,
@@ -46,17 +36,55 @@ const userModel = mongoose.Schema(
     },
     gender: {
       type: String,
+      trim: true,
     },
     address: {
       type: String,
+      trim: true,
     },
     dateOfBirth: {
-      type: String,
+      type: Date,
     },
     bio: {
       type: String,
       trim: true,
     },
+
+    // For Student :-
+    coursesPurchased: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Course",
+      },
+    ],
+
+    // For Teacher :-
+    coursesCreated: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Course",
+      },
+    ],
+    totalRevenue: {
+      type: Number,
+      default: 0,
+    },
+    courseRevenue: [
+      {
+        course: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Course",
+        },
+        revenueByCourse: {
+          type: Number,
+          default: 0,
+        },
+        datePurchased: {
+          type: Date,
+          default: Date.now,
+        },
+      },
+    ],
   },
   { timestamps: true }
 );

@@ -1,6 +1,8 @@
 import User from "../models/userModel.js";
 import bcrypt from "bcryptjs";
 import generateToken from "../utils/token.js";
+import { stripe } from "../index.js";
+import Course from "../models/courseModel.js";
 
 const createUser = async (req, res) => {
   try {
@@ -156,10 +158,94 @@ const purchaseCourse = async (req, res) => {
   try {
     const { userId, courseId } = req.body;
     const coursesToAdd = Array.isArray(courseId) ? courseId : [courseId];
+
     await User.findByIdAndUpdate(userId, {
-      $push: { coursesPurchased: { $each: coursesToAdd } },
+      $addToSet: { coursesPurchased: { $each: coursesToAdd } },
     });
-    return res.status(200).json("You have successfully bought the course");
+
+    const courses = await Course.find({ _id: { $in: coursesToAdd } });
+
+    await Promise.all(
+      courses.map(async (course) => {
+        const teacher = await User.findById(course.user);
+        const enrolledStudents = course.studentsEnrolled.length;
+        const revenue = course.price;
+        const totalRevenueForCourse = revenue * enrolledStudents;
+        const existingRevenue = teacher.courseRevenue.find(
+          (r) => r.course.toString() === course._id.toString()
+        );
+        if (existingRevenue) {
+          existingRevenue.revenueByCourse += totalRevenueForCourse;
+          existingRevenue.datePurchased = Date.now();
+        }
+        teacher.totalRevenue += totalRevenueForCourse;
+        await teacher.save();
+      })
+    );
+
+    await Course.updateMany(
+      { _id: { $in: coursesToAdd } },
+      {
+        $addToSet: { studentsEnrolled: userId },
+      }
+    );
+
+    return res.status(200).json({
+      message: "You have successfully purchased the course!",
+    });
+  } catch (error) {
+    console.log("Error in showing courses", error.message);
+    return res.status(500).json({ Error: error.message });
+  }
+};
+
+const paymentCheck = async (req, res) => {
+  try {
+    const { courseId, discountPercentage } = req.body;
+    const coursesToAdd = Array.isArray(courseId) ? courseId : [courseId];
+    const courses = await Course.find({ _id: { $in: coursesToAdd } }).exec();
+
+    const lineItems = courses.map((course) => ({
+      price_data: {
+        currency: "inr",
+        product_data: {
+          name: course.name,
+          images: [course.image],
+        },
+        unit_amount: course.price * 100,
+      },
+      quantity: 1,
+    }));
+
+    const coupon = await stripe.coupons.create({
+      percent_off: discountPercentage,
+      duration: "once",
+      name: "Discount",
+    });
+
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      line_items: lineItems,
+      mode: "payment",
+      discounts: [
+        {
+          coupon: coupon.id,
+        },
+      ],
+      success_url:
+        process.env.NODE_ENV === "DEVELOPMENT"
+          ? `http://localhost:5173/success/${coursesToAdd}`
+          : `https://agayu-frontend.onrender.com/success${coursesToAdd}`,
+      cancel_url:
+        process.env.NODE_ENV === "DEVELOPMENT"
+          ? "http://localhost:5173/cancel"
+          : "https://agayu-frontend.onrender.com/cancel",
+    });
+
+    return res.status(200).json({
+      id: session.id,
+      message: "Payment is successful!",
+    });
   } catch (error) {
     console.log("error in showing courses", error.message);
     return res.status(500).json({ Error: error.message });
@@ -199,4 +285,5 @@ export {
   showPurchasedCourses,
   showCreatedCourses,
   purchaseCourse,
+  paymentCheck,
 };

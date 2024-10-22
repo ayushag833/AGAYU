@@ -12,6 +12,7 @@ import { FaRegStar, FaStar, FaStarHalfAlt } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import Ratings from "../../components/Ratings";
 import ImageSlider from "../../components/ImageSlider";
+import { FaTrash } from "react-icons/fa";
 
 const CourseView = () => {
   const { userInfo } = useSelector((state) => state.user);
@@ -193,19 +194,19 @@ const CourseView = () => {
          focus:invalid:border-red-500 focus:invalid:ring-red-500"
                 ></textarea>
               </div>
-              <div className="mt-5">
+              <div className="mt-5 flex gap-5">
                 <Button color="green" customCSS="border-2 text-xl" width>
                   Submit
                 </Button>
                 <div
-                  className="border-2 text-xl text-white bg-red-500 hover:bg-red-600 active:bg-red-700 hover:opacity-80 my-2 block px-3 py-2 text-center cursor-pointer whitespace-nowrap border-slate-300 rounded-md font-medium shadow-sm "
+                  className="border-2 w-fit text-xl text-white bg-red-500 hover:bg-red-600 active:bg-red-700 hover:opacity-80 my-2 block p-3 text-center cursor-pointer whitespace-nowrap border-slate-300 rounded-md font-medium shadow-sm "
                   onClick={() => {
                     setComment("");
                     setRating(0);
                     setRatingMove(0);
                   }}
                 >
-                  Clear Review
+                  <FaTrash className="text-xl" />
                 </div>
               </div>
             </form>

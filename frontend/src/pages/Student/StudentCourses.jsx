@@ -21,14 +21,14 @@ const StudentCourses = () => {
           <Message variant="error">{error?.data?.Error}</Message>
         </div>
       ) : (
-        <div className="flex flex-col items-center mt-[2rem] h-[30rem] w-[70rem]  gap-[1rem] text-white">
+        <div className="flex flex-col items-center mt-[2rem] h-fit w-[70rem]  gap-[1rem] text-white">
           <div className="text-xl">My Courses</div>
           <div className="grid grid-cols-3 w-full ml-[5rem]">
             {data &&
               Array.isArray(data) &&
               data?.map((course) => (
                 <div className="p-5" key={course._id}>
-                  <CourseCard course={course} />
+                  <CourseCard course={course} condition={true} />
                 </div>
               ))}
           </div>

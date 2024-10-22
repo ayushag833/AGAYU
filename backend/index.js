@@ -5,6 +5,8 @@ import express from "express";
 import connect from "./config/db.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import Stripe from "stripe";
+export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 // Routes
 import userRoutes from "./routes/userRoutes.js";
