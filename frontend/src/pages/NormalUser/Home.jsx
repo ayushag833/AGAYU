@@ -92,7 +92,7 @@ const Home = () => {
                 ? toast.error("You need to log out first!")
                 : navigate("/login?role=teacher");
             }}
-            customCSS="text-[20px] flex gap-2"
+            customCSS="text-[21px] flex gap-2"
           >
             Teach on Agayu <FaArrowRight />
           </Button>
