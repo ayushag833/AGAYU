@@ -9,7 +9,6 @@ import Message from "../../components/Message";
 import Carousel from "../../components/Carousel";
 import ImageSlider from "../../components/ImageSlider";
 import teacherImg from "../../assets/Teacher.jpg";
-import Button from "../../components/Button";
 import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 import { FaArrowRight } from "react-icons/fa";
@@ -85,17 +84,19 @@ const Home = () => {
             knowledge, you can make a lasting impact and help someone unlock
             their potential.
           </h2>
-          <Button
-            color="green"
-            onClick={() => {
-              userInfo
-                ? toast.error("You need to log out first!")
-                : navigate("/login?role=teacher");
-            }}
-            customCSS="text-[21px] flex gap-2"
-          >
-            Teach on Agayu <FaArrowRight />
-          </Button>
+          <div className="w-full flex items-center justify-center">
+            <button
+              color="green"
+              onClick={() => {
+                userInfo
+                  ? toast.error("You need to log out first!")
+                  : navigate("/login?role=teacher");
+              }}
+              className="flex gap-2 items-center bg-green-500 hover:bg-green-600 active:bg-green-700 my-2 px-3 py-2 text-white  whitespace-nowrap border-slate-300 rounded-md font-medium text-[1.2rem] shadow-sm"
+            >
+              Teach on Agayu <FaArrowRight />
+            </button>
+          </div>
         </div>
         <img src={teacherImg} className="h-[28rem] border-2 rounded-xl" />
       </div>
