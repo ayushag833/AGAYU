@@ -88,7 +88,7 @@ const Profile = () => {
               user?.image ||
               "https://upload.wikimedia.org/wikipedia/commons/e/e0/Userimage.png"
             }
-            className="w-[5rem] bg-slate-50"
+            className="w-[5rem] bg-slate-50 object-cover object-top"
           />
         </div>
         <div className="grid grid-cols-2 gap-5">

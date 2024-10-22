@@ -148,7 +148,7 @@ const AddCourseSubContent = ({
                 btnClicked && (
                   <video
                     src={formData?.video}
-                    className="w-[6rem] border-2 rounded-md mt-[1.5rem]"
+                    className="w-[6rem] border-2 rounded-md mt-[1.5rem] object-cover object-top"
                   />
                 )
               )}
