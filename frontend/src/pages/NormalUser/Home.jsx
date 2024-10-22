@@ -77,10 +77,10 @@ const Home = () => {
       </div>
       <div className="flex p-10 gap-10">
         <div className="mt-[5rem]">
-          <h1 className="text-[2.2rem] mb-10 text-green-500 capitalize">
+          <h1 className="text-[2.2rem] mb-10 text-green-500 capitalize font-bold text-center">
             Share your knowledge, Shape the future.
           </h1>
-          <h2 className="text-2xl mb-10 ">
+          <h2 className="text-2xl mb-10 text-center">
             Teaching empowers you to inspire and uplift others. By sharing your
             knowledge, you can make a lasting impact and help someone unlock
             their potential.
@@ -92,12 +92,12 @@ const Home = () => {
                 ? toast.error("You need to log out first!")
                 : navigate("/login?role=teacher");
             }}
-            customCSS="text-[1.4rem] flex gap-2"
+            customCSS="text-[20px] flex gap-2"
           >
             Teach on Agayu <FaArrowRight />
           </Button>
         </div>
-        <img src={teacherImg} className="h-[30rem] border-2 rounded-xl" />
+        <img src={teacherImg} className="h-[28rem] border-2 rounded-xl" />
       </div>
     </div>
   );
