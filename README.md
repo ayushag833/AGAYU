@@ -4,7 +4,7 @@ AGAYU is an edtech platform designed to make quality education accessible to eve
 
 Working on AGAYU has boosted my confidence in full-stack web development. The MSP of this platform is the distinct role-based user experience, offering three different dashboards tailored for each user type.
 
-The name "AGAYU" is a personal touch, derived from my name --> *AG*garwal, and *AYU*sh. This project has not only enhanced my technical skills but also humbled me 😌.
+The name "AGAYU" is a personal touch, derived from my name --> '*AG*'garwal, and '*AYU*'sh. This project has not only enhanced my technical skills but also humbled me 😌.
 
 <!-- ### AGAYU is an edtech based platform which aims to provide the best education to everyone. 
 It is built using MERN Stack. It is quite a big project and this project taught me so many things as I have built this Project alone. <br/>
