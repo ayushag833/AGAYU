@@ -63,7 +63,7 @@ const AdminRevenue = () => {
             <div className="flex justify-end">
               <div className="mt-2 text-white font-bold whitespace-nowrap text-3xl">
                 Total Revenue : $
-                {users.Users.reduce((acc, cur) => {
+                {users?.Users?.reduce((acc, cur) => {
                   return acc + cur.totalRevenue;
                 }, 0)}
               </div>
