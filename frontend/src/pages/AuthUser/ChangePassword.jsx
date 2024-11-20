@@ -25,11 +25,19 @@ const ChangePassword = () => {
       return;
     }
     try {
-      await updatePassword(id, oldPassword, newPassword).unwrap();
+      const res = await updatePassword({
+        id,
+        oldPassword,
+        newPassword,
+      }).unwrap();
+      if (res.error) throw new Error(res.error);
       toast.success("Password Changed successfully");
+      setOldPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
     } catch (error) {
       console.log(error, error.message);
-      toast.error("Error in changing password");
+      toast.error(error.message);
     }
   };
 

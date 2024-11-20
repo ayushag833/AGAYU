@@ -116,12 +116,9 @@ const updateUser = async (req, res) => {
 const updatePassword = async (req, res) => {
   try {
     const { oldPassword, newPassword } = req.body;
-    switch (true) {
-      case !oldPassword:
-        return res.json({ error: "OldPassword is required" });
-      case !newPassword:
-        return res.json({ error: "NewPassword is required" });
-    }
+    if (!oldPassword) return res.json({ error: "OldPassword is required" });
+    if (!newPassword) return res.json({ error: "NewPassword is required" });
+
     const user = await User.findById(req.params.id);
     if (!user) {
       return res.status(404).json({ error: "User not found" });
