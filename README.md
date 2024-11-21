@@ -36,29 +36,22 @@ Agayu is an innovative ed-tech web application designed to simplify the buying a
    ```bash
    git clone https://github.com/your-username/agayu.git
    cd agayu
-2. Install dependencies:
-
-   bash
-   Copy code
+   
+2. **Install Dependencies**  
+   Navigate to the respective directories and install the necessary dependencies:  
+   ```bash
    # For backend
    cd backend
    npm install
-   
+
    # For frontend
    cd frontend
    npm install
 
+
 3. Set up environment variables for both frontend and backend.
 
-4. Run the application:
-
-   bash
-   Copy code
-   # Backend
-   npm start
-   
-   # Frontend
-   npm run dev
+4. Run the application
 
 5. Open your browser and visit http://localhost:3000.
 
