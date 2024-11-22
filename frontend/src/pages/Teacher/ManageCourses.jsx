@@ -12,21 +12,9 @@ import { useSelector } from "react-redux";
 import Button from "../../components/Button";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
-import {
-  DndContext,
-  closestCenter,
-  KeyboardSensor,
-  MouseSensor,
-  TouchSensor,
-  useSensor,
-  useSensors,
-} from "@dnd-kit/core";
-import {
-  SortableContext,
-  rectSortingStrategy,
-  arrayMove,
-} from "@dnd-kit/sortable";
-import SortableItem from "./SortableItem"; // Create a separate component for SortableItem
+import { DndContext, MouseSensor, useSensor, useSensors } from "@dnd-kit/core";
+import { SortableContext, arrayMove } from "@dnd-kit/sortable";
+import SortableItem from "./SortableItem";
 
 const ManageCourses = () => {
   const userDetails = useSelector((state) => state.user);
@@ -82,11 +70,7 @@ const ManageCourses = () => {
     UpdatePositioning(newCourses);
   };
 
-  const sensors = useSensors(
-    useSensor(MouseSensor),
-    useSensor(TouchSensor),
-    useSensor(KeyboardSensor)
-  );
+  const sensors = useSensors(useSensor(MouseSensor));
 
   return (
     <div className="flex">
@@ -101,7 +85,7 @@ const ManageCourses = () => {
         <div>
           <div className="text-xl text-white text-center my-10">My Courses</div>
           <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
-            <SortableContext items={courses} strategy={rectSortingStrategy}>
+            <SortableContext items={courses}>
               <div className="grid grid-cols-3 gap-4 mt-4 ml-[3rem] text-white w-[70rem]">
                 {courses.map((course) => (
                   <SortableItem key={course._id} id={course._id}>
