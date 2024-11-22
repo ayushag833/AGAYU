@@ -263,10 +263,25 @@ const showPurchasedCourses = async (req, res) => {
 
 const showCreatedCourses = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id).populate("coursesCreated");
+    const user = await User.findById(req.params.id)
+      .populate("coursesCreated")
+      .sort({ createdAt: -1 });
     return res.status(200).json(user.coursesCreated);
   } catch (error) {
     console.log("error in showing courses", error.message);
+    return res.status(500).json({ Error: error.message });
+  }
+};
+
+const updatePositioning = async (req, res) => {
+  try {
+    const { coursesId } = req.body;
+    const user = await User.findById(req.params.id);
+    user.coursesCreated = coursesId;
+    await user.save();
+    return res.status(200).json({ success: "Positioning is done" });
+  } catch (error) {
+    console.log("error in updating the positioning", error.message);
     return res.status(500).json({ Error: error.message });
   }
 };
@@ -283,4 +298,5 @@ export {
   showCreatedCourses,
   purchaseCourse,
   paymentCheck,
+  updatePositioning,
 };

@@ -13,6 +13,7 @@ import {
   showCreatedCourses,
   purchaseCourse,
   paymentCheck,
+  updatePositioning,
 } from "../controllers/userController.js";
 
 import {
@@ -33,5 +34,6 @@ router.route("/delete/:id").delete(authenticate, deleteUser);
 router.route("/password/:id").put(authenticate, updatePassword);
 router.route("/purchasedCourses/:id").get(authenticate, showPurchasedCourses);
 router.route("/createdCourses/:id").get(authenticate, showCreatedCourses);
+router.route("/updatePositioning/:id").post(authenticate, updatePositioning);
 
 export default router;

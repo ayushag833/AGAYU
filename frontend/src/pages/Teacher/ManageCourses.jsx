@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import TeacherMenu from "./TeacherMenu";
-import { useShowCreatedCoursesQuery } from "../../redux/api/usersApiSlice";
+import {
+  useShowCreatedCoursesQuery,
+  useUpdatePositioningMutation,
+} from "../../redux/api/usersApiSlice";
 import { useDeleteCourseMutation } from "../../redux/api/coursesApiSlice";
 import Loader from "../../components/Loader";
 import Message from "../../components/Message";
@@ -8,11 +11,28 @@ import { FaTrash } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import Button from "../../components/Button";
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  MouseSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import {
+  SortableContext,
+  rectSortingStrategy,
+  arrayMove,
+} from "@dnd-kit/sortable";
+import SortableItem from "./SortableItem"; // Create a separate component for SortableItem
 
 const ManageCourses = () => {
   const userDetails = useSelector((state) => state.user);
   const id = userDetails.userInfo._id;
-  const { data, isLoading, isError, error } = useShowCreatedCoursesQuery(id);
+  const { data, refetch, isLoading, isError, error } =
+    useShowCreatedCoursesQuery(id);
   const [deleteApi] = useDeleteCourseMutation();
 
   const navigate = useNavigate();
@@ -30,6 +50,44 @@ const ManageCourses = () => {
     }
   };
 
+  const [updatePositioningApi] = useUpdatePositioningMutation();
+  const [courses, setCourses] = useState([]);
+
+  useEffect(() => {
+    refetch();
+    if (data) setCourses(data);
+  }, [data, refetch]);
+
+  const UpdatePositioning = async (newCourses) => {
+    try {
+      const coursesId = newCourses.map((course) => course._id);
+      await updatePositioningApi({ id, coursesId }).unwrap();
+      toast.success("Positioning is done successfully");
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.data?.msg);
+    }
+  };
+
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
+
+    if (!over || active.id === over.id) return;
+
+    const oldIndex = courses.findIndex((course) => course._id === active.id);
+    const newIndex = courses.findIndex((course) => course._id === over.id);
+
+    const newCourses = arrayMove(courses, oldIndex, newIndex);
+    setCourses(newCourses);
+    UpdatePositioning(newCourses);
+  };
+
+  const sensors = useSensors(
+    useSensor(MouseSensor),
+    useSensor(TouchSensor),
+    useSensor(KeyboardSensor)
+  );
+
   return (
     <div className="flex">
       <TeacherMenu />
@@ -42,47 +100,48 @@ const ManageCourses = () => {
       ) : (
         <div>
           <div className="text-xl text-white text-center my-10">My Courses</div>
-
-          <div className="grid grid-cols-3 mt-[2rem] ml-10 w-[70rem] text-white">
-            {data.map((item) => (
-              <div
-                key={item._id}
-                className="flex items-enter mb-[1rem] pb-2 justify-between"
-              >
-                <div className="flex flex-col">
-                  <div className="w-[20rem] h-[11rem] mb-3">
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-full h-full object-cover rounded"
-                    />
-                  </div>
-
-                  <div className="text-lg text-white">{item.name}</div>
-                  <div className="mt-2 text-white">{item.teacherName}</div>
-                  <div className="flex justify-between mt-3 items-center">
-                    <Button
-                      color="green"
-                      customCSS="mr-[9rem]"
-                      onClick={() =>
-                        navigate(`/profile/teacher/courses/update/${item._id}`)
-                      }
-                    >
-                      Update
-                    </Button>
-                    <button
-                      className="text-red-500 ml-[5rem] hover:text-red-600"
-                      onClick={() => {
-                        deleteCourse(item._id);
-                      }}
-                    >
-                      <FaTrash className="text-xl" />
-                    </button>
-                  </div>
-                </div>
+          <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
+            <SortableContext items={courses} strategy={rectSortingStrategy}>
+              <div className="grid grid-cols-3 gap-4 mt-4 ml-[3rem] text-white w-[70rem]">
+                {courses.map((course) => (
+                  <SortableItem key={course._id} id={course._id}>
+                    <div className="mb-5 cursor-grab active:cursor-grabbing hover:scale-[1.05] transition-all">
+                      <div className="w-[20rem] h-[11rem] mb-3">
+                        <img
+                          src={course.image}
+                          alt={course.name}
+                          className="w-full h-full object-cover rounded"
+                        />
+                      </div>
+                      <div className="text-lg text-white">{course.name}</div>
+                      <div className="mt-2 text-white">
+                        {course.teacherName}
+                      </div>
+                      <div className="flex mt-3 items-center">
+                        <Button
+                          color="green"
+                          customCSS="mr-[18rem]"
+                          onClick={() =>
+                            navigate(
+                              `/profile/teacher/courses/update/${course._id}`
+                            )
+                          }
+                        >
+                          Update
+                        </Button>
+                        <button
+                          className="text-red-500 ml-[-4rem] hover:text-red-600"
+                          onClick={() => deleteCourse(course._id)}
+                        >
+                          <FaTrash className="text-xl" />
+                        </button>
+                      </div>
+                    </div>
+                  </SortableItem>
+                ))}
               </div>
-            ))}
-          </div>
+            </SortableContext>
+          </DndContext>
         </div>
       )}
     </div>

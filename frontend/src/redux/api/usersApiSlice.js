@@ -92,6 +92,14 @@ const userApiSlice = apiSlice.injectEndpoints({
       query: (id) => `${USERS_URL}/createdCourses/${id}`,
       providesTags: ["Course", "User"],
     }),
+
+    updatePositioning: builder.mutation({
+      query: ({ id, ...data }) => ({
+        url: `${USERS_URL}/updatePositioning/${id}`,
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -108,4 +116,5 @@ export const {
   useShowCreatedCoursesQuery,
   usePurchaseCourseMutation,
   usePaymentCheckMutation,
+  useUpdatePositioningMutation,
 } = userApiSlice;
