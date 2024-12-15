@@ -70,7 +70,13 @@ const ManageCourses = () => {
     UpdatePositioning(newCourses);
   };
 
-  const sensors = useSensors(useSensor(MouseSensor));
+  const sensors = useSensors(
+    useSensor(MouseSensor, {
+      activationConstraint: {
+        distance: 10,
+      },
+    })
+  );
 
   return (
     <div className="flex">
