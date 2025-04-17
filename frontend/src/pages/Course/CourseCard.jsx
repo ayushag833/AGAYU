@@ -17,7 +17,7 @@ const CourseCard = ({ course, condition }) => {
             <img
               src={course?.image}
               alt="course-image"
-              className="rounded-md w-[20rem]"
+              className="rounded-md w-[20rem] h-[12rem]"
             />
             <div>
               <HeartIcon course={course} css={true} condition={condition} />

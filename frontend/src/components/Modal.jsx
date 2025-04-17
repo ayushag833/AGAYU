@@ -58,7 +58,7 @@ const Modal = ({ course, difference, boughtHandler }) => {
           <img
             src={course.image}
             alt="course-image"
-            className="w-[25rem] rounded-md"
+            className="w-[25rem] rounded-md h-[13rem]"
           />
           <div className="relative bottom-[13rem] left-[1rem]">
             <HeartIcon course={course} />
@@ -168,7 +168,7 @@ const Modal = ({ course, difference, boughtHandler }) => {
           <img
             src={course.image}
             alt="course-image"
-            className="w-[25rem] rounded-md"
+            className="w-[25rem] rounded-md h-[13rem]"
           />
           <div className="relative bottom-[13rem] left-[1rem]">
             <HeartIcon course={course} />

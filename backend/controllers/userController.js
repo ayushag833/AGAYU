@@ -232,7 +232,7 @@ const paymentCheck = async (req, res) => {
       success_url:
         process.env.NODE_ENV === "DEVELOPMENT"
           ? `http://localhost:5173/success/${coursesToAdd}`
-          : `https://agayu-frontend.onrender.com/success${coursesToAdd}`,
+          : `https://agayu-frontend.onrender.com/success/${coursesToAdd}`,
       cancel_url:
         process.env.NODE_ENV === "DEVELOPMENT"
           ? "http://localhost:5173/cancel"
