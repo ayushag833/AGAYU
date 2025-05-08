@@ -13,6 +13,7 @@ import { FaHeart } from "react-icons/fa";
 import { RxDashboard } from "react-icons/rx";
 import { IoLogOutOutline } from "react-icons/io5";
 import { MdLogin } from "react-icons/md";
+import { useTranslation } from "react-i18next";
 
 const Navbar = () => {
   const [data, setData] = useState("");
@@ -24,6 +25,7 @@ const Navbar = () => {
   const { cartItems } = useSelector((state) => state.cart);
   const { favoriteItems } = useSelector((state) => state.favorite);
   const [LogoutMutation] = useLogoutMutation();
+  const { t } = useTranslation();
 
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -81,24 +83,24 @@ const Navbar = () => {
           AGAYU
         </h1>
         <nav className="my-auto p-2">
-          <ul className="flex justify-center">
+          <ul className="flex justify-center w-[20.5rem] gap-[0.625rem]">
             <li
               className="p-2 text-md mx-3 my-auto font-medium text-slate-50 cursor-pointer duration-150 ease-in-out hover:opacity-80"
               onClick={() => navigate("/courses")}
             >
-              Courses
+              {t("courses")}
             </li>
             <li
               className="p-2 text-md mx-3 my-auto font-medium text-slate-50 cursor-pointer duration-150 ease-in-out hover:opacity-80"
               onClick={() => navigate("/about")}
             >
-              About
+              {t("about")}
             </li>
             <li
               className="p-2 text-md mx-3 my-auto font-medium text-slate-50 cursor-pointer duration-150 ease-in-out hover:opacity-80"
               onClick={() => navigate("/contact")}
             >
-              Contact
+              {t("contact")}
             </li>
           </ul>
         </nav>
@@ -107,7 +109,7 @@ const Navbar = () => {
             <IoMdSearch className="text-black p-2 absolute text-center top-[0.15rem] left-[0.15rem] rounded-full text-[2.3rem] bg-slate-100" />
             <input
               type="text"
-              placeholder="Search Anything"
+              placeholder={t("search_anything")}
               value={data}
               onChange={(e) => setData(e.target.value)}
               className="bg-slate-100 rounded-full pl-[2.4rem] h-[2.5rem] focus:outline-none w-full text-base"
@@ -154,7 +156,7 @@ const Navbar = () => {
                             onClick={logoutHandler}
                             className="hover:underline duration-150 ease-in-out hover:opacity-80 whitespace-nowrap flex items-center gap-1 text-md cursor-pointer"
                           >
-                            <IoLogOutOutline className="text-lg" /> Log out
+                            <IoLogOutOutline className="text-lg" /> {t("logout")}
                           </li>
                         </ul>
                       </div>
@@ -170,13 +172,13 @@ const Navbar = () => {
                           onClick={handleLogin}
                           className="hover:underline duration-150 ease-in-out hover:opacity-80 whitespace-nowrap flex items-center gap-1 text-md cursor-pointer"
                         >
-                          <MdLogin className="text-lg" /> Log in
+                          <MdLogin className="text-lg" /> {t("login")}
                         </li>
                         <li
                           onClick={handleSignup}
                           className="hover:underline duration-150 ease-in-out hover:opacity-80 whitespace-nowrap flex items-center gap-1 text-md cursor-pointer"
                         >
-                          <MdLogin className="text-lg" /> Sign up
+                          <MdLogin className="text-lg" /> {t("signup")}
                         </li>
                       </ul>
                     </div>
@@ -210,7 +212,7 @@ const Navbar = () => {
                 className="text-white text-base whitespace-nowrap duration-150 cursor-pointer ease-in-out hover:opacity-80"
                 onClick={() => navigate("/login?role=teacher")}
               >
-                Teach on Agayu
+                {t("teach_on_agayu")}
               </div>
             )}
             <div

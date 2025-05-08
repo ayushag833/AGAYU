@@ -1,21 +1,25 @@
+import { useTranslation } from "react-i18next";
 import Logo from "../assets/logo.png";
 import { FaFacebook, FaGoogle, FaTwitter, FaYoutube } from "react-icons/fa";
 
-const BottomFooter = ["Privacy Policy", "Cookie Policy", "Terms"];
-const Resources = [
-  "Articles",
-  "Blog",
-  "Chart Sheet",
-  "Code challenges",
-  "Docs",
-  "Projects",
-  "Videos",
-  "Workspaces",
-];
-const Plans = ["Paid memberships", "For students", "Business solutions"];
-const Community = ["Forums", "Chapters", "Events"];
-
 const Footer = () => {
+  const { t } = useTranslation();
+
+  const BottomFooter = ["privacy_policy", "cookie_policy", "terms"];
+  const Resources = [
+    "articles",
+    "blog",
+    "chart_sheet",
+    "code_challenges",
+    "docs",
+    "projects",
+    "videos",
+    "workspaces",
+  ];
+  const Plans = ["paid_memberships", "for_students", "business_solutions"];
+  const Community = ["forums", "chapters", "events"];
+  const Company = ["about", "careers", "affiliates"];
+
   return (
     <div className="bg-richblack-800 text-white">
       <div className="flex lg:flex-row gap-8 items-center justify-between text-richblack-400 leading-6 mx-auto relative my-14">
@@ -23,27 +27,25 @@ const Footer = () => {
           <div className=" flex flex-wrap flex-row justify-around pl-3 lg:pr-5 w-full">
             <div className="flex flex-col gap-3 mb-7 lg:pl-0">
               <h1 className="text-richblack-50 font-semibold text-[18px]">
-                Company
+                {t("company")}
               </h1>
               <div className="flex flex-col gap-2">
-                {["About", "Careers", "Affiliates"].map((ele, i) => {
+                {Company.map((ele, i) => {
                   return (
                     <div
                       key={i}
                       className="text-[16px] cursor-pointer hover:text-richblack-50 transition-all duration-200"
                     >
-                      {ele}
+                      {t(ele)}
                     </div>
                   );
                 })}
               </div>
-
-              <div></div>
             </div>
 
             <div className="mb-7 lg:pl-0">
               <h1 className="text-richblack-50 font-semibold text-[18px]">
-                Resources
+                {t("resources")}
               </h1>
 
               <div className="flex flex-col gap-2 mt-2">
@@ -53,7 +55,7 @@ const Footer = () => {
                       key={index}
                       className="text-[16px] cursor-pointer hover:text-richblack-50 transition-all duration-200"
                     >
-                      {ele}
+                      {t(ele)}
                     </div>
                   );
                 })}
@@ -61,16 +63,16 @@ const Footer = () => {
             </div>
             <div>
               <h1 className="text-richblack-50 font-semibold text-[18px]">
-                Support
+                {t("support")}
               </h1>
               <div className="text-[16px] cursor-pointer hover:text-richblack-50 transition-all duration-200 mt-2">
-                Help Center
+                {t("help_center")}
               </div>
             </div>
 
             <div className="mb-7 lg:pl-0 hidden md:block">
               <h1 className="text-richblack-50 font-semibold text-[18px]">
-                Plans
+                {t("plans")}
               </h1>
 
               <div className="flex flex-col gap-2 mt-2">
@@ -80,7 +82,7 @@ const Footer = () => {
                       key={index}
                       className="text-[16px] cursor-pointer hover:text-richblack-50 transition-all duration-200"
                     >
-                      {ele}
+                      {t(ele)}
                     </div>
                   );
                 })}
@@ -88,7 +90,7 @@ const Footer = () => {
             </div>
             <div>
               <h1 className="text-richblack-50 font-semibold text-[18px]">
-                Community
+                {t("community")}
               </h1>
 
               <div className="flex flex-col gap-2 mt-2">
@@ -98,7 +100,7 @@ const Footer = () => {
                       key={index}
                       className="text-[16px] cursor-pointer hover:text-richblack-50 transition-all duration-200"
                     >
-                      {ele}
+                      {t(ele)}
                     </div>
                   );
                 })}
@@ -133,14 +135,14 @@ const Footer = () => {
                       : "border-r border-richblack-700 cursor-pointer hover:text-richblack-50 transition-all duration-200"
                   } px-3 `}
                 >
-                  {ele}
+                  {t(ele)}
                 </div>
               );
             })}
           </div>
 
           <div className="text-center mr-[5rem]">
-            Made by Ayush Aggarwal 🗿 © 2024 Agayu
+            {t("made_by")}
           </div>
         </div>
       </div>

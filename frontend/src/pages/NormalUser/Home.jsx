@@ -13,8 +13,10 @@ import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 import { FaArrowRight } from "react-icons/fa";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 const Home = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { userInfo } = useSelector((state) => state.user);
 
@@ -39,7 +41,7 @@ const Home = () => {
     <div className="text-white">
       <Carousel />
       <div className="m-10">
-        <h1 className="mb-5 text-3xl font-bold">Latest Courses</h1>
+        <h1 className="mb-5 text-3xl font-bold">{t("latest_courses")}</h1>
         <div>
           {latestCoursesLoading ? (
             <Loader />
@@ -51,7 +53,7 @@ const Home = () => {
         </div>
       </div>
       <div className="m-10">
-        <h1 className="mb-5 text-3xl font-bold">Popular Courses</h1>
+        <h1 className="mb-5 text-3xl font-bold">{t("popular_courses")}</h1>
         <div>
           {popularCoursesLoading ? (
             <Loader />
@@ -63,7 +65,7 @@ const Home = () => {
         </div>
       </div>
       <div className="m-10">
-        <h1 className="mb-5 text-3xl font-bold">Pocket Friendly Courses</h1>
+        <h1 className="mb-5 text-3xl font-bold">{t("budget_courses")}</h1>
         <div>
           {budgetCoursesLoading ? (
             <Loader />
@@ -77,24 +79,22 @@ const Home = () => {
       <div className="flex p-10 gap-10">
         <div className="mt-[5rem]">
           <h1 className="text-[2.2rem] mb-10 text-green-500 capitalize font-bold text-center">
-            Share your knowledge, Shape the future.
+            {t("share_knowledge_heading")}
           </h1>
           <h2 className="text-2xl mb-10 text-center">
-            Teaching empowers you to inspire and uplift others. By sharing your
-            knowledge, you can make a lasting impact and help someone unlock
-            their potential.
+            {t("share_knowledge_description")}
           </h2>
           <div className="w-full flex items-center justify-center">
             <button
               color="green"
               onClick={() => {
                 userInfo
-                  ? toast.error("You need to log out first!")
+                  ? toast.error(t("logout_to_continue"))
                   : navigate("/login?role=teacher");
               }}
               className="flex gap-2 items-center bg-green-500 hover:bg-green-600 active:bg-green-700 my-2 px-3 py-2 text-white  whitespace-nowrap border-slate-300 rounded-md font-medium text-[1.2rem] shadow-sm"
             >
-              Teach on Agayu <FaArrowRight />
+              {t("teach_on_agayu")} <FaArrowRight />
             </button>
           </div>
         </div>
