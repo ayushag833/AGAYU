@@ -39,7 +39,7 @@ const CustomModal = ({ setDropdown }) => {
               key={ind}
               onClick={() => handleLanguageChange(code)}
               className={`${
-                currentLang === label
+                currentLang === code
                   ? "border-2 border-slate-700 rounded-full"
                   : ""
               } text-lg cursor-pointer duration-150 p-1 ease-in-out hover:opacity-80 text-center`}
